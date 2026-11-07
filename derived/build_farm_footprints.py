@@ -1,8 +1,9 @@
 """Farm-gate footprint per farm, crop and year with organic soils (METHODOLOGY.md s5, split by source).
-Run: ../model-inference/.venv/bin/python -I derived/build_farm_footprints.py, then ./services upload FarmFootprint.
+Run: DATA_DIR=... python -I derived/build_farm_footprints.py (pandas, numpy), then ./services upload FarmFootprint.
 Inputs: FI survey as reported; SE Foodhills plus pea norms for P, lime, sprays; organic share from the soil map."""
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -10,12 +11,12 @@ import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-PKG = HERE.parent.parent / "APETIT_CLIMATE_NATURE_NAVIGATOR_2026"
-sys.path.insert(0, str(PKG / "tools"))
+# DATA_DIR as for the loader (folder with 01_master ...); the package tools sit next to it.
+D = Path(os.environ.get("DATA_DIR") or HERE.parent / "raw-data" / "data").resolve()
+sys.path.insert(0, str(D.parent / "tools"))
 from ccn_tools import factors as F  # noqa: E402
 from ccn_tools.farm_calculator import farm_footprint_per_ha  # noqa: E402
 
-D = PKG / "data"
 OUT = HERE / "farm_footprints.csv"
 E = F.FARM_EF
 N2O = E["n2o_n_to_n2o"] * E["n2o_gwp"]

@@ -70,7 +70,10 @@ export function loadSchemas(): Map<string, LoadableSchema> {
     const name = entry.schema.replace(/\.json$/, '');
     out.set(name, {
       name,
-      source: path.join(config.dataDir, entry.source.replace(/^.*?\/data\//, '')),
+      // Package files live under DATA_DIR; repo-local sources (e.g. derived/) resolve from the repo root.
+      source: /\/data\//.test(entry.source)
+        ? path.join(config.dataDir, entry.source.replace(/^.*?\/data\//, ''))
+        : path.resolve(config.schemasDir, '..', entry.source),
       primaryKey: entry.primaryKey,
       properties: raw.properties,
       units,
