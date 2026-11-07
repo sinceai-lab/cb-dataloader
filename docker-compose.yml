@@ -154,6 +154,26 @@ services:
       retries: 12
       start_period: 10s
 
+  weather-aggregator:
+    build: ./weather-aggregator
+    hostname: weather-aggregator
+    container_name: apetit-weather-aggregator
+    depends_on:
+      coraine:
+        condition: service_started
+      context:
+        condition: service_healthy
+    ports:
+      - "${WEATHER_AGGREGATOR_PORT}:${WEATHER_AGGREGATOR_PORT}"
+    environment:
+      - PORT=${WEATHER_AGGREGATOR_PORT}
+      - CORAINE_URL=http://coraine:1026
+      - CONTEXT_URL=http://context/user-context.jsonld
+      - NOTIFY_URL=http://weather-aggregator:${WEATHER_AGGREGATOR_PORT}/notify
+      - LOG_FILE=/app/logs/debug.log
+    volumes:
+      - ./weather-aggregator/logs:/app/logs
+
 volumes:
   mongo-db:
   mongo-config:

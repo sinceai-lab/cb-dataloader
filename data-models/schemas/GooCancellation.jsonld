@@ -7,6 +7,7 @@
     "technology": "https://apetit.sinceai2026.example/ns#technology",
     "production_country": "https://apetit.sinceai2026.example/ns#production_country",
     "vintage_year": "https://apetit.sinceai2026.example/ns#vintage_year",
+    "Site": "https://apetit.sinceai2026.example/ns#Site",
     "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
     "unitText": "https://apetit.sinceai2026.example/ns#unitText",
     "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",

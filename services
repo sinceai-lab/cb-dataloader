@@ -40,10 +40,11 @@ loadUsers () {
 case "${1:-}" in
 	start)
 		if [ "${2:-}" == "coraine" ]; then
-			docker compose up -d coraine
+			docker compose up -d --build coraine weather-aggregator
 			waitForCoraine
 			echo "Coraine (direct):   http://localhost:${CORAINE_PORT}"
 			echo "Contexts:           http://localhost:${CONTEXT_PORT}/user-context.jsonld"
+			echo "Aggregator log:     docker logs -f apetit-weather-aggregator"
 			exit 0
 		fi
 		docker compose up -d

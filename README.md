@@ -28,7 +28,7 @@ cd cb-dataloader && npm install
 
 ## Start
 ```
-./services start coraine   # Coraine + Mongo + Timescale + the @context httpd (enough for loading)
+./services start coraine   # Coraine + Mongo + Timescale + the @context httpd + weather-aggregator (enough for loading)
 ./services start           # full stack: also Keycloak and APISIX
 ./services status          # see what is running
 ```
@@ -73,6 +73,45 @@ LOADED_BY=jason ./services upload
 4. Open http://localhost:3006. The MCP server takes about a minute to discover the loaded types; if the first question fails, wait and retry. The MCP endpoint is http://localhost:3003/mcp (also used by Claude Code via `data-viewer/.mcp.json`).
 
 The viewer joins the `apetit_default` Docker network, so Coraine must be running first. Stop it with `cd data-viewer && ./services apetit stop`. Reload the data first if you ran `./services reset`.
+
+## Weather aggregator
+
+`weather-aggregator/` is a small Node service in the compose file. On start it (re)creates a subscription on `WeatherObserved` entities and writes every notification it receives to a debug log.
+
+```
+docker compose up -d --build weather-aggregator   # also started by ./services start and ./services start coraine
+docker logs -f apetit-weather-aggregator          # or weather-aggregator/logs/debug.log
+```
+
+### Drip in the weather
+
+`replay` writes one `WeatherObserved` row into Coraine every `--interval` seconds (default 6). Each write triggers a notification to the aggregator.
+
+1. Start Coraine and the aggregator: `./services start coraine`
+2. Watch the log in a second terminal: `docker logs -f apetit-weather-aggregator`
+3. Drip the sample (20 days for cell GF0104, about 2 minutes):
+   ```
+   cd data-loader
+   npm run replay -- replay/weather_sample_20.csv
+   ```
+4. Or drip from the full daily parquet, filtered to what you need:
+   ```
+   npm run replay -- ../raw-data/data/04_climate/weather_daily_1991_2060.parquet \
+       --cell GF0104 --scenario ssp245 --from 2027-06-01 --limit 100 --interval 6
+   ```
+
+| Option | Meaning |
+|---|---|
+| `--interval s` | seconds between rows (default 6) |
+| `--cell id` | only this grid cell, e.g. `GF0104` (84 cells) |
+| `--scenario s` | `historical` (to 2026), `ssp126`, `ssp245` or `ssp585` (from 2027) |
+| `--from date` | first date to send, `YYYY-MM-DD` |
+| `--limit n` | stop after n rows |
+
+- Stop early with Ctrl-C. Rows already sent stay in the broker.
+- Each row becomes one `WeatherObserved` entity (`cellId`, `dateObserved`, `temperature`, `temperatureMax`, `precipitation`, `referenceEvapotranspiration`), id `urn:ngsi-ld:WeatherObserved:<cell>:<date>`. Sending the same cell and date again updates it and notifies again.
+- A cell late in the parquet takes a few seconds to find before the first row is sent.
+- The replayed entities stay until you delete them or run `./services reset`. To remove one: `curl -X DELETE localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:WeatherObserved:GF0104:2027-06-01 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'`
 
 ## Stop and clean up
 ```

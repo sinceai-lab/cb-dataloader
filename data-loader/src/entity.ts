@@ -1,7 +1,7 @@
 import type { LoadableSchema } from './schemas.js';
 
 // Reserved members and ngsi-ld-core-context v1.8 terms override ours, so those columns use their x-term.
-const CORE = new Set(['id', 'type', 'scope', 'mode', 'reason', 'value', 'status']);
+export const CORE = new Set(['id', 'type', 'scope', 'mode', 'reason', 'value', 'status']);
 export const attrName = (col: string, term?: string) => (CORE.has(col) && term ? term : col);
 
 const types = (t?: string | string[]) => (Array.isArray(t) ? t : t ? [t] : []);
@@ -27,7 +27,7 @@ export function coerceRow(schema: LoadableSchema, raw: Record<string, string>) {
 }
 
 const urn = (type: string, key: unknown) => `urn:ngsi-ld:${type}:${String(key).replace(/\s+/g, '_')}`;
-const slug = (v: unknown) =>
+export const slug = (v: unknown) =>
   String(v)
     .toLowerCase()
     .replace(/[^\p{L}\p{N}]+/gu, '_')
@@ -47,10 +47,14 @@ export function observedAt(schema: LoadableSchema, row: Record<string, unknown>)
   return `${y}-${String(m).padStart(2, '0')}-01T00:00:00Z`;
 }
 
-// Numeric values get unitCode (UN/CEFACT) and/or a nested unitText Property from the schema annotations.
-function property(schema: LoadableSchema, row: Record<string, unknown>, col: string, value: unknown) {
-  const attr: Record<string, unknown> = { type: 'Property', value };
-  if (typeof value !== 'number') return attr;
+export interface Unit {
+  code?: string;
+  text?: string;
+}
+
+// Numeric values get a unit (UN/CEFACT code and/or text) from the schema annotations or the row's unit column.
+function unitOf(schema: LoadableSchema, row: Record<string, unknown>, col: string, value: unknown): Unit {
+  if (typeof value !== 'number') return {};
   const spec = schema.properties[col] ?? {};
   let code = spec['x-unit-code'];
   let text = spec['x-unit-text'];
@@ -61,6 +65,12 @@ function property(schema: LoadableSchema, row: Record<string, unknown>, col: str
     code = u?.code;
     text = u ? u.text : raw;
   }
+  return { code, text };
+}
+
+function property(schema: LoadableSchema, row: Record<string, unknown>, col: string, value: unknown) {
+  const attr: Record<string, unknown> = { type: 'Property', value };
+  const { code, text } = unitOf(schema, row, col, value);
   if (code) attr.unitCode = code;
   if (text) attr.unitText = { type: 'Property', value: text };
   return attr;
@@ -108,19 +118,71 @@ export function toEntity(
   return { id: `urn:ngsi-ld:${schema.name}:${key}`, type: schema.name, ...attrs };
 }
 
-// One observation of a subject entity (e.g. a Site): attribute names get the dimension values appended.
-export function toObservation(schema: LoadableSchema, row: Record<string, unknown>, at: string) {
+// Columns that become observation attributes; the rest identify the subject, time or dimension.
+export function observedColumns(schema: LoadableSchema) {
   const o = schema.observation!;
   const skip = new Set([o.subject!.column, ...Object.values(o.time), ...(o.dimensions ?? [])]);
   for (const p of Object.values(schema.properties)) if (p['x-unit-from']) skip.add(p['x-unit-from']);
-  const suffix = (o.dimensions ?? []).map((d) => slug(row[d])).join('_');
-  const attrs: Record<string, unknown> = {};
-  for (const [col, value] of Object.entries(row)) {
-    if (skip.has(col) || value === null) continue;
-    const base = schema.properties[col]?.['x-term'] ?? col;
-    attrs[suffix ? `${base}_${suffix}` : base] = valueAttr(schema, row, col, value);
+  return Object.keys(schema.properties).filter((c) => !skip.has(c));
+}
+
+export const observationTerm = (schema: LoadableSchema, col: string) =>
+  schema.properties[col]?.['x-term'] ?? col;
+
+export interface ObservedValue {
+  path: string[];
+  value: unknown;
+  unit: Unit;
+}
+
+// One CSV row of a subject entity (e.g. a Farm and year): one value per attribute at the row's dimension path (e.g. crop).
+export function toObservation(schema: LoadableSchema, row: Record<string, unknown>, at: string) {
+  const o = schema.observation!;
+  const path = (o.dimensions ?? []).map((d) => slug(row[d]));
+  const values: Record<string, ObservedValue> = {};
+  for (const col of observedColumns(schema)) {
+    const value = row[col];
+    if (value === null || value === undefined) continue;
+    values[observationTerm(schema, col)] = { path, value, unit: unitOf(schema, row, col, value) };
   }
-  return { id: urn(o.subject!.type, row[o.subject!.column]), attrs, at };
+  return { id: urn(o.subject!.type, row[o.subject!.column]), values, at };
+}
+
+const nest = (target: Record<string, unknown>, path: string[], leaf: unknown) => {
+  let node = target;
+  for (const k of path.slice(0, -1)) node = (node[k] ??= {}) as Record<string, unknown>;
+  node[path[path.length - 1]] = leaf;
+};
+
+// All rows of one subject and time collapse into one attribute: {pea: 7, carrots: 23}, nested per extra dimension.
+// A single unit is shared by the attribute; mixed units go into a unitText object shaped like the value.
+export function observedAttr(parts: ObservedValue[]) {
+  if (parts.length === 1 && parts[0].path.length === 0) {
+    const { value, unit } = parts[0];
+    const attr: Record<string, unknown> = { type: 'Property', value };
+    if (unit.code) attr.unitCode = unit.code;
+    if (unit.text) attr.unitText = { type: 'Property', value: unit.text };
+    return attr;
+  }
+  const value: Record<string, unknown> = {};
+  const texts: Record<string, unknown> = {};
+  const units = new Set<string>();
+  for (const p of parts) {
+    nest(value, p.path, p.value);
+    if (p.unit.code || p.unit.text) {
+      nest(texts, p.path, p.unit.text ?? p.unit.code);
+      units.add(`${p.unit.code ?? ''}|${p.unit.text ?? ''}`);
+    }
+  }
+  const attr: Record<string, unknown> = { type: 'Property', value };
+  const numeric = parts.filter((p) => typeof p.value === 'number').length;
+  const withUnit = parts.filter((p) => p.unit.code || p.unit.text).length;
+  if (units.size === 1 && withUnit === numeric) {
+    const { code, text } = parts.find((p) => p.unit.code || p.unit.text)!.unit;
+    if (code) attr.unitCode = code;
+    if (text) attr.unitText = { type: 'Property', value: text };
+  } else if (units.size > 0) attr.unitText = { type: 'Property', value: texts };
+  return attr;
 }
 
 export { stamp };

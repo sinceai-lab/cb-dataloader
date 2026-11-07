@@ -58,3 +58,5 @@ jspm_packages/
 # challenge brief
 Apetit_x_SinceAI_2026_Challenge_Brief_*
 
+# weather-aggregator debug log
+weather-aggregator/logs/

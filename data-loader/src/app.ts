@@ -6,10 +6,10 @@ import { detectSchema, loadSchemas } from './schemas.js';
 import { writeContexts } from './context.js';
 import { loadCsv } from './loader.js';
 
-export function createApp() {
+export async function createApp() {
   const schemas = loadSchemas();
   fs.mkdirSync(config.uploadsDir, { recursive: true });
-  writeContexts(schemas);
+  await writeContexts(schemas);
 
   const upload = multer({
     storage: multer.diskStorage({

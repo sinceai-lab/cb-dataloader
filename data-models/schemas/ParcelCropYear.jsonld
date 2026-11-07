@@ -7,6 +7,7 @@
     "crop": "https://apetit.sinceai2026.example/ns#crop",
     "catch_crop": "https://apetit.sinceai2026.example/ns#catch_crop",
     "crop_plan_status": "https://apetit.sinceai2026.example/ns#crop_plan_status",
+    "Parcel": "https://apetit.sinceai2026.example/ns#Parcel",
     "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
     "unitText": "https://apetit.sinceai2026.example/ns#unitText",
     "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",

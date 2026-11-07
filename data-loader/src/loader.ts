@@ -3,7 +3,15 @@ import crypto from 'node:crypto';
 import { parse } from 'fast-csv';
 import { config } from './config.js';
 import { upsert } from './coraine.js';
-import { coerceRow, observedAt, stamp, toEntity, toObservation } from './entity.js';
+import {
+  coerceRow,
+  observedAt,
+  observedAttr,
+  stamp,
+  toEntity,
+  toObservation,
+  type ObservedValue,
+} from './entity.js';
 import { sendAnomalies, type Anomaly } from './anomalies.js';
 import { writeLoadLog, type LoadLog } from './loadlog.js';
 import type { LoadableSchema } from './schemas.js';
@@ -58,7 +66,8 @@ export async function loadCsv(
   };
   const subject = !!schema.observation?.subject;
   const rowEntities: { entity: unknown; rows: number }[] = [];
-  const byEntity = new Map<string, Map<string, { attrs: Record<string, unknown>; rows: number }>>();
+  // Rows are grouped by subject and time (the files are not sorted by year), then written as one observation each.
+  const byEntity = new Map<string, Map<string, { values: Map<string, ObservedValue[]>; rows: number }>>();
   const seen = new Set<string>();
 
   try {
@@ -85,15 +94,16 @@ export async function loadCsv(
         continue;
       }
       const obs = toObservation(schema, row, at!);
-      const keys = Object.keys(obs.attrs).map((k) => `${obs.id}|${at}|${k}`);
+      const keys = Object.entries(obs.values).map(([t, v]) => `${obs.id}|${at}|${t}|${v.path.join('/')}`);
       if (keys.some((k) => seen.has(k))) {
         drop(raw, ['duplicate observation for subject, time and dimension']);
         continue;
       }
       keys.forEach((k) => seen.add(k));
       const times = byEntity.get(obs.id) ?? new Map();
-      const slot = times.get(at) ?? { attrs: {}, rows: 0 };
-      Object.assign(slot.attrs, obs.attrs);
+      const slot = times.get(at) ?? { values: new Map(), rows: 0 };
+      for (const [term, v] of Object.entries(obs.values))
+        slot.values.set(term, [...(slot.values.get(term) ?? []), v]);
       slot.rows++;
       times.set(at, slot);
       byEntity.set(obs.id, times);
@@ -109,9 +119,10 @@ export async function loadCsv(
         .filter((q) => k < q.list.length)
         .map((q) => {
           const [at, slot] = q.list[k];
-          stamp(slot.attrs, log.id, at);
+          const attrs = Object.fromEntries([...slot.values].map(([t, parts]) => [t, observedAttr(parts)]));
+          stamp(attrs, log.id, at);
           return {
-            entity: { id: q.id, type: schema.observation!.subject!.type, ...slot.attrs },
+            entity: { id: q.id, type: schema.observation!.subject!.type, ...attrs },
             rows: slot.rows,
           };
         });

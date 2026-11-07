@@ -8,7 +8,7 @@ import { loadCsv } from './loader.js';
 
 // No args: load every indexed CSV. Args: CSV paths (schema detected from the header) or schema names.
 const schemas = loadSchemas();
-writeContexts(schemas);
+await writeContexts(schemas);
 const loadedBy = process.env.LOADED_BY ?? os.userInfo().username;
 const args = process.argv.slice(2);
 const root = path.resolve(config.schemasDir, '..');
