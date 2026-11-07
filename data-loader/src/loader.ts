@@ -64,6 +64,7 @@ export async function loadCsv(
   const sendChunked = async (items: { entity: unknown; rows: number }[]) => {
     for (let i = 0; i < items.length; i += config.batchSize) await send(items.slice(i, i + config.batchSize));
   };
+  let flagged = 0;
   const subject = !!schema.observation?.subject;
   const rowEntities: { entity: unknown; rows: number }[] = [];
   // Rows are grouped by subject and time (the files are not sorted by year), then written as one observation each.
@@ -87,7 +88,18 @@ export async function loadCsv(
         continue;
       }
       if (!subject) {
-        rowEntities.push({ entity: toEntity(schema, row, log.id, at), rows: 1 });
+        const flags: string[] = [];
+        rowEntities.push({ entity: toEntity(schema, row, log.id, at, flags), rows: 1 });
+        if (flags.length) {
+          flagged++;
+          anomalies.push({
+            loadLogId: log.id,
+            schema: schema.name,
+            rowNumber: log.rowsRead,
+            errors: flags,
+            raw,
+          });
+        }
         if (rowEntities.length >= config.batchSize) {
           await sendChunked(rowEntities.splice(0));
         }
@@ -129,6 +141,8 @@ export async function loadCsv(
       await sendChunked(wave);
     }
     await sendAnomalies(anomalies);
+    if (flagged)
+      console.warn(`${schema.name}: ${flagged} rows hold a reference no target owns; kept as plain values`);
     log.loadStatus = 'complete';
   } catch (err) {
     log.loadStatus = 'failed';

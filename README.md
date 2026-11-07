@@ -74,6 +74,22 @@ LOADED_BY=jason ./services upload
 
 The viewer joins the `apetit_default` Docker network, so Coraine must be running first. Stop it with `cd data-viewer && ./services apetit stop`. Reload the data first if you ran `./services reset`.
 
+## Explore relationships with C3
+
+[C3](https://github.com/SEAMWARE/c3) (the coraine Control Center) draws entities as boxes and Relationships as arrows. It is Linux-only, so it runs as the `c3` service (built from pinned sources in `c3/`; the first build takes a few minutes).
+
+```
+docker compose up -d --build c3
+```
+
+Open http://localhost:7900 and go to **Explore**; the broker `http://coraine:1026` is already in the list, press **Connect**.
+
+- Tick the types to see (for example `Farm`, `Parcel`, `Catchment`) and press **Load**. Right-click an entity for its **linked entities** or its **neighbourhood**.
+- Relationship arrows exist for `Parcel` -> `Farm` / `Catchment`, `ErpPurchaseLine` -> `Site` / `Material` / `Supplier` or `Farm`, `Material` / `Shipment` -> `EmissionFactor` and `GooRegistryStatement` -> `Site`.
+- Entities with a location (Farm, ClimateGridCell) also show on **Map**; replayed weather updates show as live values.
+- A reference that no target owns (6 `Material` rows with `default_ef_id = FARM`) is kept as a plain value, not an arrow.
+- Coraine runs with `--defaultUserContext` (our `user-context.jsonld`) so C3, which sends no `@context`, sees short names, and with `--transports ws` for live values.
+
 ## Weather aggregator
 
 `weather-aggregator/` is a small Node service in the compose file. On start it (re)creates a subscription on `WeatherObserved` entities and writes every notification it receives to a debug log.

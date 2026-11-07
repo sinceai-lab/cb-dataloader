@@ -11,5 +11,7 @@ export const config = {
   schemasDir: path.resolve(here, '../../schemas'),
   uploadsDir: path.resolve(here, '../uploads'),
   contextDir: path.resolve(here, '../../data-models'),
+  // A Relationship column whose values may also belong to another schema (supplier_id holds farm ids).
+  altTargets: { 'ErpPurchaseLine.supplier_id': ['Farm'] } as Record<string, string[]>,
   batchSize: 500,
 };

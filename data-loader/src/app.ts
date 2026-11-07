@@ -4,12 +4,14 @@ import fs from 'node:fs';
 import { config } from './config.js';
 import { detectSchema, loadSchemas } from './schemas.js';
 import { writeContexts } from './context.js';
+import { loadKeys } from './refs.js';
 import { loadCsv } from './loader.js';
 
 export async function createApp() {
   const schemas = loadSchemas();
   fs.mkdirSync(config.uploadsDir, { recursive: true });
   await writeContexts(schemas);
+  await loadKeys(schemas);
 
   const upload = multer({
     storage: multer.diskStorage({

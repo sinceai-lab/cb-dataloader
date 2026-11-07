@@ -1,3 +1,4 @@
+import { targetType } from './refs.js';
 import type { LoadableSchema } from './schemas.js';
 
 // Reserved members and ngsi-ld-core-context v1.8 terms override ours, so those columns use their x-term.
@@ -77,12 +78,24 @@ function property(schema: LoadableSchema, row: Record<string, unknown>, col: str
 }
 
 // Joins become Relationships to the target URN; the source value is kept as a nested Property.
-function valueAttr(schema: LoadableSchema, row: Record<string, unknown>, col: string, value: unknown) {
+// A value no target owns stays a plain Property and is flagged, so no Relationship points at nothing.
+function valueAttr(
+  schema: LoadableSchema,
+  row: Record<string, unknown>,
+  col: string,
+  value: unknown,
+  flags: string[] = [],
+) {
   const rel = schema.relations.find((r) => r.column === col);
   if (!rel) return property(schema, row, col, value);
+  const target = targetType(schema.name, col, value, rel.target);
+  if (!target) {
+    flags.push(`${col}: no ${rel.target} with key ${String(value)}`);
+    return property(schema, row, col, value);
+  }
   return {
     type: 'Relationship',
-    object: urn(rel.target, value),
+    object: urn(target, value),
     originalValue: { type: 'Property', value },
   };
 }
@@ -100,12 +113,13 @@ export function toEntity(
   row: Record<string, unknown>,
   loadLogId: string,
   at?: string,
+  flags: string[] = [],
 ) {
   const key = schema.primaryKey.map((k) => String(row[k]).replace(/\s+/g, '_')).join(':');
   const attrs: Record<string, unknown> = {};
   for (const [col, value] of Object.entries(row)) {
     if (value !== null)
-      attrs[attrName(col, schema.properties[col]?.['x-term'])] = valueAttr(schema, row, col, value);
+      attrs[attrName(col, schema.properties[col]?.['x-term'])] = valueAttr(schema, row, col, value, flags);
   }
   const { lat, lon } = row;
   if (typeof lat === 'number' && typeof lon === 'number' && Math.abs(lat) <= 90 && Math.abs(lon) <= 180) {
@@ -123,7 +137,10 @@ export function observedColumns(schema: LoadableSchema) {
   const o = schema.observation!;
   const skip = new Set([o.subject!.column, ...Object.values(o.time), ...(o.dimensions ?? [])]);
   for (const p of Object.values(schema.properties)) if (p['x-unit-from']) skip.add(p['x-unit-from']);
-  return Object.keys(schema.properties).filter((c) => !skip.has(c));
+  const inherited = o.inherited ?? new Set<string>();
+  return Object.keys(schema.properties).filter(
+    (c) => !skip.has(c) && !inherited.has(schema.properties[c]?.['x-term'] ?? c),
+  );
 }
 
 export const observationTerm = (schema: LoadableSchema, col: string) =>

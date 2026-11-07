@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { writeContexts } from './context.js';
+import { loadKeys } from './refs.js';
 import { config } from './config.js';
 import { detectSchema, loadSchemas } from './schemas.js';
 import { loadCsv } from './loader.js';
@@ -9,6 +10,7 @@ import { loadCsv } from './loader.js';
 // No args: load every indexed CSV. Args: CSV paths (schema detected from the header) or schema names.
 const schemas = loadSchemas();
 await writeContexts(schemas);
+await loadKeys(schemas);
 const loadedBy = process.env.LOADED_BY ?? os.userInfo().username;
 const args = process.argv.slice(2);
 const root = path.resolve(config.schemasDir, '..');

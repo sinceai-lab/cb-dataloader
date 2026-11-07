@@ -35,6 +35,10 @@ services:
       - --apiPlugins
       - admin
       - --distributed
+      - --transports
+      - ws
+      - --defaultUserContext
+      - http://context/user-context.jsonld
 
   # Serves the JSON-LD @context files; Coraine fetches http://context/user-context.jsonld
   context:
@@ -174,7 +178,22 @@ services:
     volumes:
       - ./weather-aggregator/logs:/app/logs
 
+  c3:
+    build: ./c3
+    hostname: c3
+    container_name: apetit-c3
+    depends_on:
+      coraine:
+        condition: service_started
+    ports:
+      - "${C3_PORT}:7900"
+    environment:
+      - BROKER_URL=http://coraine:1026
+    volumes:
+      - c3-config:/root/.config/c3
+
 volumes:
   mongo-db:
   mongo-config:
   timescale-db:
+  c3-config:

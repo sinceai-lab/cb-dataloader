@@ -3,6 +3,7 @@ import path from 'node:path';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { config } from './config.js';
+import { attrName } from './entity.js';
 
 export interface PropSpec {
   type?: string | string[];
@@ -16,6 +17,8 @@ export interface Observation {
   subject?: { column: string; type: string };
   time: { year?: string; month?: string; date?: string };
   dimensions?: string[];
+  // Attribute names the subject's own schema defines; an observation must not overwrite them.
+  inherited?: Set<string>;
 }
 
 export type UnitMap = Record<string, { code?: string; text?: string }>;
@@ -78,6 +81,13 @@ export function loadSchemas(): Map<string, LoadableSchema> {
       validate: (row) => validate(row) as boolean,
       errors: () => (validate.errors ?? []).map((e) => `${e.instancePath || '/'} ${e.message}`),
     });
+  }
+  for (const s of out.values()) {
+    const base = s.observation?.subject && out.get(s.observation.subject.type);
+    if (base)
+      s.observation!.inherited = new Set(
+        Object.entries(base.properties).map(([c, p]) => attrName(c, p['x-term'])),
+      );
   }
   return out;
 }
