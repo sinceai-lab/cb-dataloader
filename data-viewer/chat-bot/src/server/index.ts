@@ -1,0 +1,179 @@
+import { fileURLToPath } from 'node:url';
+import express from 'express';
+import session from 'express-session';
+import { config } from './config.js';
+import { registerAuthRoutes, requireAuth } from './auth.js';
+import { closeSession, getSession, type McpSession } from './mcp-pool.js';
+import { callTool, findOntology, readResourceText } from './mcp.js';
+import { buildRegistry } from './llm/registry.js';
+import { runAgent } from './agent.js';
+import type { McpToolDef, Msg } from '../shared/types.js';
+
+const registry = buildRegistry();
+
+// MCP resources are not tools, so bridge the ontology schemas into callable tools.
+const DATA_MODEL_TOOLS: McpToolDef[] = [
+  {
+    name: 'list_data_models',
+    description:
+      'List every NGSI-LD data model (ontology schema) available, with its URI. Use to discover which entity types have a documented model.',
+    inputSchema: { type: 'object', properties: {} },
+  },
+  {
+    name: 'read_data_model',
+    description:
+      'Read the NGSI-LD data model (ontology schema) for an entity type — the attributes and relationships the type is DESIGNED to carry, which may differ from what is currently populated on the broker. Use for questions about what the farm model supports (e.g. "is animal lineage tracked?", "what attributes can a Parcel have?"). Pass an entity type name like "Animal", or a full ontology:// URI.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        type: { type: 'string', description: 'Entity type name (e.g. "Animal") or an ontology:// URI' },
+      },
+      required: ['type'],
+    },
+  },
+];
+
+// The MCP server hides tools a caller's roles do not allow, so the tool list belongs
+// to the signed-in user, not to the process.
+function agentTools(mcp: McpSession): McpToolDef[] {
+  return [...mcp.toolDefs, ...DATA_MODEL_TOOLS];
+}
+
+function toolCaller(mcp: McpSession) {
+  return async (
+    name: string,
+    args: Record<string, unknown>,
+  ): Promise<{ content: string; isError: boolean }> => {
+    if (name === 'list_data_models') {
+      return {
+        content: mcp.resourceDefs
+          .filter((r) => r.uri.startsWith('ontology://'))
+          .map((r) => `${r.uri}${r.name ? ` — ${r.name}` : ''}`)
+          .join('\n'),
+        isError: false,
+      };
+    }
+    if (name === 'read_data_model') {
+      const q = String((args as { type?: string }).type ?? '').trim();
+      if (!q) return { content: 'type is required', isError: true };
+      const hit = q.startsWith('ontology://')
+        ? { uri: q, text: await readResourceText(mcp.client, q).catch((e) => String(e)) }
+        : await findOntology(mcp.client, q);
+      return hit && hit.text
+        ? { content: `# ${hit.uri}\n\n${hit.text}`, isError: false }
+        : { content: `No data model found for "${q}". Try list_data_models.`, isError: true };
+    }
+    return callTool(mcp.client, name, args);
+  };
+}
+
+console.log(
+  `chat-bot: auth ${config.authEnabled ? 'on' : 'off'}, MCP at ${config.mcpUrl}, providers [${registry
+    .all()
+    .map((p) => p.id)
+    .join(', ')}], selected default ${registry.defaultId}${process.env.PROVIDER ? ` (PROVIDER=${process.env.PROVIDER})` : ''}`,
+);
+
+for (const p of registry.all()) {
+  p.defaultModel().then(
+    (m) => console.log(`chat-bot: ${p.id}${p.id === registry.defaultId ? ' (selected default)' : ''} -> ${m}`),
+    (e) => console.error(`chat-bot: ${p.id} has no usable default model:`, e instanceof Error ? e.message : e),
+  );
+}
+
+const app = express();
+app.use(express.json({ limit: '1mb' }));
+app.use(
+  session({
+    secret: config.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, sameSite: 'lax' },
+  }),
+);
+
+registerAuthRoutes(app, closeSession);
+
+app.get('/api/providers', requireAuth, async (_req, res) => {
+  const providers = await Promise.all(
+    registry.all().map(async (p) => ({
+      id: p.id,
+      models: await p.listModels().catch(() => []),
+      default: await p.defaultModel().catch(() => undefined),
+    })),
+  );
+  res.json({ providers, default: registry.defaultId });
+});
+
+app.get('/api/prompts', requireAuth, async (req, res) => {
+  try {
+    const mcp = await getSession(req);
+    const { prompts } = await mcp.client.listPrompts();
+    res.json({ prompts });
+  } catch {
+    res.json({ prompts: [] });
+  }
+});
+
+app.post('/api/chat', requireAuth, async (req, res) => {
+  const { messages, provider: providerId, model } = req.body as {
+    messages: Msg[];
+    provider?: string;
+    model?: string;
+  };
+  const provider = registry.get(providerId);
+  if (!provider) {
+    res.status(400).json({ error: `unknown provider: ${providerId}` });
+    return;
+  }
+
+  let mcp: McpSession;
+  try {
+    mcp = await getSession(req);
+  } catch (e) {
+    console.error('chat: MCP session failed:', e);
+    res.status(401).json({ error: String(e) });
+    return;
+  }
+
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  const send = (e: unknown) => res.write(`data: ${JSON.stringify(e)}\n\n`);
+
+  const tools = agentTools(mcp);
+  console.log(
+    `chat: provider=${provider.id} model=${model ?? 'default'} messages=${messages?.length ?? 0} ` +
+      `system=${mcp.systemPrompt.length} chars, tools=${tools.length} (${JSON.stringify(tools).length} chars)`,
+  );
+  const calls = new Map<string, string>();
+  try {
+    for await (const ev of runAgent({
+      provider,
+      model,
+      system: mcp.systemPrompt,
+      tools,
+      history: messages ?? [],
+      callTool: toolCaller(mcp),
+      lookupOntology: (type) => findOntology(mcp.client, type),
+    })) {
+      if (ev.t === 'error') console.error('chat: agent error:', ev.message);
+      else if (ev.t === 'tool_call') calls.set(ev.call.id, `${ev.call.name} ${JSON.stringify(ev.call.args)}`);
+      else if (ev.t === 'tool_result' && ev.result.isError) {
+        console.error(`chat: tool error ${calls.get(ev.result.id) ?? ev.result.id}:`, ev.result.content.slice(0, 500));
+      }
+      send(ev);
+    }
+  } catch (e) {
+    console.error(`chat: ${provider.id} failed:`, e);
+    send({ t: 'error', message: String(e) });
+  }
+  send({ t: 'end' });
+  res.end();
+});
+
+const webDir = fileURLToPath(new URL('../web', import.meta.url));
+app.use(express.static(webDir));
+app.get('*', (_req, res) => res.sendFile(`${webDir}/index.html`));
+
+app.listen(config.port, () => console.log(`chat-bot listening on :${config.port}`));
