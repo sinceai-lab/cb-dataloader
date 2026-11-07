@@ -23,7 +23,7 @@ there should be an equivalent for windows. for example
 ## First-time setup
 
 ```
-cd cb-data-loader && npm install
+cd cb-dataloader && npm install
 ```
 
 ## Start
