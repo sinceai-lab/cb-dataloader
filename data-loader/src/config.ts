@@ -8,6 +8,8 @@ export const config = {
   coraineUrl: process.env.CORAINE_URL ?? `http://localhost:${process.env.CORAINE_PORT ?? 1026}`,
   contextBase: process.env.CONTEXT_BASE ?? 'http://context',
   vocab: 'https://apetit.sinceai2026.example/ns#',
+  // Folder holding the CSVs (the one containing 00_apetit_original ... 07_frameworks).
+  dataDir: path.resolve(process.env.DATA_DIR ?? path.join(here, '../../raw-data/data')),
   schemasDir: path.resolve(here, '../../schemas'),
   uploadsDir: path.resolve(here, '../uploads'),
   contextDir: path.resolve(here, '../../data-models'),

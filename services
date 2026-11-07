@@ -4,7 +4,7 @@
 set -eo pipefail
 cd "$(dirname "$0")"
 
-USAGE="usage: services [start [coraine]|stop|reset|status|upload [Schema...]|clear-uploads]"
+USAGE="usage: services [start [coraine]|stop|reset|status|upload [Schema...]|subscribe-inference [--dry-run]|clear-uploads]"
 set -a; source .env; set +a
 NETWORK="${COMPOSE_PROJECT_NAME}_default"
 
@@ -69,6 +69,7 @@ case "${1:-}" in
 		;;
 	upload)
 		shift
+		if [ -n "${DATA_DIR:-}" ] && [ -d "$DATA_DIR" ]; then DATA_DIR="$(cd "$DATA_DIR" && pwd)"; export DATA_DIR; fi
 		args=()
 		for a in "$@"; do
 			if [ -e "$a" ]; then a="$(cd "$(dirname "$a")" && pwd)/$(basename "$a")"; fi
@@ -76,6 +77,10 @@ case "${1:-}" in
 		done
 		(cd data-loader && npm run --silent load -- "${args[@]}")
 		(cd data-loader && npm run --silent prettier >/dev/null)
+		;;
+	subscribe-inference)
+		shift
+		(cd data-loader && npm run --silent subscribe:inference -- "$@")
 		;;
 	clear-uploads)
 		find data-loader/uploads -mindepth 1 -not -name '.gitkeep' -delete

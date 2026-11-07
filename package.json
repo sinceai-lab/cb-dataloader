@@ -2,5 +2,14 @@
   "name": "cb-dataloader",
   "lockfileVersion": 2,
   "requires": true,
-  "packages": {}
+  "packages": {},
+  "dependencies": {
+    "tsx": "^4.23.15",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "express": "^5.3.0",
+    "fast-csv": "^5.0.8",
+    "hyparquet": "^1.32.0",
+    "multer": "^2.5.0"
+  }
 }

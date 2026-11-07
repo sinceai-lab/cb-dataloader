@@ -1,9 +1,9 @@
 {
-  "description": "Index of data-upload schemas for raw-data/data. Primary keys and foreign-key relationships.",
+  "description": "Index of data-upload schemas for ../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data. Primary keys and foreign-key relationships.",
   "schemas": [
     {
       "schema": "Site.json",
-      "source": "raw-data/data/01_master/sites.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/sites.csv",
       "rows": 5,
       "primaryKey": [
         "site_id"
@@ -11,7 +11,7 @@
     },
     {
       "schema": "Material.json",
-      "source": "raw-data/data/01_master/materials.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/materials.csv",
       "rows": 48,
       "primaryKey": [
         "material_id"
@@ -19,7 +19,7 @@
     },
     {
       "schema": "Supplier.json",
-      "source": "raw-data/data/01_master/suppliers.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/suppliers.csv",
       "rows": 86,
       "primaryKey": [
         "supplier_id"
@@ -27,7 +27,7 @@
     },
     {
       "schema": "EmissionFactor.json",
-      "source": "raw-data/data/01_master/emission_factor_library.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/emission_factor_library.csv",
       "rows": 84,
       "primaryKey": [
         "ef_id"
@@ -35,7 +35,7 @@
     },
     {
       "schema": "Farm.json",
-      "source": "raw-data/data/01_master/farm_registry.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/farm_registry.csv",
       "rows": 680,
       "primaryKey": [
         "farm_id"
@@ -43,7 +43,7 @@
     },
     {
       "schema": "Parcel.json",
-      "source": "raw-data/data/01_master/parcels.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/parcels.csv",
       "rows": 14213,
       "primaryKey": [
         "parcel_id"
@@ -51,7 +51,7 @@
     },
     {
       "schema": "ClimateGridCell.json",
-      "source": "raw-data/data/01_master/climate_grid_cells.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/01_master/climate_grid_cells.csv",
       "rows": 84,
       "primaryKey": [
         "cell_id"
@@ -59,7 +59,7 @@
     },
     {
       "schema": "ErpPurchaseLine.json",
-      "source": "raw-data/data/02_raw_feeds/erp_purchase_lines_2021_2025.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/erp_purchase_lines_2021_2025.csv",
       "rows": 7427,
       "primaryKey": [
         "doc_no",
@@ -68,7 +68,7 @@
     },
     {
       "schema": "EnergyMeterReading.json",
-      "source": "raw-data/data/02_raw_feeds/energy_meter_readings.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/energy_meter_readings.csv",
       "rows": 610,
       "primaryKey": [
         "site_id",
@@ -79,7 +79,7 @@
     },
     {
       "schema": "FuelDelivery.json",
-      "source": "raw-data/data/02_raw_feeds/fuel_deliveries.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/fuel_deliveries.csv",
       "rows": 263,
       "primaryKey": [
         "delivery_id"
@@ -87,7 +87,7 @@
     },
     {
       "schema": "FuelStockChange.json",
-      "source": "raw-data/data/02_raw_feeds/fuel_stock_changes.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/fuel_stock_changes.csv",
       "rows": 27,
       "primaryKey": [
         "site_id",
@@ -97,7 +97,7 @@
     },
     {
       "schema": "GooCancellation.json",
-      "source": "raw-data/data/02_raw_feeds/goo_cancellations.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/goo_cancellations.csv",
       "rows": 19,
       "primaryKey": [
         "site_id",
@@ -106,7 +106,7 @@
     },
     {
       "schema": "GooRegistryStatement.json",
-      "source": "raw-data/data/02_raw_feeds/goo_registry_statement.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/goo_registry_statement.csv",
       "rows": 55,
       "primaryKey": [
         "cancellation_id"
@@ -114,7 +114,7 @@
     },
     {
       "schema": "HeatSupplierFactor.json",
-      "source": "raw-data/data/02_raw_feeds/heat_supplier_factors.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/heat_supplier_factors.csv",
       "rows": 13,
       "primaryKey": [
         "site_id",
@@ -123,7 +123,7 @@
     },
     {
       "schema": "RefrigerantServiceEvent.json",
-      "source": "raw-data/data/02_raw_feeds/refrigerant_service_log.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/refrigerant_service_log.csv",
       "rows": 84,
       "primaryKey": [
         "event_id"
@@ -131,7 +131,7 @@
     },
     {
       "schema": "WasteTransferNote.json",
-      "source": "raw-data/data/02_raw_feeds/waste_transfer_notes.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/waste_transfer_notes.csv",
       "rows": 1008,
       "primaryKey": [
         "transfer_note"
@@ -139,7 +139,7 @@
     },
     {
       "schema": "WastewaterThirdParty.json",
-      "source": "raw-data/data/02_raw_feeds/wastewater_third_party.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/wastewater_third_party.csv",
       "rows": 22,
       "primaryKey": [
         "site_id",
@@ -148,7 +148,7 @@
     },
     {
       "schema": "WaterBalance.json",
-      "source": "raw-data/data/02_raw_feeds/water_balance.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/water_balance.csv",
       "rows": 100,
       "primaryKey": [
         "site_id",
@@ -159,7 +159,7 @@
     },
     {
       "schema": "TravelBooking.json",
-      "source": "raw-data/data/02_raw_feeds/travel_bookings.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/travel_bookings.csv",
       "rows": 3532,
       "primaryKey": [
         "booking_id"
@@ -167,7 +167,7 @@
     },
     {
       "schema": "CommutingSurveyResponse.json",
-      "source": "raw-data/data/02_raw_feeds/commuting_survey_2025.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/commuting_survey_2025.csv",
       "rows": 208,
       "primaryKey": [
         "response_id"
@@ -175,7 +175,7 @@
     },
     {
       "schema": "Headcount.json",
-      "source": "raw-data/data/02_raw_feeds/headcount.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/headcount.csv",
       "rows": 29,
       "primaryKey": [
         "year",
@@ -184,7 +184,7 @@
     },
     {
       "schema": "Shipment.json",
-      "source": "raw-data/data/02_raw_feeds/shipments.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/shipments.csv",
       "rows": 11617,
       "primaryKey": [
         "shipment_id"
@@ -192,7 +192,7 @@
     },
     {
       "schema": "FrozenWarehousing.json",
-      "source": "raw-data/data/02_raw_feeds/frozen_warehousing.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/frozen_warehousing.csv",
       "rows": 5,
       "primaryKey": [
         "year"
@@ -200,7 +200,7 @@
     },
     {
       "schema": "SalesVolume.json",
-      "source": "raw-data/data/02_raw_feeds/sales_volumes.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/sales_volumes.csv",
       "rows": 1440,
       "primaryKey": [
         "year",
@@ -212,7 +212,7 @@
     },
     {
       "schema": "CapexProject.json",
-      "source": "raw-data/data/02_raw_feeds/capex_projects.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/capex_projects.csv",
       "rows": 15,
       "primaryKey": [
         "year",
@@ -222,7 +222,7 @@
     },
     {
       "schema": "FarmSurveyFi.json",
-      "source": "raw-data/data/03_farming/farm_survey_fi.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/03_farming/farm_survey_fi.csv",
       "rows": 3437,
       "primaryKey": [
         "survey_id"
@@ -230,7 +230,7 @@
     },
     {
       "schema": "FoodhillsGrowerData.json",
-      "source": "raw-data/data/03_farming/foodhills_odlingsdata_se.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/03_farming/foodhills_odlingsdata_se.csv",
       "rows": 2683,
       "primaryKey": [
         "odlar_id",
@@ -240,7 +240,7 @@
     },
     {
       "schema": "ParcelCropYear.json",
-      "source": "raw-data/data/03_farming/parcel_crop_history_and_plan.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/03_farming/parcel_crop_history_and_plan.csv",
       "rows": 284260,
       "primaryKey": [
         "parcel_id",
@@ -249,7 +249,7 @@
     },
     {
       "schema": "CurrentCalculatorFootprint.json",
-      "source": "raw-data/data/03_farming/current_calculator_footprints.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/03_farming/current_calculator_footprints.csv",
       "rows": 3437,
       "primaryKey": [
         "farm_id",
@@ -259,7 +259,7 @@
     },
     {
       "schema": "WeatherMonthly.json",
-      "source": "raw-data/data/04_climate/weather_monthly_1991_2060.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/weather_monthly_1991_2060.csv",
       "rows": 139104,
       "primaryKey": [
         "cell_id",
@@ -270,7 +270,7 @@
     },
     {
       "schema": "ClimateChangeSignal.json",
-      "source": "raw-data/data/04_climate/climate_change_signals.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/climate_change_signals.csv",
       "rows": 36,
       "primaryKey": [
         "scenario",
@@ -279,7 +279,7 @@
     },
     {
       "schema": "TransitionScenario.json",
-      "source": "raw-data/data/05_scenarios/transition_scenarios.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/transition_scenarios.csv",
       "rows": 49,
       "primaryKey": [
         "scenario",
@@ -288,7 +288,7 @@
     },
     {
       "schema": "DecarbonisationLever.json",
-      "source": "raw-data/data/05_scenarios/decarbonisation_levers.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/decarbonisation_levers.csv",
       "rows": 30,
       "primaryKey": [
         "lever_id"
@@ -296,7 +296,7 @@
     },
     {
       "schema": "StructuralEvent.json",
-      "source": "raw-data/data/05_scenarios/structural_events.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/structural_events.csv",
       "rows": 12,
       "primaryKey": [
         "date",
@@ -305,7 +305,7 @@
     },
     {
       "schema": "PublishedInventoryYear.json",
-      "source": "raw-data/data/05_scenarios/published_inventory_history.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/published_inventory_history.csv",
       "rows": 5,
       "primaryKey": [
         "year"
@@ -313,7 +313,7 @@
     },
     {
       "schema": "DraftReportLine.json",
-      "source": "raw-data/data/05_scenarios/draft_report_summary_2025.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/draft_report_summary_2025.csv",
       "rows": 4,
       "primaryKey": [
         "year",
@@ -322,7 +322,7 @@
     },
     {
       "schema": "ContractPrice.json",
-      "source": "raw-data/data/05_scenarios/contract_prices_and_replacement_premiums.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/05_scenarios/contract_prices_and_replacement_premiums.csv",
       "rows": 54,
       "primaryKey": [
         "year",
@@ -331,7 +331,7 @@
     },
     {
       "schema": "Catchment.json",
-      "source": "raw-data/data/06_nature/catchments.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/06_nature/catchments.csv",
       "rows": 42,
       "primaryKey": [
         "catchment_id"
@@ -339,7 +339,7 @@
     },
     {
       "schema": "MonitoredCatchmentLoad.json",
-      "source": "raw-data/data/06_nature/monitored_catchment_loads.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/06_nature/monitored_catchment_loads.csv",
       "rows": 105,
       "primaryKey": [
         "catchment_id",
@@ -348,7 +348,7 @@
     },
     {
       "schema": "OriginStateOfNature.json",
-      "source": "raw-data/data/06_nature/origin_state_of_nature_indicative.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/06_nature/origin_state_of_nature_indicative.csv",
       "rows": 17,
       "primaryKey": [
         "origin_country",
@@ -357,7 +357,7 @@
     },
     {
       "schema": "SourceRegistryEntry.json",
-      "source": "raw-data/data/07_frameworks/source_registry.csv",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/07_frameworks/source_registry.csv",
       "rows": 36,
       "primaryKey": [
         "source"
@@ -365,7 +365,7 @@
     },
     {
       "schema": "SupplierPcf.json",
-      "source": "raw-data/data/02_raw_feeds/supplier_pcfs/*.json",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/02_raw_feeds/supplier_pcfs/*.json",
       "rows": 44,
       "primaryKey": [
         "supplier",
@@ -375,7 +375,7 @@
     },
     {
       "schema": "ParcelGeometry.json",
-      "source": "raw-data/data/06_nature/parcels.geojson",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/06_nature/parcels.geojson",
       "rows": 14213,
       "primaryKey": [
         "parcel_id"
@@ -383,7 +383,7 @@
     },
     {
       "schema": "CatchmentGeometry.json",
-      "source": "raw-data/data/06_nature/catchments.geojson",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/06_nature/catchments.geojson",
       "rows": 42,
       "primaryKey": [
         "catchment_id"
@@ -391,7 +391,7 @@
     },
     {
       "schema": "WeatherDaily.json",
-      "source": "raw-data/data/04_climate/weather_daily_1991_2060.parquet",
+      "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/weather_daily_1991_2060.parquet",
       "primaryKey": [
         "cell_id",
         "date",

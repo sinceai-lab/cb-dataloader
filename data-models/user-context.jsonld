@@ -343,7 +343,25 @@
     "dateObserved": "https://apetit.sinceai2026.example/ns#dateObserved",
     "temperature": "https://apetit.sinceai2026.example/ns#temperature",
     "temperatureMax": "https://apetit.sinceai2026.example/ns#temperatureMax",
+    "temperatureMin": "https://apetit.sinceai2026.example/ns#temperatureMin",
+    "climateScenario": "https://apetit.sinceai2026.example/ns#climateScenario",
     "precipitation": "https://apetit.sinceai2026.example/ns#precipitation",
-    "referenceEvapotranspiration": "https://apetit.sinceai2026.example/ns#referenceEvapotranspiration"
+    "referenceEvapotranspiration": "https://apetit.sinceai2026.example/ns#referenceEvapotranspiration",
+    "YieldPrediction": "https://apetit.sinceai2026.example/ns#YieldPrediction",
+    "refParcel": "https://apetit.sinceai2026.example/ns#refParcel",
+    "refGridCell": "https://apetit.sinceai2026.example/ns#refGridCell",
+    "cropName": "https://apetit.sinceai2026.example/ns#cropName",
+    "seasonYear": "https://apetit.sinceai2026.example/ns#seasonYear",
+    "predictionLabel": "https://apetit.sinceai2026.example/ns#predictionLabel",
+    "estimatedYield": "https://apetit.sinceai2026.example/ns#estimatedYield",
+    "baselineYield": "https://apetit.sinceai2026.example/ns#baselineYield",
+    "modelName": "https://apetit.sinceai2026.example/ns#modelName",
+    "modelVersion": "https://apetit.sinceai2026.example/ns#modelVersion",
+    "observedDays": "https://apetit.sinceai2026.example/ns#observedDays",
+    "filledDays": "https://apetit.sinceai2026.example/ns#filledDays",
+    "filledGapDays": "https://apetit.sinceai2026.example/ns#filledGapDays",
+    "filledFutureDays": "https://apetit.sinceai2026.example/ns#filledFutureDays",
+    "asOfDate": "https://apetit.sinceai2026.example/ns#asOfDate",
+    "computedAt": "https://apetit.sinceai2026.example/ns#computedAt"
   }
 }
