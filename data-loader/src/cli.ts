@@ -12,6 +12,7 @@ writeContexts(schemas);
 const loadedBy = process.env.LOADED_BY ?? os.userInfo().username;
 const args = process.argv.slice(2);
 const root = path.resolve(config.schemasDir, '..');
+fs.mkdirSync(config.uploadsDir, { recursive: true });
 
 const jobs: { name?: string; src: string }[] = args.length
   ? args.map((a) =>

@@ -1,0 +1,3006 @@
+{
+  "info": {
+    "name": "Apetit NGSI-LD Data",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "coraine",
+      "value": "http://localhost:1026",
+      "description": "Direct to Coraine. Via APISIX: http://localhost:1030/coraine plus a Bearer token (Auth folder)."
+    },
+    {
+      "key": "keycloak",
+      "value": "http://localhost:3005"
+    },
+    {
+      "key": "context",
+      "value": "http://context",
+      "description": "Resolved by Coraine inside the compose network; host port 3004 is for browsers only."
+    },
+    {
+      "key": "tenant",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "type",
+      "value": "Farm"
+    },
+    {
+      "key": "attribute",
+      "value": "farm_id"
+    },
+    {
+      "key": "entity_id",
+      "value": "urn:ngsi-ld:Farm:F0001"
+    },
+    {
+      "key": "material_id",
+      "value": "M101"
+    },
+    {
+      "key": "supplier_id",
+      "value": "SUP002"
+    },
+    {
+      "key": "ef_id",
+      "value": "FARM"
+    },
+    {
+      "key": "catchment_id",
+      "value": "urn:ngsi-ld:Catchment:CA28"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth (APISIX only)",
+      "item": [
+        {
+          "name": "Get token (client credentials)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('token', pm.response.json().access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "description": "Only needed via APISIX; then set the collection Authorization to Bearer {{token}}.",
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                },
+                {
+                  "key": "client_id",
+                  "value": "ngsi-ld-farm"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "1234"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak}}/realms/farm-management/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak}}"
+              ],
+              "path": [
+                "realms",
+                "farm-management",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Discovery (types and attributes)",
+      "item": [
+        {
+          "name": "List entity types",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/types",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "types"
+              ],
+              "query": []
+            },
+            "description": "Start here: every type with entity count."
+          }
+        },
+        {
+          "name": "List entity types (details)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/types?details=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "types"
+              ],
+              "query": [
+                {
+                  "key": "details",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Describe a type {{type}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/types/{{type}}",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "types",
+                "{{type}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "List attributes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/attributes",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "attributes"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "List attributes (details)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/attributes?details=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "attributes"
+              ],
+              "query": [
+                {
+                  "key": "details",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Describe an attribute",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/attributes/{{attribute}}",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "attributes",
+                "{{attribute}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "Count entities of {{type}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type={{type}}&limit=0&count=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "{{type}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "0"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Entities by type",
+      "item": [
+        {
+          "name": "List Catchment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Catchment.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Catchment&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Catchment"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List ClimateChangeSignal",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ClimateChangeSignal.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ClimateChangeSignal&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ClimateChangeSignal"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List ClimateGridCell",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ClimateGridCell.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ClimateGridCell&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ClimateGridCell"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List CommutingSurveyResponse",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/CommutingSurveyResponse.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=CommutingSurveyResponse&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "CommutingSurveyResponse"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List ContractPrice",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ContractPrice.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ContractPrice&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ContractPrice"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List DecarbonisationLever",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/DecarbonisationLever.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=DecarbonisationLever&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "DecarbonisationLever"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List DraftReportLine",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/DraftReportLine.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=DraftReportLine&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "DraftReportLine"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List EmissionFactor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/EmissionFactor.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=EmissionFactor&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "EmissionFactor"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List ErpPurchaseLine",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ErpPurchaseLine.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ErpPurchaseLine&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ErpPurchaseLine"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Farm",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Farm.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Farm&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Farm"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List FrozenWarehousing",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/FrozenWarehousing.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=FrozenWarehousing&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "FrozenWarehousing"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List FuelDelivery",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/FuelDelivery.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=FuelDelivery&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "FuelDelivery"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List FuelStockChange",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/FuelStockChange.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=FuelStockChange&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "FuelStockChange"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List GooRegistryStatement",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/GooRegistryStatement.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=GooRegistryStatement&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "GooRegistryStatement"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Material",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Material.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Material&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Material"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List OriginStateOfNature",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/OriginStateOfNature.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=OriginStateOfNature&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "OriginStateOfNature"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Parcel",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Parcel&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Parcel"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List PublishedInventoryYear",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/PublishedInventoryYear.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=PublishedInventoryYear&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "PublishedInventoryYear"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List RefrigerantServiceEvent",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/RefrigerantServiceEvent.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=RefrigerantServiceEvent&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "RefrigerantServiceEvent"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Shipment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Shipment.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Shipment&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Shipment"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Site",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Site.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Site&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Site"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List SourceRegistryEntry",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/SourceRegistryEntry.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=SourceRegistryEntry&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "SourceRegistryEntry"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List StructuralEvent",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/StructuralEvent.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=StructuralEvent&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "StructuralEvent"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Supplier",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Supplier.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Supplier&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Supplier"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List SupplierPcf",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=SupplierPcf&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "SupplierPcf"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List TransitionScenario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/TransitionScenario.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=TransitionScenario&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "TransitionScenario"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List TravelBooking",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/TravelBooking.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=TravelBooking&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "TravelBooking"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List WasteTransferNote",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/WasteTransferNote.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=WasteTransferNote&limit=20&count=true&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "WasteTransferNote"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Entity reads and queries",
+      "item": [
+        {
+          "name": "Get entity by id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/{{entity_id}}?options=sysAttrs",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "{{entity_id}}"
+              ],
+              "query": [
+                {
+                  "key": "options",
+                  "value": "sysAttrs"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get entity (simplified)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/{{entity_id}}?format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "{{entity_id}}"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get selected attributes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/{{entity_id}}?attrs={{attribute}}",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "{{entity_id}}"
+              ],
+              "query": [
+                {
+                  "key": "attrs",
+                  "value": "{{attribute}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List by type with filter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Parcel&q=area_ha>5;buffer_strip==false&format=simplified&limit=20&count=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Parcel"
+                },
+                {
+                  "key": "q",
+                  "value": "area_ha>5;buffer_strip==false"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List by id prefix (idPattern)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Farm.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?idPattern=urn:ngsi-ld:Farm:F00.*&type=Farm&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "idPattern",
+                  "value": "urn:ngsi-ld:Farm:F00.*"
+                },
+                {
+                  "key": "type",
+                  "value": "Farm"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sites near a point",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Site.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/geo+json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Site&georel=near;maxDistance==200000&geometry=Point&coordinates=[22.25,61.08]&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Site"
+                },
+                {
+                  "key": "georel",
+                  "value": "near;maxDistance==200000"
+                },
+                {
+                  "key": "geometry",
+                  "value": "Point"
+                },
+                {
+                  "key": "coordinates",
+                  "value": "[22.25,61.08]"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Farms near a point",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Farm.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/geo+json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Farm&georel=near;maxDistance==25000&geometry=Point&coordinates=[22.5,61.0]&format=simplified&limit=50",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Farm"
+                },
+                {
+                  "key": "georel",
+                  "value": "near;maxDistance==25000"
+                },
+                {
+                  "key": "geometry",
+                  "value": "Point"
+                },
+                {
+                  "key": "coordinates",
+                  "value": "[22.5,61.0]"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Relationships",
+      "item": [
+        {
+          "name": "Parcels of a Farm",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Parcel&q=farm_id==\"F0001\"&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Parcel"
+                },
+                {
+                  "key": "q",
+                  "value": "farm_id==\"F0001\""
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            },
+            "description": "farm_id is a plain Property holding the farm key, not a URN."
+          }
+        },
+        {
+          "name": "Parcels in a Catchment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Parcel&q=catchment_id==\"urn:ngsi-ld:Catchment:CA28\"&format=simplified&limit=100&count=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Parcel"
+                },
+                {
+                  "key": "q",
+                  "value": "catchment_id==\"urn:ngsi-ld:Catchment:CA28\""
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                },
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Purchase lines for a Material",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ErpPurchaseLine.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ErpPurchaseLine&q=material_id==\"urn:ngsi-ld:Material:{{material_id}}\"&limit=20&count=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ErpPurchaseLine"
+                },
+                {
+                  "key": "q",
+                  "value": "material_id==\"urn:ngsi-ld:Material:{{material_id}}\""
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Purchase lines for a Supplier",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/ErpPurchaseLine.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=ErpPurchaseLine&q=supplier_id==\"urn:ngsi-ld:Supplier:{{supplier_id}}\"&limit=20&count=true",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "ErpPurchaseLine"
+                },
+                {
+                  "key": "q",
+                  "value": "supplier_id==\"urn:ngsi-ld:Supplier:{{supplier_id}}\""
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "count",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Materials using an EmissionFactor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Material.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Material&q=default_ef_id==\"urn:ngsi-ld:EmissionFactor:{{ef_id}}\"&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Material"
+                },
+                {
+                  "key": "q",
+                  "value": "default_ef_id==\"urn:ngsi-ld:EmissionFactor:{{ef_id}}\""
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Entity with joined targets (join=inline)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/urn:ngsi-ld:Parcel:F0001-P01?join=inline&joinLevel=1",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "urn:ngsi-ld:Parcel:F0001-P01"
+              ],
+              "query": [
+                {
+                  "key": "join",
+                  "value": "inline"
+                },
+                {
+                  "key": "joinLevel",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Parcels referencing a Catchment id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Parcel.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=Parcel&q=catchment_id==\"{{catchment_id}}\"&attrs=catchment_id&format=simplified",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Parcel"
+                },
+                {
+                  "key": "q",
+                  "value": "catchment_id==\"{{catchment_id}}\""
+                },
+                {
+                  "key": "attrs",
+                  "value": "catchment_id"
+                },
+                {
+                  "key": "format",
+                  "value": "simplified"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Temporal",
+      "item": [
+        {
+          "name": "Temporal: all history of an entity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities/{{entity_id}}",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities",
+                "{{entity_id}}"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "Temporal: Site observations 2021-2025",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities/urn:ngsi-ld:Site:S-SAK?timerel=between&timeAt=2021-01-01T00:00:00Z&endTimeAt=2025-12-31T23:59:59Z&timeproperty=observedAt",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities",
+                "urn:ngsi-ld:Site:S-SAK"
+              ],
+              "query": [
+                {
+                  "key": "timerel",
+                  "value": "between"
+                },
+                {
+                  "key": "timeAt",
+                  "value": "2021-01-01T00:00:00Z"
+                },
+                {
+                  "key": "endTimeAt",
+                  "value": "2025-12-31T23:59:59Z"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: last 12 values",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities/urn:ngsi-ld:Site:S-SAK?lastN=12&timeproperty=observedAt",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities",
+                "urn:ngsi-ld:Site:S-SAK"
+              ],
+              "query": [
+                {
+                  "key": "lastN",
+                  "value": "12"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: type query, temporalValues",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities?type=Site&options=temporalValues&timerel=after&timeAt=2024-01-01T00:00:00Z&timeproperty=observedAt",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Site"
+                },
+                {
+                  "key": "options",
+                  "value": "temporalValues"
+                },
+                {
+                  "key": "timerel",
+                  "value": "after"
+                },
+                {
+                  "key": "timeAt",
+                  "value": "2024-01-01T00:00:00Z"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: Farm survey/footprint by year",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities/urn:ngsi-ld:Farm:F0001?options=temporalValues&timeproperty=observedAt",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities",
+                "urn:ngsi-ld:Farm:F0001"
+              ],
+              "query": [
+                {
+                  "key": "options",
+                  "value": "temporalValues"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: Catchment monitored loads",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities/urn:ngsi-ld:Catchment:CA28?options=temporalValues&timeproperty=observedAt",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities",
+                "urn:ngsi-ld:Catchment:CA28"
+              ],
+              "query": [
+                {
+                  "key": "options",
+                  "value": "temporalValues"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: modifiedAt (load audit)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities?type={{type}}&timeproperty=modifiedAt&timerel=after&timeAt=2026-01-01T00:00:00Z&limit=5&options=count",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "{{type}}"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "modifiedAt"
+                },
+                {
+                  "key": "timerel",
+                  "value": "after"
+                },
+                {
+                  "key": "timeAt",
+                  "value": "2026-01-01T00:00:00Z"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "options",
+                  "value": "count"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Temporal: geofenced Farms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/temporal/entities?type=Farm&georel=near;maxDistance==25000&geometry=Point&coordinates=[22.5,61.0]&options=temporalValues&lastN=3&timerel=after&timeAt=2020-01-01T00:00:00Z&timeproperty=observedAt&limit=5",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "temporal",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Farm"
+                },
+                {
+                  "key": "georel",
+                  "value": "near;maxDistance==25000"
+                },
+                {
+                  "key": "geometry",
+                  "value": "Point"
+                },
+                {
+                  "key": "coordinates",
+                  "value": "[22.5,61.0]"
+                },
+                {
+                  "key": "options",
+                  "value": "temporalValues"
+                },
+                {
+                  "key": "lastN",
+                  "value": "3"
+                },
+                {
+                  "key": "timerel",
+                  "value": "after"
+                },
+                {
+                  "key": "timeAt",
+                  "value": "2020-01-01T00:00:00Z"
+                },
+                {
+                  "key": "timeproperty",
+                  "value": "observedAt"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Write operations",
+      "item": [
+        {
+          "name": "Batch upsert (update mode)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Site.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entityOperations/upsert?options=update",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entityOperations",
+                "upsert"
+              ],
+              "query": [
+                {
+                  "key": "options",
+                  "value": "update"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"urn:ngsi-ld:Site:S-TEST\",\n    \"type\": \"Site\",\n    \"name\": {\n      \"type\": \"Property\",\n      \"value\": \"Test site\"\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Patch attributes",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Site.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/urn:ngsi-ld:Site:S-TEST/attrs",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "urn:ngsi-ld:Site:S-TEST",
+                "attrs"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"type\": \"Property\",\n    \"value\": \"Renamed\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete entity",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/schemas/Site.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities/urn:ngsi-ld:Site:S-TEST",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities",
+                "urn:ngsi-ld:Site:S-TEST"
+              ],
+              "query": []
+            }
+          }
+        },
+        {
+          "name": "Batch delete",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entityOperations/delete",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entityOperations",
+                "delete"
+              ],
+              "query": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"urn:ngsi-ld:Site:S-TEST\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Query tenant: anomalies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Link",
+                "value": "<{{context}}/user-context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+              },
+              {
+                "key": "NGSILD-Tenant",
+                "value": "{{tenant}}",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{coraine}}/ngsi-ld/v1/entities?type=LoadLog&limit=20",
+              "host": [
+                "{{coraine}}"
+              ],
+              "path": [
+                "ngsi-ld",
+                "v1",
+                "entities"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "LoadLog"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "Set tenant var to use NGSILD-Tenant."
+          }
+        }
+      ]
+    }
+  ]
+}
