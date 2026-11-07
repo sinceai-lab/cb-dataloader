@@ -1,0 +1,39 @@
+# MCP server + chat-bot over the Apetit Coraine (root docker-compose.yml, network apetit_default).
+# Read-only; no curated schemas, so the agent sees only the types the loader uploaded.
+services:
+  mcp-server:
+    extends:
+      file: common.yml
+      service: mcp-server
+    networks: [default]
+    volumes: !override
+      - type: bind
+        source: ${PWD}/schemas-apetit
+        target: /schemas
+        read_only: true
+      - type: bind
+        source: ${PWD}/prompts-apetit
+        target: /prompts
+        read_only: true
+    environment: !override
+      - DEBUG=mcp:*
+      - MCP_TRANSPORT=http
+      - MCP_PORT=${MCP_SERVER_PORT}
+      - SCHEMA_DIR=/schemas
+      - NGSI_LD_CONTEXT=http://context/user-context.jsonld
+      - WRITABLE=false
+      - DISCOVERY=merge
+      - AUTH_ENABLED=false
+      - CONTEXT_BROKER=http://coraine:1026/ngsi-ld/v1
+      - TEMPORAL_BROKER=http://coraine:1026/ngsi-ld/v1
+
+  chat-bot:
+    extends:
+      file: common.yml
+      service: chat-bot
+    networks: [default]
+
+networks:
+  default:
+    name: apetit_default
+    external: true

@@ -1,0 +1,25 @@
+#!/bin/bash
+# Read-only MCP server + chat-bot over the Apetit Coraine (start Coraine from the repo root first).
+
+set -eo pipefail
+cd "$(dirname "$0")"
+
+USAGE="usage: services [apetit|apetit stop]"
+
+case "${1:-}" in
+	apetit)
+		set -a; source .env; set +a
+		export AUTH_ENABLED=false MCP_ENDPOINT="http://mcp-server:${MCP_SERVER_PORT}/mcp"
+		if [ "${2:-}" == "stop" ]; then
+			docker compose -f docker-compose/apetit.yml -p apetit-viewer down
+			exit 0
+		fi
+		docker network inspect apetit_default >/dev/null 2>&1 || { echo "apetit_default missing: run ./services start in the repo root first"; exit 1; }
+		docker compose -f docker-compose/apetit.yml -p apetit-viewer up -d --build
+		echo -e "Chat with the Apetit data at \033[4mhttp://localhost:${CHAT_BOT_PORT}\033[0m (MCP: http://localhost:${MCP_SERVER_PORT}/mcp)"
+		;;
+	*)
+		echo "${USAGE}"
+		exit 1
+		;;
+esac

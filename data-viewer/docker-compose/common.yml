@@ -1,0 +1,101 @@
+
+services:
+  # MCP Server exposes the Context Broker to LLM agents as tools and resources
+  mcp-server:
+    labels:
+      org.fiware: 'tutorial'
+    image: quay.io/fiware/tutorials.mcp-server
+    hostname: mcp-server
+    container_name: fiware-mcp-server
+    networks:
+      - default
+    expose:
+      - "${MCP_SERVER_PORT}"
+    ports:
+      - "${MCP_SERVER_PORT}:${MCP_SERVER_PORT}" # localhost:3003
+    environment:
+      - DEBUG=mcp:*
+      - MCP_TRANSPORT=http
+      - MCP_PORT=${MCP_SERVER_PORT}
+      - SCHEMA_DIR=/schemas
+      - NGSI_LD_CONTEXT=http://context/user-context.jsonld
+      - WRITABLE=true
+      - WRITE_TENANT=farmer
+      - WRITE_LOCAL_ONLY=true
+      # Broker-derived entity types are discovered at start-up and merged with the
+      # curated schemas mounted at /schemas.
+      - DISCOVERY=merge
+      # The server verifies the bearer token a second time, and forwards
+      # it to the broker so Keycloak's UMA policies apply to the caller, not to the server.
+      - AUTH_ENABLED=${AUTH_ENABLED}
+      # The issuer is the string in the token's `iss` claim, which Keycloak pins to
+      # its frontend hostname; JWKS and the token endpoint are reached in-network.
+      - OIDC_ISSUER=http://localhost:${KEYCLOAK_PORT}/realms/${OIDC_REALM}
+      - OIDC_JWKS_URI=http://keycloak:8080/realms/${OIDC_REALM}/protocol/openid-connect/certs
+      - OIDC_TOKEN_URL=http://keycloak:8080/realms/${OIDC_REALM}/protocol/openid-connect/token
+      - MCP_RESOURCE_URL=http://localhost:${MCP_SERVER_PORT}/mcp
+      - OIDC_CLIENT_ID=${MCP_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${MCP_CLIENT_SECRET}
+
+  # Chat-bot - a web UI and LLM agent loop that drives the broker via the MCP Server
+  chat-bot:
+    labels:
+      org.fiware: 'tutorial'
+    build:
+      context: ${PWD}/chat-bot
+    image: quay.io/fiware/tutorials.chat-bot
+    hostname: chat-bot
+    container_name: fiware-chat-bot
+    depends_on:
+      - mcp-server
+    networks:
+      - default
+    expose:
+      - "${CHAT_BOT_PORT}"
+    ports:
+      - "${CHAT_BOT_PORT}:${CHAT_BOT_PORT}" # localhost:3006
+    environment:
+      # The chat-bot reads bare names (PORT / MCP_URL / PROVIDER / <PROVIDER>_*);
+      # map the CHAT_BOT_* .env vars onto them and point MCP_URL in-network.
+      - PORT=${CHAT_BOT_PORT}
+      # Straight at the MCP server while the tutorial is unsecured; through the
+      # gateway once the security section swaps this in .env, at which point the
+      # bot must present the signed-in user's token like any other client.
+      - MCP_URL=${MCP_ENDPOINT}
+      - AUTH_ENABLED=${AUTH_ENABLED}
+      - OIDC_ISSUER=http://keycloak:8080/realms/${OIDC_REALM}
+      # The browser is redirected here, so this must be reachable from the host.
+      - OIDC_PUBLIC_ISSUER=http://localhost:${KEYCLOAK_PORT}/realms/${OIDC_REALM}
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
+      - OIDC_REDIRECT_URI=http://localhost:${CHAT_BOT_PORT}/login/callback
+      - SESSION_SECRET=${SESSION_SECRET}
+      - PROVIDER=${CHAT_BOT_PROVIDER}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_BASE_URL=${GEMINI_BASE_URL}
+      - GEMINI_MODEL=${GEMINI_MODEL}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_BASE_URL=${GROQ_BASE_URL}
+      - GROQ_MODEL=${GROQ_MODEL}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_BASE_URL=${OPENROUTER_BASE_URL}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL}
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NVIDIA_BASE_URL=${NVIDIA_BASE_URL}
+      - NVIDIA_MODEL=${NVIDIA_MODEL}
+      - COHERE_API_KEY=${COHERE_API_KEY}
+      - COHERE_BASE_URL=${COHERE_BASE_URL}
+      - COHERE_MODEL=${COHERE_MODEL}
+
+networks:
+  default:
+    labels:
+      org.fiware: 'tutorial'
