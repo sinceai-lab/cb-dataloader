@@ -56,8 +56,29 @@ const WEATHER_OBSERVED = [
   'dateObserved',
   'temperature',
   'temperatureMax',
+  'temperatureMin',
+  'climateScenario',
   'precipitation',
   'referenceEvapotranspiration',
+];
+// Terms of the YieldPrediction entities model-inference writes back (service/broker_client.py).
+const YIELD_PREDICTION = [
+  'YieldPrediction',
+  'refParcel',
+  'refGridCell',
+  'cropName',
+  'seasonYear',
+  'predictionLabel',
+  'estimatedYield',
+  'baselineYield',
+  'modelName',
+  'modelVersion',
+  'observedDays',
+  'filledDays',
+  'filledGapDays',
+  'filledFutureDays',
+  'asOfDate',
+  'computedAt',
 ];
 
 export async function writeContexts(schemas: Map<string, LoadableSchema>) {
@@ -95,7 +116,8 @@ export async function writeContexts(schemas: Map<string, LoadableSchema>) {
     write(path.join(dir, `${s.name}.jsonld`), ctx);
     user[s.name] = config.vocab + s.name;
   }
-  for (const t of [...SHARED, 'LoadLog', ...LOADLOG_TERMS, ...WEATHER_OBSERVED]) user[t] = config.vocab + t;
+  for (const t of [...SHARED, 'LoadLog', ...LOADLOG_TERMS, ...WEATHER_OBSERVED, ...YIELD_PREDICTION])
+    user[t] = config.vocab + t;
   write(path.join(dir, 'LoadLog.jsonld'), {
     '@vocab': config.vocab,
     LoadLog: config.vocab + 'LoadLog',

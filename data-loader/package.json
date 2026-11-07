@@ -10,7 +10,8 @@
     "prettier": "prettier --write \"src/**/*.ts\"",
     "context": "tsx src/writeContext.ts",
     "load": "tsx src/cli.ts",
-    "replay": "tsx src/replay.ts"
+    "replay": "tsx src/replay.ts",
+    "subscribe:inference": "tsx src/subscribeInference.ts"
   },
   "dependencies": {
     "ajv": "^8.20.0",

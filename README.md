@@ -1,6 +1,6 @@
 # Apetit x SinceAI 2026
 
-Loads the Apetit CSV datasets in `raw-data/` into Coraine (an NGSI-LD context broker), validated against the JSON Schemas in `schemas/`, and lets you ask questions about the loaded data in a chat UI (`data-viewer/`).
+Loads the Apetit CSV datasets (the `source` paths in `schemas/index.json`, under `../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/`) into Coraine (an NGSI-LD context broker), validated against the JSON Schemas in `schemas/`, and lets you ask questions about the loaded data in a chat UI (`data-viewer/`).
 
 ## Prerequisites
 
@@ -54,7 +54,7 @@ LOADED_BY=jason ./services upload
 
 - Each file is validated against its schema; rows with a wrong type or missing required field are logged and dropped. Value-level errors (outliers, duplicates) are kept on purpose.
 - Every load writes a `LoadLog` entity (file, sha256, who, when, row counts). Loaded entities link back to it through `refLoadLog`.
-- Source CSVs are copied to `data-loader/uploads/` before loading. `raw-data/` is never modified.
+- Source CSVs are copied to `data-loader/uploads/` before loading. The source datasets are never modified.
 - Loading again is safe; entities are upserted by id.
 - Check the result: `curl 'localhost:1026/ngsi-ld/v1/entities?type=Site' -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'`
 
@@ -101,7 +101,7 @@ docker logs -f apetit-weather-aggregator          # or weather-aggregator/logs/d
 
 ### Drip in the weather
 
-`replay` writes one `WeatherObserved` row into Coraine every `--interval` seconds (default 6). Each write triggers a notification to the aggregator.
+`replay` writes `--batch` `WeatherObserved` rows (default 1) into Coraine every `--interval` seconds (default 6). Each written entity triggers a notification to every subscriber.
 
 1. Start Coraine and the aggregator: `./services start coraine`
 2. Watch the log in a second terminal: `docker logs -f apetit-weather-aggregator`
@@ -112,22 +112,47 @@ docker logs -f apetit-weather-aggregator          # or weather-aggregator/logs/d
    ```
 4. Or drip from the full daily parquet, filtered to what you need:
    ```
-   npm run replay -- ../raw-data/data/04_climate/weather_daily_1991_2060.parquet \
+   npm run replay -- ../../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/weather_daily_1991_2060.parquet \
        --cell GF0104 --scenario ssp245 --from 2027-06-01 --limit 100 --interval 6
    ```
 
 | Option | Meaning |
 |---|---|
-| `--interval s` | seconds between rows (default 6) |
+| `--interval s` | seconds between upserts (default 6; `0` for a backfill) |
+| `--batch n` | rows per upsert call, 1 to 500 (default 1, a drip) |
 | `--cell id` | only this grid cell, e.g. `GF0104` (84 cells) |
 | `--scenario s` | `historical` (to 2026), `ssp126`, `ssp245` or `ssp585` (from 2027) |
 | `--from date` | first date to send, `YYYY-MM-DD` |
+| `--to date` | last date to send, `YYYY-MM-DD` |
 | `--limit n` | stop after n rows |
+| `--dry-run` | print each batch as a JSON array instead of sending it |
 
 - Stop early with Ctrl-C. Rows already sent stay in the broker.
-- Each row becomes one `WeatherObserved` entity (`cellId`, `dateObserved`, `temperature`, `temperatureMax`, `precipitation`, `referenceEvapotranspiration`), id `urn:ngsi-ld:WeatherObserved:<cell>:<date>`. Sending the same cell and date again updates it and notifies again.
+- Each row becomes one `WeatherObserved` entity (`cellId`, `dateObserved`, `climateScenario`, `temperature`, `temperatureMax`, `temperatureMin` when the file has `tmin_c`, `precipitation`, `referenceEvapotranspiration`), id `urn:ngsi-ld:WeatherObserved:<cell>:<scenario>:<date>`, so scenarios don't overwrite each other. Sending the same cell, scenario and date again updates it and notifies again.
+- Rejected entities in a batch (HTTP 207) are logged with their id and reason; the rest of the batch is kept.
 - A cell late in the parquet takes a few seconds to find before the first row is sent.
-- The replayed entities stay until you delete them or run `./services reset`. To remove one: `curl -X DELETE localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:WeatherObserved:GF0104:2027-06-01 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'`
+- The replayed entities stay until you delete them or run `./services reset`. To remove one: `curl -X DELETE localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:WeatherObserved:GF0104:ssp245:2027-06-01 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'`
+
+## Pipeline: broker -> inference
+
+`model-inference` (a separate repo, `../model-inference`) gets every `WeatherObserved` update from Coraine on `POST /notify` and serves yield estimates on `GET /predictions`.
+
+```
+./services start coraine                     # 1. broker (+ @context httpd)
+./services upload                            # 2. load the data, regenerates data-models/user-context.jsonld
+# 3. in ../model-inference: the inference service on port 8600
+CB_URL=http://localhost:1026 .venv/bin/uvicorn service.api:app --host 0.0.0.0 --port 8600
+./services subscribe-inference               # 4. (re)create urn:ngsi-ld:Subscription:apetit-yield
+cd data-loader                               # 5. backfill one scenario's season from 1 March
+npm run replay -- ../../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/weather_daily_1991_2060.parquet \
+    --scenario ssp245 --from 2027-03-01 --to 2027-10-31 --batch 500 --interval 0
+```
+
+- Coraine runs in Docker, so it calls the service at `http://host.docker.internal:8600/notify` (the default); set `NOTIFY_URL` to change it and `CORAINE_URL` for another broker. Docker Desktop should also forward to a service bound to `127.0.0.1` (not yet confirmed), so an already-running service doesn't need a restart. On Linux, bind `0.0.0.0` and Coraine also needs `extra_hosts: ["host.docker.internal:host-gateway"]`.
+- `npm run subscribe:inference -- --dry-run` (in `data-loader/`) prints the body. The subscription watches `WeatherObserved` only, format `normalized`, with no throttling (dropped days get filled with typical weather).
+- The inference service keys its readings by cell and date, not by scenario. Subscribe it while replaying one scenario per season; replaying ssp126 and ssp585 for the same dates would mix them.
+- `CB_URL` is optional: set it to have estimates written back as `YieldPrediction` entities; their terms are in `user-context.jsonld`, so `CB_CONTEXT=http://context/user-context.jsonld` works.
+- The parquet is ordered by cell, then scenario, then date, so the backfill sends each cell's season in turn (84 cells, about 20k rows). Add `--cell GF0104` to try one cell first.
 
 ## Stop and clean up
 ```

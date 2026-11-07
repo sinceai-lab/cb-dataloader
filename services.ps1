@@ -4,7 +4,7 @@
 
 Set-Location $PSScriptRoot
 
-$Usage = 'usage: services [start [coraine]|stop|reset|status|upload [Schema...]|clear-uploads]'
+$Usage = 'usage: services [start [coraine]|stop|reset|status|upload [Schema...]|subscribe-inference [--dry-run]|clear-uploads]'
 
 # Equivalent of `set -a; source .env; set +a`
 if (Test-Path .env) {
@@ -117,6 +117,11 @@ switch ($command) {
         finally {
             Pop-Location
         }
+    }
+    'subscribe-inference' {
+        Push-Location data-loader
+        try { npm run --silent subscribe:inference -- @rest; Test-Exit }
+        finally { Pop-Location }
     }
     'clear-uploads' {
         Clear-Uploads
