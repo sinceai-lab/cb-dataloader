@@ -2,6 +2,7 @@ import type { AgentEvent, Msg } from '../shared/types';
 
 export interface Me {
   authEnabled: boolean;
+  showTools: boolean;
   user: string | null;
   roles: string[];
 }

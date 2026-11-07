@@ -4,12 +4,14 @@
 set -eo pipefail
 cd "$(dirname "$0")"
 
-USAGE="usage: services [apetit|apetit stop]"
+USAGE="usage: services [apetit [--login]|apetit stop]"
 
 case "${1:-}" in
 	apetit)
 		set -a; source .env; set +a
-		export AUTH_ENABLED=false MCP_ENDPOINT="http://mcp-server:${MCP_SERVER_PORT}/mcp"
+		# --login asks for a Keycloak sign-in in the chat UI (Keycloak must be running: ./services start in the repo root).
+		login=false; for a in "${@:2}"; do [ "$a" == "--login" ] && login=true; done
+		export AUTH_ENABLED=${login} MCP_ENDPOINT="http://mcp-server:${MCP_SERVER_PORT}/mcp"
 		if [ "${2:-}" == "stop" ]; then
 			docker compose -f docker-compose/apetit.yml -p apetit-viewer down
 			exit 0

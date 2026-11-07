@@ -130,7 +130,8 @@ export function App() {
   return (
     <div className="app">
       <header>
-        <h1>&#127806; Smart Farm FMIS</h1>
+        <span className="brand-note">Climate &amp; Nature Navigator</span>
+        <img className="logo" src="/logo-apetit.png" alt="Apetit" />
         <div className="pickers">
           <select value={provider} onChange={(e) => setProvider(e.target.value)}>
             {providers.map((p) => (
@@ -192,6 +193,7 @@ export function App() {
               </div>
             );
           }
+          if (!me.showTools) return null;
           return (
             <details key={i} className="tool">
               <summary className="tool-head">
@@ -238,13 +240,23 @@ export function App() {
       >
         <input
           value={input}
-          placeholder="Ask about the farm…"
+          placeholder="Ask about the Apetit data…"
           onChange={(e) => setInput(e.target.value)}
           disabled={busy}
         />
         <button disabled={busy || !input.trim()}>Send</button>
       </form>
       </div>
+      <footer>
+        <img className="logo" src="/logo-apetit.png" alt="Apetit" />
+        <nav>
+          <a href="https://apetit.com/" target="_blank" rel="noreferrer">Home</a>
+          <a href="https://apetit.com/products/" target="_blank" rel="noreferrer">Products</a>
+          <a href="https://apetit.com/sustainability/" target="_blank" rel="noreferrer">Sustainability</a>
+          <a href="https://apetit.com/quality/" target="_blank" rel="noreferrer">Quality</a>
+          <a href="https://apetit.com/contact-us/" target="_blank" rel="noreferrer">Contact us</a>
+        </nav>
+      </footer>
     </div>
   );
 }

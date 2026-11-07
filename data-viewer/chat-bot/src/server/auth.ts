@@ -127,7 +127,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction): vo
 export function registerAuthRoutes(app: Express, onSignOut: (sessionId: string) => void): void {
   app.get('/api/me', (req, res) => {
     if (!config.authEnabled) {
-      res.json({ authEnabled: false, user: null, roles: [] });
+      res.json({ authEnabled: false, showTools: config.showTools, user: null, roles: [] });
       return;
     }
     const user = req.session.user;
@@ -135,7 +135,12 @@ export function registerAuthRoutes(app: Express, onSignOut: (sessionId: string) 
       res.status(401).json({ authEnabled: true, error: 'not signed in' });
       return;
     }
-    res.json({ authEnabled: true, user: user.username, roles: user.roles });
+    res.json({
+      authEnabled: true,
+      showTools: config.showTools,
+      user: user.username,
+      roles: user.roles,
+    });
   });
 
   app.get('/login', async (req, res) => {

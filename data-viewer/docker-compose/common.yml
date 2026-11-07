@@ -63,6 +63,8 @@ services:
       # bot must present the signed-in user's token like any other client.
       - MCP_URL=${MCP_ENDPOINT}
       - AUTH_ENABLED=${AUTH_ENABLED}
+      # false hides the tool-call cards in the chat; set SHOW_TOOLS=true in .env to see them again.
+      - SHOW_TOOLS=${SHOW_TOOLS:-false}
       - OIDC_ISSUER=http://keycloak:8080/realms/${OIDC_REALM}
       # The browser is redirected here, so this must be reachable from the host.
       - OIDC_PUBLIC_ISSUER=http://localhost:${KEYCLOAK_PORT}/realms/${OIDC_REALM}

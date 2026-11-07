@@ -2,6 +2,8 @@ export const config = {
   port: Number(process.env.PORT ?? '3005'),
   mcpUrl: process.env.MCP_URL ?? 'http://localhost:3003/mcp',
   authEnabled: process.env.AUTH_ENABLED === 'true',
+  // false hides the tool-call cards in the chat; the model still uses the tools.
+  showTools: process.env.SHOW_TOOLS !== 'false',
   sessionSecret: process.env.SESSION_SECRET ?? 'tutorial-session-secret',
   oidc: {
     // In-network issuer, used for the token exchange and discovery.
