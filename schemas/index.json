@@ -258,6 +258,16 @@
       ]
     },
     {
+      "schema": "FarmFootprint.json",
+      "source": "derived/farm_footprints.csv",
+      "rows": 6120,
+      "primaryKey": [
+        "farm_id",
+        "crop",
+        "year"
+      ]
+    },
+    {
       "schema": "WeatherMonthly.json",
       "source": "../APETIT_CLIMATE_NATURE_NAVIGATOR_2026/data/04_climate/weather_monthly_1991_2060.csv",
       "rows": 139104,
@@ -422,6 +432,10 @@
     },
     {
       "from": "CurrentCalculatorFootprint.farm_id",
+      "to": "Farm.farm_id"
+    },
+    {
+      "from": "FarmFootprint.farm_id",
       "to": "Farm.farm_id"
     },
     {

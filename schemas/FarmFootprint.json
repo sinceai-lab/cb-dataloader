@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:FarmFootprint",
+  "title": "Apetit Climate & Nature Navigator - FarmFootprint",
+  "description": "Derived: cradle-to-farm-gate footprint per farm, crop and year incl. drained organic soils (METHODOLOGY.md s5). Built by derived/build_farm_footprints.py.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "gold",
+  "x-primary-key": [
+    "farm_id",
+    "crop",
+    "year"
+  ],
+  "properties": {
+    "farm_id": {
+      "type": "string",
+      "description": "Farm",
+      "x-term": "farm_id"
+    },
+    "crop": {
+      "type": "string",
+      "description": "Contract crop",
+      "x-term": "crop",
+      "x-observed-values": [
+        "carrot",
+        "pea",
+        "potato",
+        "spinach",
+        "turnip_rape"
+      ]
+    },
+    "year": {
+      "type": "integer",
+      "description": "Harvest year",
+      "x-term": "year"
+    },
+    "fp_method": {
+      "type": "string",
+      "description": "Input source: survey (FI, as reported) or foodhills (SE, P/lime/sprays from pea norms)",
+      "x-term": "fp_method",
+      "enum": [
+        "foodhills",
+        "survey"
+      ]
+    },
+    "fp_area_ha": {
+      "type": "number",
+      "description": "Crop area in the input file",
+      "x-term": "fp_area_ha",
+      "x-unit-text": "ha"
+    },
+    "fp_yield_t_ha": {
+      "type": "number",
+      "description": "Yield (FI reported, SE delivered/area)",
+      "x-term": "fp_yield_t_ha",
+      "x-unit-text": "t/ha"
+    },
+    "fp_organic_share": {
+      "type": "number",
+      "description": "Share of the crop's area on drained organic soil (soil map; 1 if reported organic)",
+      "x-term": "fp_organic_share",
+      "x-unit-text": "fraction"
+    },
+    "fp_fertiliser_kg_ha": {
+      "type": "number",
+      "description": "Fertiliser manufacture N, P, K",
+      "x-term": "fp_fertiliser_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_n2o_direct_kg_ha": {
+      "type": "number",
+      "description": "Direct N2O (FLAG)",
+      "x-term": "fp_n2o_direct_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_n2o_indirect_kg_ha": {
+      "type": "number",
+      "description": "Indirect N2O (FLAG)",
+      "x-term": "fp_n2o_indirect_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_diesel_kg_ha": {
+      "type": "number",
+      "description": "Diesel, combustion + WTT",
+      "x-term": "fp_diesel_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_lime_kg_ha": {
+      "type": "number",
+      "description": "Liming (FLAG)",
+      "x-term": "fp_lime_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_sprays_kg_ha": {
+      "type": "number",
+      "description": "Plant protection passes",
+      "x-term": "fp_sprays_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_electricity_kg_ha": {
+      "type": "number",
+      "description": "Storage, drying and irrigation electricity",
+      "x-term": "fp_electricity_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_organic_soil_kg_ha": {
+      "type": "number",
+      "description": "Drained organic soil CO2 + N2O, area-weighted (FLAG)",
+      "x-term": "fp_organic_soil_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_total_kg_ha": {
+      "type": "number",
+      "description": "Total cradle-to-farm-gate",
+      "x-term": "fp_total_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_flag_kg_ha": {
+      "type": "number",
+      "description": "FLAG part (N2O, lime, organic soil)",
+      "x-term": "fp_flag_kg_ha",
+      "x-unit-text": "kgCO2e/ha"
+    },
+    "fp_kgco2e_per_kg": {
+      "type": "number",
+      "description": "Footprint per kg of crop, organic soils included",
+      "x-term": "fp_kgco2e_per_kg",
+      "x-unit-text": "kgCO2e/kg"
+    },
+    "fp_mineral_only_kgco2e_per_kg": {
+      "type": "number",
+      "description": "Same method on mineral soil only",
+      "x-term": "fp_mineral_only_kgco2e_per_kg",
+      "x-unit-text": "kgCO2e/kg"
+    },
+    "fp_current_calc_kgco2e_per_kg": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Current calculator value for comparison (FI survey farms only)",
+      "x-term": "fp_current_calc_kgco2e_per_kg",
+      "x-unit-text": "kgCO2e/kg"
+    },
+    "fp_farm_tco2e": {
+      "type": "number",
+      "description": "Farm total for this crop and year",
+      "x-term": "fp_farm_tco2e",
+      "x-unit-text": "tCO2e"
+    }
+  },
+  "required": [
+    "farm_id",
+    "crop",
+    "year",
+    "fp_method",
+    "fp_area_ha",
+    "fp_yield_t_ha",
+    "fp_organic_share",
+    "fp_fertiliser_kg_ha",
+    "fp_n2o_direct_kg_ha",
+    "fp_n2o_indirect_kg_ha",
+    "fp_diesel_kg_ha",
+    "fp_lime_kg_ha",
+    "fp_sprays_kg_ha",
+    "fp_electricity_kg_ha",
+    "fp_organic_soil_kg_ha",
+    "fp_total_kg_ha",
+    "fp_flag_kg_ha",
+    "fp_kgco2e_per_kg",
+    "fp_mineral_only_kgco2e_per_kg",
+    "fp_farm_tco2e"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "subject": {
+      "column": "farm_id",
+      "type": "Farm"
+    },
+    "time": {
+      "year": "year"
+    },
+    "dimensions": [
+      "crop"
+    ]
+  }
+}
