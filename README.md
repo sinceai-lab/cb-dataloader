@@ -13,10 +13,17 @@ Loads the Apetit CSV datasets in `raw-data/` into Coraine (an NGSI-LD context br
 ## First-time setup
 
 ```
-cd data-loader && npm install && cd ..
+cd cb-data-loader && npm install && cd ..
 ```
 
 ## Start
+### On Windows
+```
+.\services.cmd start coraine   # Coraine + Mongo + Timescale + the @context httpd (enough for loading)
+.\services.cmd start           # full stack: also Keycloak and APISIX
+.\services.cmd status          # see what is running
+```
+### On others
 
 ```
 ./services start coraine   # Coraine + Mongo + Timescale + the @context httpd (enough for loading)
@@ -37,7 +44,13 @@ cd data-viewer && ./services apetit       # 3. chat UI at http://localhost:3006
 ```
 
 ## Load data
-
+### On Windows
+```
+.\services.cmd upload                # load every CSV, in turn
+.\services.cmd upload Site Parcel    # load only the named schemas
+LOADED_BY=jason ./services upload
+```
+### On others
 ```
 ./services upload                # load every CSV, in turn
 ./services upload Site Parcel    # load only the named schemas
@@ -67,7 +80,13 @@ LOADED_BY=jason ./services upload
 The viewer joins the `apetit_default` Docker network, so Coraine must be running first. Stop it with `cd data-viewer && ./services apetit stop`. Reload the data first if you ran `./services reset`.
 
 ## Stop and clean up
-
+### On windows
+```
+.\services.cmd clear-uploads   # delete the copied files in data-loader/uploads/ (LoadLog entries stay)
+.\services.cmd stop            # stop containers, keep the data, and clear data-loader/uploads/
+.\services.cmd reset           # stop containers AND delete all loaded data
+```
+### On others
 ```
 ./services clear-uploads   # delete the copied files in data-loader/uploads/ (LoadLog entries stay)
 ./services stop            # stop containers, keep the data, and clear data-loader/uploads/
