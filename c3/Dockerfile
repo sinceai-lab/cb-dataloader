@@ -21,6 +21,10 @@ RUN set -e; \
     make -C corRest CC="gcc -D_GNU_SOURCE="; \
     make -C c3 EXTRA_CFLAGS="-D_GNU_SOURCE="
 
+# Apetit look and feel: an override stylesheet linked after c3.css, plus its fonts and logo.
+COPY apetit /src/c3/www/apetit
+RUN sed -i 's#<link rel="stylesheet" href="css/c3.css">#&\n<link rel="stylesheet" href="apetit/apetit.css">#; s#<title>[^<]*</title>#<title>Apetit Climate \&amp; Nature Navigator - relationships</title>#; s#img/coraine-mark.png#apetit/favicon-32.png#; s#class="mark" src="apetit/favicon-32.png"#class="mark" src="apetit/logo-apetit.png"#' /src/c3/www/index.html
+
 COPY entrypoint.sh /entrypoint.sh
 EXPOSE 7900
 ENTRYPOINT ["/entrypoint.sh"]

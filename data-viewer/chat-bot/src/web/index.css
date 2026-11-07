@@ -357,6 +357,7 @@ header {
 }
 
 .whoami button {
+  white-space: nowrap;
   border: 1px solid var(--line);
   background: var(--bg);
   color: var(--ink);

@@ -1,0 +1,52 @@
+/* Apetit look and feel, loaded after c3.css; only overrides its variables. */
+@font-face { font-family: 'Lexend'; src: url(../apetit/lexend-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Heebo'; src: url(../apetit/heebo-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
+
+:root {
+  color-scheme: light;
+  --bg: #f4f9ef;
+  --bg-deep: #e8f1de;
+  --panel: #ffffff;
+  --panel-2: #f1f6ec;
+  --line: #dee2e6;
+  --line-soft: #e9ecef;
+  --line-box: #cfd6cc;
+  --text: #3d3d3d;
+  --text-2: #4a4a48;
+  --muted: #5f6368;
+  --dim: #7a7f85;
+  --faint: #a0a6ab;
+  --accent: #58a01f;
+  --accent-2: #67b52c;
+  --accent-text: #3f7d12;
+  --accent-soft: #2f6209;
+  --ok: #2f8a4f;
+  --warn: #b27a00;
+  --bad: #c0392b;
+  --sans: 'Heebo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --title: 'Lexend', 'Heebo', system-ui, sans-serif;
+}
+
+.brand .word, .brand .tag { font-family: var(--title); color: var(--heading, #1d1d1b); }
+.brand .cube { color: var(--accent); }
+.apetit-logo { height: 28px; margin-left: auto; }
+
+header.top .mark { height: 36px; }
+.brand .tag { font-size: 20px; letter-spacing: 0.12em; }
+.btn.primary { background: var(--accent); color: #fff; }
+.btn.primary:hover { background: var(--accent-2); }
+.box.sel { box-shadow: 0 0 0 4px #67b52c33, 0 8px 24px #0003; }
+
+.zoombar, .chip2, .seg, #view-toggle { background: #ffffffe6; }
+.zoombar { border-color: var(--line); }
+.menu { box-shadow: 0 12px 30px #0002; border-color: var(--line); }
+.menu .item:focus .hint, .menu .item[aria-expanded="true"] .hint { color: #fff; }
+.btn:hover { border-color: var(--accent-2); }
+.mapview, .mapview.maplibregl-map { background: #e9f1e1; }
+.overlay { background: #f4f9efcc; }
+.viewswitch, .zoombar, .chip2 { background: #ffffffe6; }
+.viewswitch button[aria-pressed="false"], .zoombar button { color: var(--text-2); }
+
+.modebar, .legend, .atoast { background: #fffffff2; }
+.maplibregl-ctrl-attrib, .maplibregl-ctrl-attrib.maplibregl-compact, .maplibregl-ctrl-scale { background: #ffffffcc !important; }
+.chip2.warn { border-color: #e2c27a; }

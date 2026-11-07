@@ -127,6 +127,10 @@ export function App() {
     return <Login />;
   }
 
+  // The opener is display-only: it is not part of `turns`, so it is never sent to the model.
+  const name = me.user ? me.user.charAt(0).toUpperCase() + me.user.slice(1) : 'there';
+  const greeting = `Hi ${name}, how can I help you today? I'm the Apetit Data Chatbot, able to check the validity and provenance of Apetit's Climate and Nature data.`;
+
   return (
     <div className="app">
       <header>
@@ -178,6 +182,7 @@ export function App() {
 
       <div className="chat">
       <div className="log" ref={scroller}>
+        <div className="msg assistant">{greeting}</div>
         {turns.map((t, i) => {
           if (t.kind === 'user') {
             return (
