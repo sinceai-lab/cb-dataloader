@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "traveller_id": "https://apetit.sinceai2026.example/ns#traveller_id",
+    "travel_date": "https://apetit.sinceai2026.example/ns#travel_date",
+    "travel_mode": "https://apetit.sinceai2026.example/ns#travel_mode",
+    "route": "https://apetit.sinceai2026.example/ns#travel_route",
+    "pkm": "https://apetit.sinceai2026.example/ns#passenger_km",
+    "nights": "https://apetit.sinceai2026.example/ns#nights",
+    "booking_id": "https://apetit.sinceai2026.example/ns#booking_id",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "TravelBooking": "https://apetit.sinceai2026.example/ns#TravelBooking"
+  }
+}

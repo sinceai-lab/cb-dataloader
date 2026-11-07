@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:PublishedInventoryYear",
+  "title": "Apetit Climate & Nature Navigator - PublishedInventoryYear",
+  "description": "Apetit published totals 2019-2024 (tCO2e), including restatements.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "year"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Reporting year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2024,
+      "x-term": "year"
+    },
+    "scope1": {
+      "type": "integer",
+      "description": "Scope 1 (t)",
+      "x-unit": "t",
+      "x-observed-min": 1247,
+      "x-observed-max": 6251,
+      "x-term": "scope1",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "scope2_market": {
+      "type": "integer",
+      "description": "Scope 2 market-based (t)",
+      "x-unit": "t",
+      "x-observed-min": 63,
+      "x-observed-max": 21860,
+      "x-term": "scope2_market",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "scope3": {
+      "type": "integer",
+      "description": "Scope 3 as published (t)",
+      "x-unit": "t",
+      "x-observed-min": 201016,
+      "x-observed-max": 294108,
+      "x-term": "scope3",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "scope3_restated": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Scope 3 after restatement (t), empty if none",
+      "x-unit": "t",
+      "x-observed-min": 186430.0,
+      "x-observed-max": 237886.0,
+      "x-term": "scope3_restated",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "note": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Note",
+      "x-term": "inventory_note"
+    }
+  },
+  "required": [
+    "year",
+    "scope1",
+    "scope2_market",
+    "scope3"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

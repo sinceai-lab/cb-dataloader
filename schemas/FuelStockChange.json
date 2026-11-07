@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:FuelStockChange",
+  "title": "Apetit Climate & Nature Navigator - FuelStockChange",
+  "description": "Year-end tank stock change. Consumption = deliveries - stock_change.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "site_id",
+    "carrier",
+    "year"
+  ],
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-term": "site_id"
+    },
+    "carrier": {
+      "type": "string",
+      "description": "Fuel",
+      "x-term": "fuel_carrier"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Unit",
+      "x-term": "fuel_unit"
+    },
+    "stock_change": {
+      "type": "number",
+      "description": "Closing minus opening stock",
+      "x-observed-min": -6308.021,
+      "x-observed-max": 3474.154,
+      "x-term": "stock_change",
+      "x-unit-from": "unit"
+    },
+    "note": {
+      "type": "string",
+      "description": "Note",
+      "x-term": "stock_note"
+    }
+  },
+  "required": [
+    "site_id",
+    "carrier",
+    "year",
+    "unit",
+    "stock_change",
+    "note"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

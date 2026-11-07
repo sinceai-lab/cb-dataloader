@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:FoodhillsGrowerData",
+  "title": "Apetit Climate & Nature Navigator - FoodhillsGrowerData",
+  "description": "Foodhills (SE) grower data 2018-2026 in the acquired company's format: Swedish headers, ';' separator, decimal comma.",
+  "type": "object",
+  "x-source-format": "csv (';' separated, decimal comma)",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "odlar_id",
+    "skördeår",
+    "gröda"
+  ],
+  "properties": {
+    "odlar_id": {
+      "type": "string",
+      "description": "Grower id",
+      "x-term": "farm_id"
+    },
+    "skördeår": {
+      "type": "integer",
+      "description": "Harvest year",
+      "x-observed-min": 2018,
+      "x-observed-max": 2026,
+      "x-term": "year"
+    },
+    "gröda": {
+      "type": "string",
+      "description": "Crop",
+      "x-observed-values": [
+        "Ärt (frysärt)"
+      ],
+      "x-term": "crop"
+    },
+    "areal_ha": {
+      "type": "string",
+      "pattern": "^\\d+(,\\d+)?$",
+      "x-decimal-separator": ",",
+      "description": "Area (ha)",
+      "x-unit": "ha",
+      "x-term": "area_ha",
+      "x-unit-code": "HAR"
+    },
+    "levererad_mängd_ton": {
+      "type": "string",
+      "pattern": "^\\d+(,\\d+)?$",
+      "x-decimal-separator": ",",
+      "description": "Delivered (t)",
+      "x-unit": "t",
+      "x-term": "delivered_tonnes",
+      "x-unit-code": "TNE"
+    },
+    "kvävegiva_kg_ha": {
+      "type": "integer",
+      "description": "N applied (kg/ha)",
+      "x-unit": "kg/ha",
+      "x-observed-min": 0,
+      "x-observed-max": 36,
+      "x-term": "n_applied_kg_ha",
+      "x-unit-text": "kg/ha"
+    },
+    "diesel_l_ha": {
+      "type": "integer",
+      "description": "Diesel (l/ha)",
+      "x-observed-min": 51,
+      "x-observed-max": 137,
+      "x-term": "diesel_l_ha",
+      "x-unit-text": "l/ha"
+    },
+    "bevattnad": {
+      "type": "string",
+      "description": "Irrigated (ja/nej)",
+      "x-observed-values": [
+        "ja",
+        "nej"
+      ],
+      "x-term": "irrigated"
+    }
+  },
+  "required": [
+    "odlar_id",
+    "skördeår",
+    "gröda",
+    "areal_ha",
+    "levererad_mängd_ton",
+    "kvävegiva_kg_ha",
+    "diesel_l_ha",
+    "bevattnad"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "odlar_id",
+      "type": "Farm"
+    },
+    "time": {
+      "year": "skördeår"
+    },
+    "dimensions": [
+      "gröda"
+    ]
+  }
+}

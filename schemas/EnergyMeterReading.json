@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:EnergyMeterReading",
+  "title": "Apetit Climate & Nature Navigator - EnergyMeterReading",
+  "description": "Monthly meter readings (electricity, purchased steam/heat, biogas, wood chips, side streams, natural gas). Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "site_id",
+    "year",
+    "month",
+    "carrier"
+  ],
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-BJU",
+        "S-HQ",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "month": {
+      "type": "integer",
+      "description": "Month",
+      "x-observed-min": 1,
+      "x-observed-max": 12,
+      "x-term": "month"
+    },
+    "carrier": {
+      "type": "string",
+      "description": "Energy carrier",
+      "x-observed-values": [
+        "biogas",
+        "district_heat",
+        "electricity",
+        "natural_gas",
+        "oilseed_sidestream",
+        "steam",
+        "wood_chips"
+      ],
+      "x-term": "energy_carrier"
+    },
+    "value": {
+      "type": "number",
+      "description": "Reading",
+      "x-observed-min": 0.0,
+      "x-observed-max": 1849794.0,
+      "x-term": "energy_reading",
+      "x-unit-from": "unit"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Unit (MWh)",
+      "x-observed-values": [
+        "MWh"
+      ],
+      "x-term": "reading_unit"
+    }
+  },
+  "required": [
+    "site_id",
+    "year",
+    "month",
+    "carrier",
+    "value",
+    "unit"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "site_id",
+      "type": "Site"
+    },
+    "time": {
+      "year": "year",
+      "month": "month"
+    },
+    "dimensions": [
+      "carrier"
+    ]
+  }
+}

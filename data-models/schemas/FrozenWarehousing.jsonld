@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "pallet_days": "https://apetit.sinceai2026.example/ns#pallet_days",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "FrozenWarehousing": "https://apetit.sinceai2026.example/ns#FrozenWarehousing"
+  }
+}

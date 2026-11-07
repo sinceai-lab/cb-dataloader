@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "catchment_id": "https://apetit.sinceai2026.example/ns#catchment_id",
+    "region": "https://apetit.sinceai2026.example/ns#region",
+    "receiving_water_type": "https://apetit.sinceai2026.example/ns#receiving_water_type",
+    "ecological_status_class": "https://apetit.sinceai2026.example/ns#ecological_status_class",
+    "nutrient_retention_frac_estimate": "https://apetit.sinceai2026.example/ns#nutrient_retention_frac_estimate",
+    "catchment_area_km2": "https://apetit.sinceai2026.example/ns#catchment_area_km2",
+    "field_area_total_ha": "https://apetit.sinceai2026.example/ns#field_area_total_ha",
+    "p_sensitivity": "https://apetit.sinceai2026.example/ns#p_sensitivity",
+    "monitoring_station": "https://apetit.sinceai2026.example/ns#monitoring_station",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Catchment": "https://apetit.sinceai2026.example/ns#Catchment"
+  }
+}

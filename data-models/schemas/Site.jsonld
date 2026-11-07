@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "name": "https://apetit.sinceai2026.example/ns#site_name",
+    "country": "https://apetit.sinceai2026.example/ns#country",
+    "lat": "https://apetit.sinceai2026.example/ns#lat",
+    "lon": "https://apetit.sinceai2026.example/ns#lon",
+    "activity": "https://apetit.sinceai2026.example/ns#site_activity",
+    "in_group_from": "https://apetit.sinceai2026.example/ns#in_group_from",
+    "in_group_to": "https://apetit.sinceai2026.example/ns#in_group_to",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Site": "https://apetit.sinceai2026.example/ns#Site"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:ErpPurchaseLine",
+  "title": "Apetit Climate & Nature Navigator - ErpPurchaseLine",
+  "description": "ERP purchase lines (goods receipts / invoices). Raw: contains planted issues.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "doc_no",
+    "line_no"
+  ],
+  "properties": {
+    "doc_no": {
+      "type": "integer",
+      "description": "Document number",
+      "x-observed-min": 4500000001,
+      "x-observed-max": 5100000607,
+      "x-term": "doc_no"
+    },
+    "line_no": {
+      "type": "integer",
+      "description": "Line",
+      "x-observed-min": 10,
+      "x-observed-max": 10,
+      "x-term": "line_no"
+    },
+    "posting_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Posting date",
+      "x-term": "posting_date"
+    },
+    "company_code": {
+      "type": "string",
+      "description": "C100 Apetit Oyj, C200 Kasviöljy (Kantvik), C400 Foodhills (SE)",
+      "x-observed-values": [
+        "C100",
+        "C200"
+      ],
+      "x-term": "company_code"
+    },
+    "plant": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-HQ",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "plant"
+    },
+    "material_id": {
+      "type": "string",
+      "description": "Material",
+      "x-term": "material_id"
+    },
+    "material_text": {
+      "type": "string",
+      "description": "Material text as on the document",
+      "x-term": "material_text"
+    },
+    "supplier_id": {
+      "type": "string",
+      "description": "Supplier or contract farm",
+      "x-term": "supplier_id"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity in `uom`",
+      "x-observed-min": -25311.128,
+      "x-observed-max": 2320787.129532,
+      "x-term": "purchase_quantity",
+      "x-unit-from": "uom"
+    },
+    "uom": {
+      "type": "string",
+      "description": "KG / TO (tonnes; vessel lots) / EUR (spend items)",
+      "x-observed-values": [
+        "EUR",
+        "KG",
+        "TO"
+      ],
+      "x-term": "uom"
+    },
+    "net_amount": {
+      "type": "number",
+      "description": "Net amount in `currency`",
+      "x-observed-min": -6845.62,
+      "x-observed-max": 10644735.86,
+      "x-term": "net_amount",
+      "x-unit-from": "currency"
+    },
+    "currency": {
+      "type": "string",
+      "description": "EUR / SEK / USD",
+      "x-observed-values": [
+        "EUR",
+        "SEK",
+        "USD"
+      ],
+      "x-term": "currency"
+    },
+    "origin_country": {
+      "type": "string",
+      "description": "Origin country",
+      "x-observed-values": [
+        "BE",
+        "CN",
+        "DK",
+        "EC",
+        "EE",
+        "ES",
+        "EU",
+        "FI",
+        "FO",
+        "GLO",
+        "HU",
+        "LT",
+        "LV",
+        "NO",
+        "PL",
+        "PT",
+        "SE"
+      ],
+      "x-term": "origin_country"
+    },
+    "lot_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Lot (V = vessel, L = farm oilseed, G = vegetable intake)",
+      "x-term": "lot_id"
+    },
+    "movement_type": {
+      "type": "integer",
+      "description": "101 = receipt, 122 = return to supplier (credit, legitimate)",
+      "x-observed-min": 101,
+      "x-observed-max": 122,
+      "x-term": "movement_type"
+    },
+    "reference_doc": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Original document for returns",
+      "x-observed-min": 4500000410.0,
+      "x-observed-max": 4500006794.0,
+      "x-term": "reference_doc"
+    },
+    "wbs_element": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Capex project",
+      "x-observed-values": [
+        "Automated frozen warehouse (phase 1)",
+        "Biosteam plant (wood chips / side streams)",
+        "BlackGrain powder line",
+        "Heat-pump heat recovery (with energy partner)",
+        "Maintenance capex (various)",
+        "Optical sorting machines",
+        "Packing line upgrade",
+        "Pea viner fleet renewal",
+        "Steam boiler house (biogas / LNG backup)"
+      ],
+      "x-term": "wbs_element"
+    }
+  },
+  "required": [
+    "doc_no",
+    "line_no",
+    "posting_date",
+    "company_code",
+    "plant",
+    "material_id",
+    "material_text",
+    "supplier_id",
+    "quantity",
+    "uom",
+    "net_amount",
+    "currency",
+    "origin_country",
+    "movement_type"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "date": "posting_date"
+    }
+  }
+}

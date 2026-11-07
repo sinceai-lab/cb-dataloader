@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Farm",
+  "title": "Apetit Climate & Nature Navigator - Farm",
+  "description": "Contract-farm registry (FI vegetables, FI oilseeds, SE peas).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "farm_id"
+  ],
+  "properties": {
+    "farm_id": {
+      "type": "string",
+      "description": "Farm id (F = Finland, S = Sweden)",
+      "x-term": "farm_id"
+    },
+    "segment": {
+      "type": "string",
+      "description": "veg / oil / se_pea",
+      "enum": [
+        "oil",
+        "se_pea",
+        "veg"
+      ],
+      "x-term": "farm_segment"
+    },
+    "region": {
+      "type": "string",
+      "description": "FI_SW / SE_SKANE",
+      "enum": [
+        "FI_SW",
+        "SE_SKANE"
+      ],
+      "x-term": "region"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country",
+      "enum": [
+        "FI",
+        "SE"
+      ],
+      "x-term": "country"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Farm centre latitude",
+      "x-observed-min": 21.9413,
+      "x-observed-max": 61.54206,
+      "x-term": "lat"
+    },
+    "lon": {
+      "type": "number",
+      "description": "Farm centre longitude",
+      "x-observed-min": 12.95243,
+      "x-observed-max": 61.11341,
+      "x-term": "lon"
+    },
+    "organic_certified": {
+      "type": "boolean",
+      "description": "Certified organic production",
+      "x-term": "organic_certified"
+    },
+    "livestock": {
+      "type": "boolean",
+      "description": "Farm has livestock (manure)",
+      "x-term": "livestock"
+    },
+    "joined_year": {
+      "type": "integer",
+      "description": "Year contract relationship started",
+      "x-observed-min": 1995,
+      "x-observed-max": 2023,
+      "x-term": "joined_year"
+    },
+    "contract_crops": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Contract crops (;-separated)",
+      "x-observed-values": [
+        "carrot",
+        "carrot;pea",
+        "carrot;pea;potato",
+        "carrot;pea;spinach",
+        "pea",
+        "pea;potato",
+        "pea;spinach",
+        "potato",
+        "spinach",
+        "turnip_rape"
+      ],
+      "x-term": "contract_crops"
+    }
+  },
+  "required": [
+    "farm_id",
+    "segment",
+    "region",
+    "country",
+    "lat",
+    "lon",
+    "organic_certified",
+    "livestock",
+    "joined_year"
+  ],
+  "additionalProperties": false
+}

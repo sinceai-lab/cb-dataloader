@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "origin_country": "https://apetit.sinceai2026.example/ns#origin_country",
+    "commodity": "https://apetit.sinceai2026.example/ns#commodity",
+    "baseline_water_stress_cat_indicative": "https://apetit.sinceai2026.example/ns#baseline_water_stress_cat_indicative",
+    "deforestation_conversion_risk_indicative": "https://apetit.sinceai2026.example/ns#deforestation_conversion_risk_indicative",
+    "biodiversity_sensitivity_indicative": "https://apetit.sinceai2026.example/ns#biodiversity_sensitivity_indicative",
+    "freshwater_nutrient_status_indicative": "https://apetit.sinceai2026.example/ns#freshwater_nutrient_status_indicative",
+    "water_stress_scale": "https://apetit.sinceai2026.example/ns#water_stress_scale",
+    "source_note": "https://apetit.sinceai2026.example/ns#source_note",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "OriginStateOfNature": "https://apetit.sinceai2026.example/ns#OriginStateOfNature"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "response_id": "https://apetit.sinceai2026.example/ns#response_id",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "one_way_km": "https://apetit.sinceai2026.example/ns#one_way_km",
+    "commute_mode": "https://apetit.sinceai2026.example/ns#commute_mode",
+    "days_on_site_per_week": "https://apetit.sinceai2026.example/ns#days_on_site_per_week",
+    "shift_worker": "https://apetit.sinceai2026.example/ns#shift_worker",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "CommutingSurveyResponse": "https://apetit.sinceai2026.example/ns#CommutingSurveyResponse"
+  }
+}

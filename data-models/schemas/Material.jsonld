@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "material_id": "https://apetit.sinceai2026.example/ns#material_id",
+    "erp_name": "https://apetit.sinceai2026.example/ns#erp_name",
+    "name_en": "https://apetit.sinceai2026.example/ns#name_en",
+    "material_group": "https://apetit.sinceai2026.example/ns#material_group",
+    "base_uom": "https://apetit.sinceai2026.example/ns#base_uom",
+    "default_ef_id": "https://apetit.sinceai2026.example/ns#default_ef_id",
+    "receiving_site": "https://apetit.sinceai2026.example/ns#receiving_site",
+    "origin_countries": "https://apetit.sinceai2026.example/ns#origin_countries",
+    "eudr_commodity": "https://apetit.sinceai2026.example/ns#eudr_commodity",
+    "sbtn_high_impact_commodity": "https://apetit.sinceai2026.example/ns#sbtn_high_impact_commodity",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Material": "https://apetit.sinceai2026.example/ns#Material"
+  }
+}

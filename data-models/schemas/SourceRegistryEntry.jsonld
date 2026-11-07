@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "source": "https://apetit.sinceai2026.example/ns#source_name",
+    "url": "https://apetit.sinceai2026.example/ns#source_url",
+    "licence": "https://apetit.sinceai2026.example/ns#source_licence",
+    "used_for": "https://apetit.sinceai2026.example/ns#used_for",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "SourceRegistryEntry": "https://apetit.sinceai2026.example/ns#SourceRegistryEntry"
+  }
+}

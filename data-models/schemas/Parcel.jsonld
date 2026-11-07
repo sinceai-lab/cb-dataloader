@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "parcel_id": "https://apetit.sinceai2026.example/ns#parcel_id",
+    "farm_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "lat": "https://apetit.sinceai2026.example/ns#lat",
+    "lon": "https://apetit.sinceai2026.example/ns#lon",
+    "area_ha": "https://apetit.sinceai2026.example/ns#area_ha",
+    "soil_class_soilmap": "https://apetit.sinceai2026.example/ns#soil_class_soilmap",
+    "clay_pct_soilmap": "https://apetit.sinceai2026.example/ns#clay_pct_soilmap",
+    "slope_pct": "https://apetit.sinceai2026.example/ns#slope_pct",
+    "dist_to_water_m": "https://apetit.sinceai2026.example/ns#dist_to_water_m",
+    "drainage": "https://apetit.sinceai2026.example/ns#drainage",
+    "catchment_id": "https://apetit.sinceai2026.example/ns#catchment_id",
+    "p_test_mgl_latest": "https://apetit.sinceai2026.example/ns#p_test_mgl_latest",
+    "buffer_strip": "https://apetit.sinceai2026.example/ns#buffer_strip",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Parcel": "https://apetit.sinceai2026.example/ns#Parcel"
+  }
+}

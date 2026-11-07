@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "cell_id": "https://apetit.sinceai2026.example/ns#cell_id",
+    "region": "https://apetit.sinceai2026.example/ns#region",
+    "lat": "https://apetit.sinceai2026.example/ns#lat",
+    "lon": "https://apetit.sinceai2026.example/ns#lon",
+    "continentality": "https://apetit.sinceai2026.example/ns#continentality",
+    "elevation_m": "https://apetit.sinceai2026.example/ns#elevation_m",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "ClimateGridCell": "https://apetit.sinceai2026.example/ns#ClimateGridCell"
+  }
+}

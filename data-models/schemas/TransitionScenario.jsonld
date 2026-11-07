@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "scenario": "https://apetit.sinceai2026.example/ns#transition_scenario",
+    "ngfs_category": "https://apetit.sinceai2026.example/ns#ngfs_category",
+    "narrative": "https://apetit.sinceai2026.example/ns#scenario_narrative",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "physical_pathway_proxy": "https://apetit.sinceai2026.example/ns#physical_pathway_proxy",
+    "carbon_price_eur_t": "https://apetit.sinceai2026.example/ns#carbon_price_eur_t",
+    "eu_ets2_fuel_price_eur_t": "https://apetit.sinceai2026.example/ns#eu_ets2_fuel_price_eur_t",
+    "electricity_price_eur_mwh": "https://apetit.sinceai2026.example/ns#electricity_price_eur_mwh",
+    "n_fertiliser_price_index": "https://apetit.sinceai2026.example/ns#n_fertiliser_price_index",
+    "diesel_price_index": "https://apetit.sinceai2026.example/ns#diesel_price_index",
+    "plant_based_demand_index": "https://apetit.sinceai2026.example/ns#plant_based_demand_index",
+    "frozen_veg_import_premium_pct": "https://apetit.sinceai2026.example/ns#frozen_veg_import_premium_pct",
+    "value_status": "https://apetit.sinceai2026.example/ns#scenario_status",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "TransitionScenario": "https://apetit.sinceai2026.example/ns#TransitionScenario"
+  }
+}

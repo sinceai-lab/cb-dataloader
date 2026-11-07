@@ -1,0 +1,12 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "m3": "https://apetit.sinceai2026.example/ns#wastewater_m3",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "WastewaterThirdParty": "https://apetit.sinceai2026.example/ns#WastewaterThirdParty"
+  }
+}

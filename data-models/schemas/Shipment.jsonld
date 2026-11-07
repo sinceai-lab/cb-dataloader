@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "shipment_id": "https://apetit.sinceai2026.example/ns#shipment_id",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "direction": "https://apetit.sinceai2026.example/ns#shipment_direction",
+    "ref_doc": "https://apetit.sinceai2026.example/ns#ref_doc",
+    "ef_id": "https://apetit.sinceai2026.example/ns#ef_id",
+    "transport_mode": "https://apetit.sinceai2026.example/ns#transport_mode",
+    "t": "https://apetit.sinceai2026.example/ns#tonnes",
+    "km": "https://apetit.sinceai2026.example/ns#distance_km",
+    "tkm": "https://apetit.sinceai2026.example/ns#tonne_km",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Shipment": "https://apetit.sinceai2026.example/ns#Shipment"
+  }
+}

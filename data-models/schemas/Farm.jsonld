@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "farm_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "segment": "https://apetit.sinceai2026.example/ns#farm_segment",
+    "region": "https://apetit.sinceai2026.example/ns#region",
+    "country": "https://apetit.sinceai2026.example/ns#country",
+    "lat": "https://apetit.sinceai2026.example/ns#lat",
+    "lon": "https://apetit.sinceai2026.example/ns#lon",
+    "organic_certified": "https://apetit.sinceai2026.example/ns#organic_certified",
+    "livestock": "https://apetit.sinceai2026.example/ns#livestock",
+    "joined_year": "https://apetit.sinceai2026.example/ns#joined_year",
+    "contract_crops": "https://apetit.sinceai2026.example/ns#contract_crops",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Farm": "https://apetit.sinceai2026.example/ns#Farm"
+  }
+}

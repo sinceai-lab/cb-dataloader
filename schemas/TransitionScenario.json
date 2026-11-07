@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:TransitionScenario",
+  "title": "Apetit Climate & Nature Navigator - TransitionScenario",
+  "description": "NGFS-style transition scenarios (illustrative values).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "scenario",
+    "year"
+  ],
+  "properties": {
+    "scenario": {
+      "type": "string",
+      "description": "Scenario",
+      "enum": [
+        "below_2c",
+        "current_policies",
+        "delayed_transition",
+        "fragmented_world",
+        "low_demand",
+        "ndcs",
+        "net_zero_2050"
+      ],
+      "x-term": "transition_scenario"
+    },
+    "ngfs_category": {
+      "type": "string",
+      "description": "NGFS category",
+      "enum": [
+        "disorderly",
+        "hot house",
+        "orderly",
+        "too little, too late"
+      ],
+      "x-term": "ngfs_category"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Narrative",
+      "enum": [
+        "Behaviour change lowers energy demand; less reliance on carbon price.",
+        "Delayed and divergent policies; high physical and transition risk.",
+        "Gradually rising policy stringency; 67 % chance of < 2 C.",
+        "Immediate, ambitious policy; global net zero CO2 ~2050.",
+        "No new policy until 2030, then abrupt tightening; higher transition risk.",
+        "Only currently implemented policies; highest physical risk.",
+        "Pledged NDCs implemented."
+      ],
+      "x-term": "scenario_narrative"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2025,
+      "x-observed-max": 2050,
+      "x-term": "year"
+    },
+    "physical_pathway_proxy": {
+      "type": "string",
+      "description": "Matching SSP",
+      "enum": [
+        "ssp126",
+        "ssp245",
+        "ssp585"
+      ],
+      "x-term": "physical_pathway_proxy"
+    },
+    "carbon_price_eur_t": {
+      "type": "integer",
+      "description": "EU carbon price (EUR/t)",
+      "x-observed-min": 75,
+      "x-observed-max": 650,
+      "x-term": "carbon_price_eur_t",
+      "x-unit-text": "EUR/t"
+    },
+    "eu_ets2_fuel_price_eur_t": {
+      "type": "number",
+      "description": "ETS2 price on fuels (EUR/t, from 2028)",
+      "x-observed-min": 0.0,
+      "x-observed-max": 160.0,
+      "x-term": "eu_ets2_fuel_price_eur_t",
+      "x-unit-text": "EUR/t"
+    },
+    "electricity_price_eur_mwh": {
+      "type": "number",
+      "description": "Electricity price (EUR/MWh)",
+      "x-observed-min": 61.8,
+      "x-observed-max": 80.0,
+      "x-term": "electricity_price_eur_mwh",
+      "x-unit-text": "EUR/MWh"
+    },
+    "n_fertiliser_price_index": {
+      "type": "number",
+      "description": "N fertiliser price index (2025 = 1)",
+      "x-observed-min": 1.0,
+      "x-observed-max": 1.45,
+      "x-term": "n_fertiliser_price_index"
+    },
+    "diesel_price_index": {
+      "type": "number",
+      "description": "Diesel price index",
+      "x-observed-min": 0.996,
+      "x-observed-max": 1.45,
+      "x-term": "diesel_price_index"
+    },
+    "plant_based_demand_index": {
+      "type": "number",
+      "description": "Plant-based demand index",
+      "x-observed-min": 1.0,
+      "x-observed-max": 1.35,
+      "x-term": "plant_based_demand_index"
+    },
+    "frozen_veg_import_premium_pct": {
+      "type": "number",
+      "description": "Import premium (%)",
+      "x-observed-min": 4.0,
+      "x-observed-max": 9.79,
+      "x-term": "frozen_veg_import_premium_pct",
+      "x-unit-code": "P1"
+    },
+    "value_status": {
+      "type": "string",
+      "description": "Status",
+      "enum": [
+        "illustrative (NGFS Phase V-consistent ranges); replace with IIASA NGFS data for production"
+      ],
+      "x-term": "scenario_status"
+    }
+  },
+  "required": [
+    "scenario",
+    "ngfs_category",
+    "narrative",
+    "year",
+    "physical_pathway_proxy",
+    "carbon_price_eur_t",
+    "eu_ets2_fuel_price_eur_t",
+    "electricity_price_eur_mwh",
+    "n_fertiliser_price_index",
+    "diesel_price_index",
+    "plant_based_demand_index",
+    "frozen_veg_import_premium_pct",
+    "value_status"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:GooRegistryStatement",
+  "title": "Apetit Climate & Nature Navigator - GooRegistryStatement",
+  "description": "Guarantee-of-origin cancellations exported from the national registry (authoritative).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "cancellation_id"
+  ],
+  "properties": {
+    "cancellation_id": {
+      "type": "string",
+      "description": "Cancellation id",
+      "x-term": "cancellation_id"
+    },
+    "consumption_year": {
+      "type": "integer",
+      "description": "Consumption year the cancellation is for",
+      "x-observed-min": 2020,
+      "x-observed-max": 2025,
+      "x-term": "consumption_year"
+    },
+    "beneficiary_site": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-BJU",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "beneficiary_site"
+    },
+    "mwh": {
+      "type": "number",
+      "description": "MWh",
+      "x-observed-min": 372.0,
+      "x-observed-max": 10332.689,
+      "x-term": "mwh_cancelled",
+      "x-unit-code": "MWH"
+    },
+    "technology": {
+      "type": "string",
+      "description": "Technology",
+      "x-observed-values": [
+        "hydro",
+        "wind"
+      ],
+      "x-term": "technology"
+    },
+    "production_country": {
+      "type": "string",
+      "description": "Production country",
+      "x-observed-values": [
+        "FI",
+        "SE"
+      ],
+      "x-term": "production_country"
+    },
+    "production_period_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Production period start",
+      "x-term": "production_period_start"
+    },
+    "production_period_end": {
+      "type": "string",
+      "format": "date",
+      "description": "Production period end",
+      "x-term": "production_period_end"
+    },
+    "issuing_body": {
+      "type": "string",
+      "description": "Issuing body",
+      "x-observed-values": [
+        "national registry (synthetic)"
+      ],
+      "x-term": "issuing_body"
+    }
+  },
+  "required": [
+    "cancellation_id",
+    "consumption_year",
+    "beneficiary_site",
+    "mwh",
+    "technology",
+    "production_country",
+    "production_period_start",
+    "production_period_end",
+    "issuing_body"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint."
+}

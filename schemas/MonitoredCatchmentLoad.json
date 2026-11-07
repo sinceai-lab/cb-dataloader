@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:MonitoredCatchmentLoad",
+  "title": "Apetit Climate & Nature Navigator - MonitoredCatchmentLoad",
+  "description": "Monitored outlet loads (all sources).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "catchment_id",
+    "year"
+  ],
+  "properties": {
+    "catchment_id": {
+      "type": "string",
+      "description": "Catchment",
+      "x-observed-values": [
+        "CA01",
+        "CA02",
+        "CA03",
+        "CA04",
+        "CA05",
+        "CA06",
+        "CA07",
+        "CA08",
+        "CA09",
+        "CA10",
+        "CS01",
+        "CS02",
+        "CS03",
+        "CS04",
+        "CS05"
+      ],
+      "x-term": "catchment_id"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "total_p_load_kg": {
+      "type": "number",
+      "description": "P load (kg/yr)",
+      "x-observed-min": 1932.0,
+      "x-observed-max": 15137.0,
+      "x-term": "total_p_load_kg",
+      "x-unit-text": "kg/yr"
+    },
+    "total_n_load_kg": {
+      "type": "number",
+      "description": "N load (kg/yr)",
+      "x-observed-min": 43024.0,
+      "x-observed-max": 205568.0,
+      "x-term": "total_n_load_kg",
+      "x-unit-text": "kg/yr"
+    },
+    "method": {
+      "type": "string",
+      "description": "Method",
+      "enum": [
+        "flow-weighted sampling, ±10-15 % uncertainty"
+      ],
+      "x-term": "load_method"
+    }
+  },
+  "required": [
+    "catchment_id",
+    "year",
+    "total_p_load_kg",
+    "total_n_load_kg",
+    "method"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "subject": {
+      "column": "catchment_id",
+      "type": "Catchment"
+    },
+    "time": {
+      "year": "year"
+    }
+  }
+}

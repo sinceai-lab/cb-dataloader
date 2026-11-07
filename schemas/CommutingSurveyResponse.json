@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:CommutingSurveyResponse",
+  "title": "Apetit Climate & Nature Navigator - CommutingSurveyResponse",
+  "description": "Employee commuting survey 2025 (respondents only). Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "response_id"
+  ],
+  "properties": {
+    "response_id": {
+      "type": "string",
+      "description": "Response id",
+      "x-term": "response_id"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-BJU",
+        "S-HQ",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "one_way_km": {
+      "type": "number",
+      "description": "One-way distance (km)",
+      "x-unit": "km",
+      "x-observed-min": 1.5,
+      "x-observed-max": 56300.0,
+      "x-term": "one_way_km",
+      "x-unit-code": "KMT"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Main mode",
+      "x-observed-values": [
+        "Car",
+        "auto",
+        "bike_walk",
+        "bus",
+        "car",
+        "carpool",
+        "ev_car",
+        "henkilöauto",
+        "linja-auto",
+        "train"
+      ],
+      "x-term": "commute_mode"
+    },
+    "days_on_site_per_week": {
+      "type": "integer",
+      "description": "Days on site per week",
+      "x-observed-min": 2,
+      "x-observed-max": 5,
+      "x-term": "days_on_site_per_week",
+      "x-unit-text": "days/week"
+    },
+    "shift_worker": {
+      "type": "boolean",
+      "description": "Shift worker",
+      "x-term": "shift_worker"
+    }
+  },
+  "required": [
+    "response_id",
+    "site_id",
+    "one_way_km",
+    "mode",
+    "days_on_site_per_week",
+    "shift_worker"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint."
+}

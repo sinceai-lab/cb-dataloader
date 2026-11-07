@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:WeatherMonthly",
+  "title": "Apetit Climate & Nature Navigator - WeatherMonthly",
+  "description": "Monthly aggregates of the daily weather.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "cell_id",
+    "scenario",
+    "year",
+    "month"
+  ],
+  "properties": {
+    "cell_id": {
+      "type": "string",
+      "description": "Grid cell",
+      "x-term": "cell_id"
+    },
+    "scenario": {
+      "type": "string",
+      "description": "historical / ssp126 / ssp245 / ssp585",
+      "x-observed-values": [
+        "historical",
+        "ssp126",
+        "ssp245",
+        "ssp585"
+      ],
+      "x-term": "climate_scenario"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 1991,
+      "x-observed-max": 2060,
+      "x-term": "year"
+    },
+    "month": {
+      "type": "integer",
+      "description": "Month",
+      "x-observed-min": 1,
+      "x-observed-max": 12,
+      "x-term": "month"
+    },
+    "tmean_c": {
+      "type": "number",
+      "description": "Mean temperature (C)",
+      "x-unit": "Cel",
+      "x-observed-min": -14.16,
+      "x-observed-max": 23.72,
+      "x-term": "tmean_c",
+      "x-unit-code": "CEL"
+    },
+    "tmax_c_max": {
+      "type": "number",
+      "description": "Highest daily max (C)",
+      "x-unit": "Cel",
+      "x-observed-min": -5.2,
+      "x-observed-max": 34.8,
+      "x-term": "tmax_c_max",
+      "x-unit-code": "CEL"
+    },
+    "precip_mm": {
+      "type": "number",
+      "description": "Precipitation (mm)",
+      "x-unit": "mm",
+      "x-observed-min": 0.0,
+      "x-observed-max": 327.8,
+      "x-term": "precip_mm",
+      "x-unit-code": "MMT"
+    },
+    "pet_mm": {
+      "type": "number",
+      "description": "Potential evapotranspiration (mm)",
+      "x-unit": "mm",
+      "x-observed-min": 0.63,
+      "x-observed-max": 154.42,
+      "x-term": "pet_mm",
+      "x-unit-code": "MMT"
+    },
+    "hot_days_tmax_ge_27": {
+      "type": "integer",
+      "description": "Days with Tmax >= 27 C",
+      "x-observed-min": 0,
+      "x-observed-max": 29,
+      "x-term": "hot_days_tmax_ge_27",
+      "x-unit-code": "DAY"
+    }
+  },
+  "required": [
+    "cell_id",
+    "scenario",
+    "year",
+    "month",
+    "tmean_c",
+    "tmax_c_max",
+    "precip_mm",
+    "pet_mm",
+    "hot_days_tmax_ge_27"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "subject": {
+      "column": "cell_id",
+      "type": "ClimateGridCell"
+    },
+    "time": {
+      "year": "year",
+      "month": "month"
+    },
+    "dimensions": [
+      "scenario"
+    ]
+  }
+}

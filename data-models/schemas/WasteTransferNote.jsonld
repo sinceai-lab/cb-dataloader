@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "transfer_note": "https://apetit.sinceai2026.example/ns#transfer_note",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "month": "https://apetit.sinceai2026.example/ns#month",
+    "waste_stream": "https://apetit.sinceai2026.example/ns#waste_stream",
+    "treatment": "https://apetit.sinceai2026.example/ns#waste_treatment",
+    "quantity": "https://apetit.sinceai2026.example/ns#waste_quantity",
+    "unit": "https://apetit.sinceai2026.example/ns#waste_unit",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "WasteTransferNote": "https://apetit.sinceai2026.example/ns#WasteTransferNote"
+  }
+}

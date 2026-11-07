@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "scenario": "https://apetit.sinceai2026.example/ns#ssp_scenario",
+    "period": "https://apetit.sinceai2026.example/ns#climate_period",
+    "month": "https://apetit.sinceai2026.example/ns#month",
+    "delta_tmean_c": "https://apetit.sinceai2026.example/ns#delta_tmean_c",
+    "precip_factor": "https://apetit.sinceai2026.example/ns#precip_factor",
+    "wetday_factor": "https://apetit.sinceai2026.example/ns#wetday_factor",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "ClimateChangeSignal": "https://apetit.sinceai2026.example/ns#ClimateChangeSignal"
+  }
+}

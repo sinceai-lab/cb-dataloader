@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:StructuralEvent",
+  "title": "Apetit Climate & Nature Navigator - StructuralEvent",
+  "description": "Dated structural and regulatory events with inventory relevance.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "date",
+    "event"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Event date",
+      "x-term": "event_date"
+    },
+    "event": {
+      "type": "string",
+      "description": "Event description",
+      "x-term": "event"
+    },
+    "type": {
+      "type": "string",
+      "description": "Event type",
+      "x-term": "event_type"
+    },
+    "relevance": {
+      "type": "string",
+      "description": "Inventory relevance",
+      "x-term": "event_relevance"
+    },
+    "source": {
+      "type": "string",
+      "description": "Source label",
+      "x-term": "source_label"
+    }
+  },
+  "required": [
+    "date",
+    "event",
+    "type",
+    "relevance",
+    "source"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "time": {
+      "date": "date"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:ContractPrice",
+  "title": "Apetit Climate & Nature Navigator - ContractPrice",
+  "description": "Farm-gate contract prices 2018-2026 and the premium for replacing a shortfall with imports.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "year",
+    "item"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2018,
+      "x-observed-max": 2026,
+      "x-term": "year"
+    },
+    "item": {
+      "type": "string",
+      "description": "Crop",
+      "enum": [
+        "carrot",
+        "pea",
+        "pea_SE",
+        "potato",
+        "spinach",
+        "turnip_rape"
+      ],
+      "x-term": "contract_item"
+    },
+    "contract_price_eur_t": {
+      "type": "number",
+      "description": "Contract price (EUR/t)",
+      "x-observed-min": 173.7,
+      "x-observed-max": 505.2,
+      "x-term": "contract_price_eur_t",
+      "x-unit-text": "EUR/t"
+    },
+    "replacement_import_premium_frac": {
+      "type": "number",
+      "description": "Import replacement premium (fraction of contract price)",
+      "x-observed-min": 0.08,
+      "x-observed-max": 0.6,
+      "x-term": "replacement_import_premium_frac"
+    },
+    "note": {
+      "type": "string",
+      "description": "Note",
+      "enum": [
+        "replacement = buying frozen/processed equivalent from import when contract volume falls short"
+      ],
+      "x-term": "contract_note"
+    }
+  },
+  "required": [
+    "year",
+    "item",
+    "contract_price_eur_t",
+    "replacement_import_premium_frac",
+    "note"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

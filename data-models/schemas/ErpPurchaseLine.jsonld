@@ -1,0 +1,26 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "doc_no": "https://apetit.sinceai2026.example/ns#doc_no",
+    "line_no": "https://apetit.sinceai2026.example/ns#line_no",
+    "posting_date": "https://apetit.sinceai2026.example/ns#posting_date",
+    "company_code": "https://apetit.sinceai2026.example/ns#company_code",
+    "plant": "https://apetit.sinceai2026.example/ns#plant",
+    "material_id": "https://apetit.sinceai2026.example/ns#material_id",
+    "material_text": "https://apetit.sinceai2026.example/ns#material_text",
+    "supplier_id": "https://apetit.sinceai2026.example/ns#supplier_id",
+    "quantity": "https://apetit.sinceai2026.example/ns#purchase_quantity",
+    "uom": "https://apetit.sinceai2026.example/ns#uom",
+    "net_amount": "https://apetit.sinceai2026.example/ns#net_amount",
+    "currency": "https://apetit.sinceai2026.example/ns#currency",
+    "origin_country": "https://apetit.sinceai2026.example/ns#origin_country",
+    "lot_id": "https://apetit.sinceai2026.example/ns#lot_id",
+    "movement_type": "https://apetit.sinceai2026.example/ns#movement_type",
+    "reference_doc": "https://apetit.sinceai2026.example/ns#reference_doc",
+    "wbs_element": "https://apetit.sinceai2026.example/ns#wbs_element",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "ErpPurchaseLine": "https://apetit.sinceai2026.example/ns#ErpPurchaseLine"
+  }
+}

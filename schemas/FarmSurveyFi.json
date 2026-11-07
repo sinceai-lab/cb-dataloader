@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:FarmSurveyFi",
+  "title": "Apetit Climate & Nature Navigator - FarmSurveyFi",
+  "description": "Finnish contract-farm survey (self-reported, farm x crop x year). ~42 % response before 2019, ~74 % after. Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "survey_id"
+  ],
+  "properties": {
+    "survey_id": {
+      "type": "string",
+      "description": "Survey id",
+      "x-term": "survey_id"
+    },
+    "farm_id": {
+      "type": "string",
+      "description": "Farm",
+      "x-term": "farm_id"
+    },
+    "crop": {
+      "type": "string",
+      "description": "Crop",
+      "x-observed-values": [
+        "carrot",
+        "pea",
+        "potato",
+        "spinach",
+        "turnip_rape"
+      ],
+      "x-term": "crop"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Harvest year",
+      "x-observed-min": 2012,
+      "x-observed-max": 2026,
+      "x-term": "year"
+    },
+    "area_ha": {
+      "type": "number",
+      "description": "Reported area (ha)",
+      "x-unit": "ha",
+      "x-observed-min": 1.02,
+      "x-observed-max": 123.07,
+      "x-term": "area_ha",
+      "x-unit-code": "HAR"
+    },
+    "soil_type_reported": {
+      "type": "string",
+      "description": "Farmer-reported soil type",
+      "x-observed-values": [
+        "Mineral soil",
+        "Organic soil"
+      ],
+      "x-term": "soil_type_reported"
+    },
+    "n_mineral_kg_ha": {
+      "type": "number",
+      "description": "Mineral N (kg/ha)",
+      "x-unit": "kg/ha",
+      "x-observed-min": 0.0,
+      "x-observed-max": 1503.0,
+      "x-term": "n_mineral_kg_ha",
+      "x-unit-text": "kg/ha"
+    },
+    "n_manure_kg_ha": {
+      "type": "number",
+      "description": "Manure N (kg/ha)",
+      "x-unit": "kg/ha",
+      "x-observed-min": 0.0,
+      "x-observed-max": 71.5,
+      "x-term": "n_manure_kg_ha",
+      "x-unit-text": "kg/ha"
+    },
+    "fertiliser_product": {
+      "type": "string",
+      "description": "Main N product",
+      "x-observed-values": [
+        "AN 27-0-0",
+        "AN low-carbon (green ammonia)",
+        "CAN 27",
+        "NPK 20-3-8",
+        "NPK 22-6-12"
+      ],
+      "x-term": "fertiliser_product"
+    },
+    "p_kg_ha": {
+      "type": "number",
+      "description": "P (kg/ha)",
+      "x-unit": "kg/ha",
+      "x-observed-min": 5.1,
+      "x-observed-max": 50.0,
+      "x-term": "p_kg_ha",
+      "x-unit-text": "kg/ha"
+    },
+    "diesel_l_ha": {
+      "type": "number",
+      "description": "Diesel (l/ha)",
+      "x-observed-min": 46.3,
+      "x-observed-max": 271.2,
+      "x-term": "diesel_l_ha",
+      "x-unit-text": "l/ha"
+    },
+    "lime_t_ha": {
+      "type": "number",
+      "description": "Lime (t/ha) this year",
+      "x-observed-min": 0.0,
+      "x-observed-max": 4.33,
+      "x-term": "lime_t_ha",
+      "x-unit-text": "t/ha"
+    },
+    "sprays": {
+      "type": "number",
+      "description": "Plant-protection passes",
+      "x-observed-min": 0.0,
+      "x-observed-max": 10.7,
+      "x-term": "sprays"
+    },
+    "irrigated": {
+      "type": "boolean",
+      "description": "Irrigated",
+      "x-term": "irrigated"
+    },
+    "catch_crop_share": {
+      "type": "number",
+      "description": "Share of area with catch crop",
+      "x-observed-min": 0.0,
+      "x-observed-max": 1.0,
+      "x-term": "catch_crop_share"
+    },
+    "yield_t_ha": {
+      "type": "number",
+      "description": "Reported yield (t/ha)",
+      "x-observed-min": 0.44,
+      "x-observed-max": 369.5,
+      "x-term": "yield_t_ha",
+      "x-unit-text": "t/ha"
+    }
+  },
+  "required": [
+    "survey_id",
+    "farm_id",
+    "crop",
+    "year",
+    "area_ha",
+    "soil_type_reported",
+    "n_mineral_kg_ha",
+    "n_manure_kg_ha",
+    "fertiliser_product",
+    "p_kg_ha",
+    "diesel_l_ha",
+    "lime_t_ha",
+    "sprays",
+    "irrigated",
+    "catch_crop_share",
+    "yield_t_ha"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "farm_id",
+      "type": "Farm"
+    },
+    "time": {
+      "year": "year"
+    },
+    "dimensions": [
+      "crop"
+    ]
+  }
+}

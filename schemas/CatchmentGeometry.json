@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:CatchmentGeometry",
+  "title": "Apetit Climate & Nature Navigator - CatchmentGeometry",
+  "description": "Synthetic catchment polygons (Voronoi). Remaining Catchment columns live in catchments.csv; join on catchment_id.",
+  "type": "object",
+  "x-source-format": "geojson (CRS84)",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "FeatureCollection"
+      ]
+    },
+    "crs": {
+      "type": "object"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "Feature"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "catchment_id": {
+                "type": "string",
+                "description": "Catchment"
+              },
+              "region": {
+                "type": "string",
+                "description": "Region",
+                "enum": [
+                  "FI_SW",
+                  "SE_SKANE"
+                ]
+              },
+              "receiving_water_type": {
+                "type": "string",
+                "description": "lake / river / coastal",
+                "enum": [
+                  "coastal",
+                  "lake",
+                  "river"
+                ]
+              },
+              "ecological_status_class": {
+                "type": "string",
+                "description": "WFD ecological status",
+                "enum": [
+                  "bad",
+                  "good",
+                  "moderate",
+                  "poor"
+                ]
+              },
+              "catchment_area_km2": {
+                "type": "number",
+                "description": "Area (km2)",
+                "x-observed-min": 123.7,
+                "x-observed-max": 615.0
+              }
+            },
+            "required": [
+              "catchment_id",
+              "region",
+              "receiving_water_type",
+              "ecological_status_class",
+              "catchment_area_km2"
+            ]
+          },
+          "geometry": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "Polygon"
+              },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "type": "number",
+                        "description": "lon"
+                      },
+                      {
+                        "type": "number",
+                        "description": "lat"
+                      }
+                    ],
+                    "minItems": 2
+                  },
+                  "minItems": 4
+                }
+              }
+            },
+            "required": [
+              "type",
+              "coordinates"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "properties",
+          "geometry"
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "features"
+  ],
+  "x-stage": "reference"
+}

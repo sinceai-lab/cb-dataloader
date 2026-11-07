@@ -1,0 +1,21 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "ef_id": "https://apetit.sinceai2026.example/ns#ef_id",
+    "name": "https://apetit.sinceai2026.example/ns#factor_name",
+    "unit": "https://apetit.sinceai2026.example/ns#activity_unit",
+    "kgco2e_per_unit": "https://apetit.sinceai2026.example/ns#kgco2e_per_unit",
+    "flag_share": "https://apetit.sinceai2026.example/ns#flag_share",
+    "luc_included": "https://apetit.sinceai2026.example/ns#luc_included",
+    "source_type": "https://apetit.sinceai2026.example/ns#factor_source_type",
+    "reference_source": "https://apetit.sinceai2026.example/ns#factor_reference_source",
+    "geography": "https://apetit.sinceai2026.example/ns#geography",
+    "version": "https://apetit.sinceai2026.example/ns#factor_version",
+    "value_status": "https://apetit.sinceai2026.example/ns#factor_value_status",
+    "gwp_set": "https://apetit.sinceai2026.example/ns#gwp_set",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "EmissionFactor": "https://apetit.sinceai2026.example/ns#EmissionFactor"
+  }
+}

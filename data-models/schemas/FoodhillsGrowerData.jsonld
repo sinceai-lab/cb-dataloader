@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "odlar_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "skördeår": "https://apetit.sinceai2026.example/ns#year",
+    "gröda": "https://apetit.sinceai2026.example/ns#crop",
+    "areal_ha": "https://apetit.sinceai2026.example/ns#area_ha",
+    "levererad_mängd_ton": "https://apetit.sinceai2026.example/ns#delivered_tonnes",
+    "kvävegiva_kg_ha": "https://apetit.sinceai2026.example/ns#n_applied_kg_ha",
+    "diesel_l_ha": "https://apetit.sinceai2026.example/ns#diesel_l_ha",
+    "bevattnad": "https://apetit.sinceai2026.example/ns#irrigated",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "FoodhillsGrowerData": "https://apetit.sinceai2026.example/ns#FoodhillsGrowerData"
+  }
+}

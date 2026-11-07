@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:DraftReportLine",
+  "title": "Apetit Climate & Nature Navigator - DraftReportLine",
+  "description": "Draft 2025 summary table as typed into a report. Raw: contains planted total_mismatch issues.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "year",
+    "line"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Reporting year",
+      "x-observed-min": 2025,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "line": {
+      "type": "string",
+      "description": "Report line",
+      "x-term": "report_line"
+    },
+    "tco2e": {
+      "type": "integer",
+      "description": "tCO2e as typed",
+      "x-observed-min": 132163,
+      "x-observed-max": 71534593,
+      "x-term": "tco2e",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "status": {
+      "type": "string",
+      "description": "Draft status",
+      "x-term": "draft_status"
+    }
+  },
+  "required": [
+    "year",
+    "line",
+    "tco2e",
+    "status"
+  ],
+  "additionalProperties": false,
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:ClimateGridCell",
+  "title": "Apetit Climate & Nature Navigator - ClimateGridCell",
+  "description": "Climate grid cells (0.25 degree).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "cell_id"
+  ],
+  "properties": {
+    "cell_id": {
+      "type": "string",
+      "description": "Cell id",
+      "x-term": "cell_id"
+    },
+    "region": {
+      "type": "string",
+      "description": "Region",
+      "enum": [
+        "FI_SW",
+        "SE_SKANE"
+      ],
+      "x-term": "region"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Cell centre latitude",
+      "x-observed-min": 55.525,
+      "x-observed-max": 61.475,
+      "x-term": "lat"
+    },
+    "lon": {
+      "type": "number",
+      "description": "Cell centre longitude",
+      "x-observed-min": 12.625,
+      "x-observed-max": 23.625,
+      "x-term": "lon"
+    },
+    "continentality": {
+      "type": "number",
+      "description": "0 = coastal .. 1 = inland",
+      "x-observed-min": 0.056,
+      "x-observed-max": 0.944,
+      "x-term": "continentality"
+    },
+    "elevation_m": {
+      "type": "number",
+      "description": "Mean elevation (m)",
+      "x-unit": "m",
+      "x-observed-min": 5.0,
+      "x-observed-max": 135.0,
+      "x-term": "elevation_m",
+      "x-unit-code": "MTR"
+    }
+  },
+  "required": [
+    "cell_id",
+    "region",
+    "lat",
+    "lon",
+    "continentality",
+    "elevation_m"
+  ],
+  "additionalProperties": false
+}

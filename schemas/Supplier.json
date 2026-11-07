@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Supplier",
+  "title": "Apetit Climate & Nature Navigator - Supplier",
+  "description": "Supplier master (synthetic names).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "supplier_id"
+  ],
+  "properties": {
+    "supplier_id": {
+      "type": "string",
+      "description": "Supplier code",
+      "x-term": "supplier_id"
+    },
+    "supplier_name": {
+      "type": "string",
+      "description": "Placeholder name",
+      "x-term": "supplier_name"
+    },
+    "supplier_type": {
+      "type": "string",
+      "description": "grain_trader / manufacturer / service_provider",
+      "enum": [
+        "grain_trader",
+        "manufacturer",
+        "service_provider"
+      ],
+      "x-term": "supplier_type"
+    },
+    "country": {
+      "type": "string",
+      "description": "Supplier country",
+      "x-observed-values": [
+        "BE",
+        "CN",
+        "DE",
+        "DK",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FO",
+        "HU",
+        "LT",
+        "LV",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "SE"
+      ],
+      "x-term": "country"
+    },
+    "material_id": {
+      "type": "string",
+      "description": "Material supplied",
+      "x-term": "material_id"
+    },
+    "sbti_status": {
+      "type": "string",
+      "description": "Supplier climate-target status",
+      "enum": [
+        "committed",
+        "none",
+        "targets_set"
+      ],
+      "x-term": "sbti_status"
+    },
+    "provides_pcf": {
+      "type": "boolean",
+      "description": "Supplier provides product carbon footprints (PACT)",
+      "x-term": "provides_pcf"
+    },
+    "cdp_score": {
+      "type": "string",
+      "description": "Supplier CDP climate score",
+      "enum": [
+        "A-",
+        "B",
+        "C",
+        "D",
+        "none"
+      ],
+      "x-term": "cdp_score"
+    }
+  },
+  "required": [
+    "supplier_id",
+    "supplier_name",
+    "supplier_type",
+    "country",
+    "material_id",
+    "sbti_status",
+    "provides_pcf",
+    "cdp_score"
+  ],
+  "additionalProperties": false
+}

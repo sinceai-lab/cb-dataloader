@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "lever_id": "https://apetit.sinceai2026.example/ns#lever_id",
+    "name": "https://apetit.sinceai2026.example/ns#lever_name",
+    "lever_scope": "https://apetit.sinceai2026.example/ns#lever_scope",
+    "flag": "https://apetit.sinceai2026.example/ns#flag",
+    "lever_type": "https://apetit.sinceai2026.example/ns#lever_type",
+    "abatement_tco2e_2030_design": "https://apetit.sinceai2026.example/ns#abatement_tco2e_2030_design",
+    "capex_eur": "https://apetit.sinceai2026.example/ns#capex_eur",
+    "opex_delta_eur_per_yr": "https://apetit.sinceai2026.example/ns#opex_delta_eur_per_yr",
+    "lifetime_yr": "https://apetit.sinceai2026.example/ns#lifetime_yr",
+    "earliest_start": "https://apetit.sinceai2026.example/ns#earliest_start",
+    "ramp_years": "https://apetit.sinceai2026.example/ns#ramp_years",
+    "confidence": "https://apetit.sinceai2026.example/ns#lever_confidence",
+    "co_benefits": "https://apetit.sinceai2026.example/ns#co_benefits",
+    "trade_offs": "https://apetit.sinceai2026.example/ns#trade_offs",
+    "indicative_cost_eur_per_tco2e": "https://apetit.sinceai2026.example/ns#indicative_cost_eur_per_tco2e",
+    "value_status": "https://apetit.sinceai2026.example/ns#lever_status",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "DecarbonisationLever": "https://apetit.sinceai2026.example/ns#DecarbonisationLever"
+  }
+}

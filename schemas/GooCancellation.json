@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:GooCancellation",
+  "title": "Apetit Climate & Nature Navigator - GooCancellation",
+  "description": "Guarantee-of-origin cancellations. Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "site_id",
+    "year"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Consumption year claimed",
+      "x-observed-min": 2020,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-term": "site_id"
+    },
+    "mwh_cancelled": {
+      "type": "number",
+      "description": "MWh cancelled",
+      "x-observed-min": 2120.0,
+      "x-observed-max": 22900.0,
+      "x-term": "mwh_cancelled",
+      "x-unit-code": "MWH"
+    },
+    "technology": {
+      "type": "string",
+      "description": "Technology",
+      "x-term": "technology"
+    },
+    "production_country": {
+      "type": "string",
+      "description": "Production country",
+      "x-term": "production_country"
+    },
+    "vintage_year": {
+      "type": "integer",
+      "description": "Production (vintage) year",
+      "x-observed-min": 2020,
+      "x-observed-max": 2025,
+      "x-term": "vintage_year"
+    }
+  },
+  "required": [
+    "year",
+    "site_id",
+    "mwh_cancelled",
+    "technology",
+    "production_country",
+    "vintage_year"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "site_id",
+      "type": "Site"
+    },
+    "time": {
+      "year": "year"
+    }
+  }
+}

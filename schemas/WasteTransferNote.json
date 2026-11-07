@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:WasteTransferNote",
+  "title": "Apetit Climate & Nature Navigator - WasteTransferNote",
+  "description": "Monthly waste transfer notes. Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "transfer_note"
+  ],
+  "properties": {
+    "transfer_note": {
+      "type": "string",
+      "description": "Note id",
+      "x-term": "transfer_note"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "month": {
+      "type": "integer",
+      "description": "Month",
+      "x-observed-min": 1,
+      "x-observed-max": 12,
+      "x-term": "month"
+    },
+    "waste_stream": {
+      "type": "string",
+      "description": "Stream",
+      "x-observed-values": [
+        "biowaste_mixed",
+        "cardboard",
+        "food_waste",
+        "mixed_waste",
+        "plastic_waste",
+        "spent_bleaching_earth",
+        "vegetable_biowaste",
+        "wwtp_sludge"
+      ],
+      "x-term": "waste_stream"
+    },
+    "treatment": {
+      "type": "string",
+      "description": "Treatment",
+      "x-observed-values": [
+        "anaerobic_digestion",
+        "composting",
+        "incineration",
+        "landfill_codigestion",
+        "recycling"
+      ],
+      "x-term": "waste_treatment"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity",
+      "x-observed-min": 3.988,
+      "x-observed-max": 1095348.2,
+      "x-term": "waste_quantity",
+      "x-unit-from": "unit"
+    },
+    "unit": {
+      "type": "string",
+      "description": "kg",
+      "x-observed-values": [
+        "kg"
+      ],
+      "x-term": "waste_unit"
+    }
+  },
+  "required": [
+    "transfer_note",
+    "site_id",
+    "year",
+    "month",
+    "waste_stream",
+    "treatment",
+    "quantity",
+    "unit"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "year": "year",
+      "month": "month"
+    }
+  }
+}

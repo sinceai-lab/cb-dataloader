@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Parcel",
+  "title": "Apetit Climate & Nature Navigator - Parcel",
+  "description": "Field parcels (attributes of parcels.geojson). Soil from a soil map, not field truth.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "parcel_id"
+  ],
+  "properties": {
+    "parcel_id": {
+      "type": "string",
+      "description": "Parcel id",
+      "x-term": "parcel_id"
+    },
+    "farm_id": {
+      "type": "string",
+      "description": "Farm id",
+      "x-term": "farm_id"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Parcel centroid latitude",
+      "x-observed-min": 55.52746,
+      "x-observed-max": 61.57339,
+      "x-term": "lat"
+    },
+    "lon": {
+      "type": "number",
+      "description": "Parcel centroid longitude",
+      "x-observed-min": 12.90223,
+      "x-observed-max": 23.74397,
+      "x-term": "lon"
+    },
+    "area_ha": {
+      "type": "number",
+      "description": "Area (ha)",
+      "x-unit": "ha",
+      "x-observed-min": 0.46,
+      "x-observed-max": 36.2,
+      "x-term": "area_ha",
+      "x-unit-code": "HAR"
+    },
+    "soil_class_soilmap": {
+      "type": "string",
+      "description": "Soil class from soil map (clay/silt/fine_sand/sand/organic), ~88 % accurate",
+      "enum": [
+        "clay",
+        "fine_sand",
+        "organic",
+        "sand",
+        "silt"
+      ],
+      "x-term": "soil_class_soilmap"
+    },
+    "clay_pct_soilmap": {
+      "type": "number",
+      "description": "Clay content estimate (%)",
+      "x-observed-min": 1.0,
+      "x-observed-max": 70.0,
+      "x-term": "clay_pct_soilmap",
+      "x-unit-code": "P1"
+    },
+    "slope_pct": {
+      "type": "number",
+      "description": "Mean slope (%)",
+      "x-observed-min": 0.1,
+      "x-observed-max": 14.0,
+      "x-term": "slope_pct",
+      "x-unit-code": "P1"
+    },
+    "dist_to_water_m": {
+      "type": "integer",
+      "description": "Distance to nearest water body / main ditch (m)",
+      "x-unit": "m",
+      "x-observed-min": 8,
+      "x-observed-max": 2792,
+      "x-term": "dist_to_water_m",
+      "x-unit-code": "MTR"
+    },
+    "drainage": {
+      "type": "string",
+      "description": "subsurface / open_ditch",
+      "enum": [
+        "open_ditch",
+        "subsurface"
+      ],
+      "x-term": "drainage"
+    },
+    "catchment_id": {
+      "type": "string",
+      "description": "Catchment id",
+      "x-term": "catchment_id"
+    },
+    "p_test_mgl_latest": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Latest soil P test (mg/l, acid ammonium acetate); empty = missing",
+      "x-observed-min": 1.7,
+      "x-observed-max": 119.3,
+      "x-term": "p_test_mgl_latest",
+      "x-unit-text": "mg/l"
+    },
+    "buffer_strip": {
+      "type": "boolean",
+      "description": "Buffer strip along water",
+      "x-term": "buffer_strip"
+    }
+  },
+  "required": [
+    "parcel_id",
+    "farm_id",
+    "lat",
+    "lon",
+    "area_ha",
+    "soil_class_soilmap",
+    "clay_pct_soilmap",
+    "slope_pct",
+    "dist_to_water_m",
+    "drainage",
+    "catchment_id",
+    "buffer_strip"
+  ],
+  "additionalProperties": false
+}

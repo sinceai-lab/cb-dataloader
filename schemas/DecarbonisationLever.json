@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:DecarbonisationLever",
+  "title": "Apetit Climate & Nature Navigator - DecarbonisationLever",
+  "description": "Lever catalogue (design estimates).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "lever_id"
+  ],
+  "properties": {
+    "lever_id": {
+      "type": "string",
+      "description": "Id",
+      "x-term": "lever_id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Lever",
+      "x-term": "lever_name"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Scope/category",
+      "enum": [
+        "measurement",
+        "scope1",
+        "scope1_to_scope2",
+        "scope3_cat1",
+        "scope3_cat4",
+        "scope3_cat4_cat9",
+        "scope3_cat5",
+        "scope3_cat6",
+        "scope3_cat7",
+        "scope3_cat9_cat11",
+        "structural"
+      ],
+      "x-term": "lever_scope"
+    },
+    "flag": {
+      "type": "boolean",
+      "description": "FLAG lever",
+      "x-term": "flag"
+    },
+    "lever_type": {
+      "type": "string",
+      "description": "Type",
+      "x-term": "lever_type"
+    },
+    "abatement_tco2e_2030_design": {
+      "type": "integer",
+      "description": "Indicative abatement in 2030 at full ramp (t)",
+      "x-unit": "t",
+      "x-observed-min": 0,
+      "x-observed-max": 14000,
+      "x-term": "abatement_tco2e_2030_design",
+      "x-unit-code": "TNE",
+      "x-unit-text": "tCO2e"
+    },
+    "capex_eur": {
+      "type": "integer",
+      "description": "Capex (EUR)",
+      "x-unit": "EUR",
+      "x-observed-min": 0,
+      "x-observed-max": 1100000,
+      "x-term": "capex_eur",
+      "x-unit-text": "EUR"
+    },
+    "opex_delta_eur_per_yr": {
+      "type": "integer",
+      "description": "Opex change (EUR/yr, negative = saving)",
+      "x-observed-min": -80000,
+      "x-observed-max": 650000,
+      "x-term": "opex_delta_eur_per_yr",
+      "x-unit-text": "EUR/yr"
+    },
+    "lifetime_yr": {
+      "type": "integer",
+      "description": "Lifetime (yr)",
+      "x-observed-min": 1,
+      "x-observed-max": 20,
+      "x-term": "lifetime_yr",
+      "x-unit-code": "ANN"
+    },
+    "earliest_start": {
+      "type": "integer",
+      "description": "Earliest start",
+      "x-observed-min": 2026,
+      "x-observed-max": 2029,
+      "x-term": "earliest_start"
+    },
+    "ramp_years": {
+      "type": "integer",
+      "description": "Years to full effect",
+      "x-observed-min": 1,
+      "x-observed-max": 5,
+      "x-term": "ramp_years",
+      "x-unit-code": "ANN"
+    },
+    "confidence": {
+      "type": "string",
+      "description": "Confidence",
+      "enum": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "x-term": "lever_confidence"
+    },
+    "co_benefits": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Co-benefits",
+      "x-term": "co_benefits"
+    },
+    "trade_offs": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Trade-offs",
+      "x-term": "trade_offs"
+    },
+    "indicative_cost_eur_per_tco2e": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Annualised cost per t",
+      "x-observed-min": -500.0,
+      "x-observed-max": 500.0,
+      "x-term": "indicative_cost_eur_per_tco2e",
+      "x-unit-text": "EUR/tCO2e"
+    },
+    "value_status": {
+      "type": "string",
+      "description": "Status",
+      "enum": [
+        "design estimate for the hackathon; teams should recompute abatement from the inventory data"
+      ],
+      "x-term": "lever_status"
+    }
+  },
+  "required": [
+    "lever_id",
+    "name",
+    "scope",
+    "flag",
+    "lever_type",
+    "abatement_tco2e_2030_design",
+    "capex_eur",
+    "opex_delta_eur_per_yr",
+    "lifetime_yr",
+    "earliest_start",
+    "ramp_years",
+    "confidence",
+    "value_status"
+  ],
+  "additionalProperties": false
+}

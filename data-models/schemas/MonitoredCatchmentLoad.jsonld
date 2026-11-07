@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "catchment_id": "https://apetit.sinceai2026.example/ns#catchment_id",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "total_p_load_kg": "https://apetit.sinceai2026.example/ns#total_p_load_kg",
+    "total_n_load_kg": "https://apetit.sinceai2026.example/ns#total_n_load_kg",
+    "method": "https://apetit.sinceai2026.example/ns#load_method",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "MonitoredCatchmentLoad": "https://apetit.sinceai2026.example/ns#MonitoredCatchmentLoad"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "farm_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "crop": "https://apetit.sinceai2026.example/ns#crop",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "carbon_footprint_kgco2e_per_kg": "https://apetit.sinceai2026.example/ns#carbon_footprint_kgco2e_per_kg",
+    "calculator_note": "https://apetit.sinceai2026.example/ns#calculator_note",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "CurrentCalculatorFootprint": "https://apetit.sinceai2026.example/ns#CurrentCalculatorFootprint"
+  }
+}

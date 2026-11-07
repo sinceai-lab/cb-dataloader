@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:CurrentCalculatorFootprint",
+  "title": "Apetit Climate & Nature Navigator - CurrentCalculatorFootprint",
+  "description": "Footprints from the current calculator practice (mineral soil assumed; organic-soil emissions and LUC excluded).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "farm_id",
+    "crop",
+    "year"
+  ],
+  "properties": {
+    "farm_id": {
+      "type": "string",
+      "description": "Farm",
+      "x-term": "farm_id"
+    },
+    "crop": {
+      "type": "string",
+      "description": "Crop",
+      "x-observed-values": [
+        "carrot",
+        "pea",
+        "potato",
+        "spinach",
+        "turnip_rape"
+      ],
+      "x-term": "crop"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2012,
+      "x-observed-max": 2026,
+      "x-term": "year"
+    },
+    "carbon_footprint_kgco2e_per_kg": {
+      "type": "number",
+      "description": "kg CO2e / kg harvested",
+      "x-observed-min": 0.02,
+      "x-observed-max": 3.71,
+      "x-term": "carbon_footprint_kgco2e_per_kg",
+      "x-unit-text": "kgCO2e/kg"
+    },
+    "calculator_note": {
+      "type": "string",
+      "description": "Method note",
+      "x-observed-values": [
+        "current calculator: mineral soil assumed, excludes land-use change and organic-soil emissions"
+      ],
+      "x-term": "calculator_note"
+    }
+  },
+  "required": [
+    "farm_id",
+    "crop",
+    "year",
+    "carbon_footprint_kgco2e_per_kg",
+    "calculator_note"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "farm_id",
+      "type": "Farm"
+    },
+    "time": {
+      "year": "year"
+    },
+    "dimensions": [
+      "crop"
+    ]
+  }
+}

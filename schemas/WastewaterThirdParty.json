@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:WastewaterThirdParty",
+  "title": "Apetit Climate & Nature Navigator - WastewaterThirdParty",
+  "description": "Wastewater to municipal treatment.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "site_id",
+    "year"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-term": "site_id"
+    },
+    "m3": {
+      "type": "integer",
+      "description": "m3",
+      "x-observed-min": 1050,
+      "x-observed-max": 9600,
+      "x-term": "wastewater_m3",
+      "x-unit-code": "MTQ"
+    }
+  },
+  "required": [
+    "year",
+    "site_id",
+    "m3"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "site_id",
+      "type": "Site"
+    },
+    "time": {
+      "year": "year"
+    }
+  }
+}

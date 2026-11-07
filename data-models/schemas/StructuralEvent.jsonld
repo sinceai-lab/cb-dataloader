@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "date": "https://apetit.sinceai2026.example/ns#event_date",
+    "event": "https://apetit.sinceai2026.example/ns#event",
+    "event_type": "https://apetit.sinceai2026.example/ns#event_type",
+    "relevance": "https://apetit.sinceai2026.example/ns#event_relevance",
+    "source": "https://apetit.sinceai2026.example/ns#source_label",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "StructuralEvent": "https://apetit.sinceai2026.example/ns#StructuralEvent"
+  }
+}

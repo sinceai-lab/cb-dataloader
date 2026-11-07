@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:EmissionFactor",
+  "title": "Apetit Climate & Nature Navigator - EmissionFactor",
+  "description": "Emission-factor library with provenance. See SOURCES_AND_LICENCES.md for value_status.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "ef_id"
+  ],
+  "properties": {
+    "ef_id": {
+      "type": "string",
+      "description": "Factor id",
+      "x-term": "ef_id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Description",
+      "x-term": "factor_name"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Activity unit",
+      "enum": [
+        "EUR",
+        "MWh",
+        "kg",
+        "m3",
+        "night",
+        "pallet_day",
+        "pkm",
+        "t",
+        "tkm"
+      ],
+      "x-term": "activity_unit"
+    },
+    "kgco2e_per_unit": {
+      "type": "number",
+      "description": "kg CO2e per unit (AR6 GWP100)",
+      "x-observed-min": 0.005,
+      "x-observed-max": 2150.0,
+      "x-term": "kgco2e_per_unit",
+      "x-unit-text": "kgCO2e/unit"
+    },
+    "flag_share": {
+      "type": "number",
+      "description": "Share of factor that is FLAG (land-based)",
+      "x-observed-min": 0.0,
+      "x-observed-max": 0.88,
+      "x-term": "flag_share"
+    },
+    "luc_included": {
+      "type": "boolean",
+      "description": "Statistical land-use change included",
+      "x-term": "luc_included"
+    },
+    "source_type": {
+      "type": "string",
+      "description": "Type of source",
+      "enum": [
+        "government_db",
+        "industry_study",
+        "lca_database",
+        "national_study",
+        "spend_based",
+        "supplier_pcf",
+        "supplier_sample"
+      ],
+      "x-term": "factor_source_type"
+    },
+    "reference_source": {
+      "type": "string",
+      "description": "Real-world source this factor stands in for",
+      "x-term": "factor_reference_source"
+    },
+    "geography": {
+      "type": "string",
+      "description": "Geography",
+      "x-observed-values": [
+        "BE",
+        "CN",
+        "DK",
+        "EC",
+        "EE",
+        "ES",
+        "EU",
+        "FI",
+        "FO",
+        "GLO",
+        "HU",
+        "LT",
+        "LV",
+        "NL",
+        "NO",
+        "PL",
+        "SE",
+        "UA"
+      ],
+      "x-term": "geography"
+    },
+    "version": {
+      "type": "integer",
+      "description": "Factor version (year)",
+      "x-observed-min": 2021,
+      "x-observed-max": 2026,
+      "x-term": "factor_version"
+    },
+    "value_status": {
+      "type": "string",
+      "description": "public_value / partner_supplied / calibrated_synthetic",
+      "enum": [
+        "calibrated_synthetic",
+        "partner_supplied"
+      ],
+      "x-term": "factor_value_status"
+    },
+    "gwp_set": {
+      "type": "string",
+      "description": "GWP set",
+      "enum": [
+        "IPCC AR6 GWP100"
+      ],
+      "x-term": "gwp_set"
+    }
+  },
+  "required": [
+    "ef_id",
+    "name",
+    "unit",
+    "kgco2e_per_unit",
+    "flag_share",
+    "luc_included",
+    "source_type",
+    "reference_source",
+    "geography",
+    "version",
+    "value_status",
+    "gwp_set"
+  ],
+  "additionalProperties": false
+}

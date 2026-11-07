@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:RefrigerantServiceEvent",
+  "title": "Apetit Climate & Nature Navigator - RefrigerantServiceEvent",
+  "description": "Refrigerant service events (top-ups). Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "event_id"
+  ],
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "description": "Site",
+      "x-observed-values": [
+        "S-BJU",
+        "S-HQ",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "system": {
+      "type": "string",
+      "description": "Cooling system",
+      "x-observed-values": [
+        "Cold store 2 (legacy)",
+        "Main freezing plant",
+        "Office AC",
+        "Pea freezing tunnel",
+        "Pizza line freezer",
+        "Process chillers",
+        "Spiral freezer aux."
+      ],
+      "x-term": "refrigerant_system"
+    },
+    "refrigerant": {
+      "type": "string",
+      "description": "Gas code",
+      "x-observed-values": [
+        "R134a",
+        "R404A",
+        "R410A",
+        "R449A",
+        "R717_ammonia",
+        "R744_co2"
+      ],
+      "x-term": "refrigerant"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "service_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date",
+      "x-term": "service_date"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason",
+      "x-observed-values": [
+        "compressor service",
+        "leak repair",
+        "routine top-up",
+        "seal failure"
+      ],
+      "x-term": "service_reason"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Event id",
+      "x-term": "event_id"
+    },
+    "kg_added": {
+      "type": "number",
+      "description": "kg added",
+      "x-observed-min": 0.0,
+      "x-observed-max": 85150.0,
+      "x-term": "kg_added",
+      "x-unit-code": "KGM"
+    }
+  },
+  "required": [
+    "site_id",
+    "system",
+    "refrigerant",
+    "year",
+    "service_date",
+    "reason",
+    "event_id",
+    "kg_added"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "date": "service_date"
+    }
+  }
+}

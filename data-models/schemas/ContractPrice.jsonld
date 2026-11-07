@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "item": "https://apetit.sinceai2026.example/ns#contract_item",
+    "contract_price_eur_t": "https://apetit.sinceai2026.example/ns#contract_price_eur_t",
+    "replacement_import_premium_frac": "https://apetit.sinceai2026.example/ns#replacement_import_premium_frac",
+    "note": "https://apetit.sinceai2026.example/ns#contract_note",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "ContractPrice": "https://apetit.sinceai2026.example/ns#ContractPrice"
+  }
+}

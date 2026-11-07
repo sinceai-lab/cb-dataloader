@@ -1,0 +1,38 @@
+routes:
+  - id: 1
+    uri: /health
+    upstream_id: 1
+    plugins:
+      mocking:
+        response_status: 200
+        content_type: application/json
+        response_example: '{"status":"ok"}'
+
+  - id: 2
+    uri: /coraine/*
+    upstream_id: 1
+    plugins:
+      proxy-rewrite:
+        regex_uri: ["^/coraine(.*)", "$1"]
+      openid-connect:
+        client_id: "ngsi-ld-farm"
+        client_secret: "1234"
+        discovery: "http://keycloak:8080/realms/farm-management/.well-known/openid-configuration"
+        realm: "farm-management"
+        scope: "openid profile email"
+        bearer_only: true
+      authz-keycloak:
+        discovery: "http://keycloak:8080/realms/farm-management/.well-known/uma2-configuration"
+        client_id: "ngsi-ld-farm"
+        client_secret: "1234"
+        permissions: ["Entity Collection"]
+        http_method_as_scope: true
+        policy_enforcement_mode: "ENFORCING"
+        ssl_verify: false
+
+upstreams:
+  - id: 1
+    type: roundrobin
+    nodes:
+      "coraine:1026": 1
+#END

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Site",
+  "title": "Apetit Climate & Nature Navigator - Site",
+  "description": "Group sites (public facts; coordinates approximate except Säkylä).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "site_id"
+  ],
+  "properties": {
+    "site_id": {
+      "type": "string",
+      "description": "Site code",
+      "x-term": "site_id"
+    },
+    "name": {
+      "type": "string",
+      "description": "Site name",
+      "x-term": "site_name"
+    },
+    "country": {
+      "type": "string",
+      "description": "ISO country",
+      "x-term": "country"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude (WGS84)",
+      "x-observed-min": 56.084,
+      "x-observed-max": 65.36,
+      "x-term": "lat"
+    },
+    "lon": {
+      "type": "number",
+      "description": "Longitude (WGS84)",
+      "x-observed-min": 12.92,
+      "x-observed-max": 26.99,
+      "x-term": "lon"
+    },
+    "activity": {
+      "type": "string",
+      "description": "Main activity",
+      "x-term": "site_activity"
+    },
+    "in_group_from": {
+      "type": "integer",
+      "description": "First year in group",
+      "x-observed-min": 1990,
+      "x-observed-max": 2025,
+      "x-term": "in_group_from"
+    },
+    "in_group_to": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Last year (closure/divestment decided), empty if ongoing",
+      "x-observed-min": 2026.0,
+      "x-observed-max": 2026.0,
+      "x-term": "in_group_to"
+    }
+  },
+  "required": [
+    "site_id",
+    "name",
+    "country",
+    "lat",
+    "lon",
+    "activity",
+    "in_group_from"
+  ],
+  "additionalProperties": false
+}

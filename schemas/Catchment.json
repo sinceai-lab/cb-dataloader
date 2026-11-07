@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Catchment",
+  "title": "Apetit Climate & Nature Navigator - Catchment",
+  "description": "Catchments (synthetic geometry).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "catchment_id"
+  ],
+  "properties": {
+    "catchment_id": {
+      "type": "string",
+      "description": "Catchment",
+      "x-term": "catchment_id"
+    },
+    "region": {
+      "type": "string",
+      "description": "Region",
+      "enum": [
+        "FI_SW",
+        "SE_SKANE"
+      ],
+      "x-term": "region"
+    },
+    "receiving_water_type": {
+      "type": "string",
+      "description": "lake / river / coastal",
+      "enum": [
+        "coastal",
+        "lake",
+        "river"
+      ],
+      "x-term": "receiving_water_type"
+    },
+    "ecological_status_class": {
+      "type": "string",
+      "description": "WFD ecological status",
+      "enum": [
+        "bad",
+        "good",
+        "moderate",
+        "poor"
+      ],
+      "x-term": "ecological_status_class"
+    },
+    "nutrient_retention_frac_estimate": {
+      "type": "number",
+      "description": "Estimated in-catchment retention",
+      "x-observed-min": 0.054,
+      "x-observed-max": 0.414,
+      "x-term": "nutrient_retention_frac_estimate"
+    },
+    "catchment_area_km2": {
+      "type": "number",
+      "description": "Area (km2)",
+      "x-observed-min": 123.7,
+      "x-observed-max": 615.0,
+      "x-term": "catchment_area_km2",
+      "x-unit-code": "KMK"
+    },
+    "field_area_total_ha": {
+      "type": "number",
+      "description": "All field area incl. non-contract farms (ha)",
+      "x-unit": "ha",
+      "x-observed-min": 2365.0,
+      "x-observed-max": 27762.0,
+      "x-term": "field_area_total_ha",
+      "x-unit-code": "HAR"
+    },
+    "p_sensitivity": {
+      "type": "number",
+      "description": "Phosphorus sensitivity weight",
+      "x-observed-min": 1.0,
+      "x-observed-max": 1.6,
+      "x-term": "p_sensitivity"
+    },
+    "monitoring_station": {
+      "type": "boolean",
+      "description": "Outlet monitoring station",
+      "x-term": "monitoring_station"
+    }
+  },
+  "required": [
+    "catchment_id",
+    "region",
+    "receiving_water_type",
+    "ecological_status_class",
+    "nutrient_retention_frac_estimate",
+    "catchment_area_km2",
+    "field_area_total_ha",
+    "p_sensitivity",
+    "monitoring_station"
+  ],
+  "additionalProperties": false
+}

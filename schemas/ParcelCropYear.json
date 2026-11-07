@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:ParcelCropYear",
+  "title": "Apetit Climate & Nature Navigator - ParcelCropYear",
+  "description": "Crop per parcel and year: declared 2012-2026, planned 2027-2031.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "parcel_id",
+    "year"
+  ],
+  "properties": {
+    "parcel_id": {
+      "type": "string",
+      "description": "Parcel",
+      "x-term": "parcel_id"
+    },
+    "farm_id": {
+      "type": "string",
+      "description": "Farm",
+      "x-term": "farm_id"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2012,
+      "x-observed-max": 2031,
+      "x-term": "year"
+    },
+    "crop": {
+      "type": "string",
+      "description": "Crop",
+      "x-observed-values": [
+        "barley",
+        "carrot",
+        "fallow",
+        "grass_ley",
+        "oats",
+        "pea",
+        "potato",
+        "spinach",
+        "turnip_rape",
+        "wheat"
+      ],
+      "x-term": "crop"
+    },
+    "catch_crop": {
+      "type": "boolean",
+      "description": "Catch crop after main crop",
+      "x-term": "catch_crop"
+    },
+    "status": {
+      "type": "string",
+      "description": "declared / planned",
+      "x-observed-values": [
+        "declared",
+        "planned"
+      ],
+      "x-term": "crop_plan_status"
+    }
+  },
+  "required": [
+    "parcel_id",
+    "farm_id",
+    "year",
+    "crop",
+    "catch_crop",
+    "status"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "parcel_id",
+      "type": "Parcel"
+    },
+    "time": {
+      "year": "year"
+    }
+  }
+}

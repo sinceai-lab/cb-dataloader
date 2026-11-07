@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "scope1": "https://apetit.sinceai2026.example/ns#scope1",
+    "scope2_market": "https://apetit.sinceai2026.example/ns#scope2_market",
+    "scope3": "https://apetit.sinceai2026.example/ns#scope3",
+    "scope3_restated": "https://apetit.sinceai2026.example/ns#scope3_restated",
+    "note": "https://apetit.sinceai2026.example/ns#inventory_note",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "PublishedInventoryYear": "https://apetit.sinceai2026.example/ns#PublishedInventoryYear"
+  }
+}

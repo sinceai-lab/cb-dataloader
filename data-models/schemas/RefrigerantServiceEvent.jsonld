@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "system": "https://apetit.sinceai2026.example/ns#refrigerant_system",
+    "refrigerant": "https://apetit.sinceai2026.example/ns#refrigerant",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "service_date": "https://apetit.sinceai2026.example/ns#service_date",
+    "service_reason": "https://apetit.sinceai2026.example/ns#service_reason",
+    "event_id": "https://apetit.sinceai2026.example/ns#event_id",
+    "kg_added": "https://apetit.sinceai2026.example/ns#kg_added",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "RefrigerantServiceEvent": "https://apetit.sinceai2026.example/ns#RefrigerantServiceEvent"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:FuelDelivery",
+  "title": "Apetit Climate & Nature Navigator - FuelDelivery",
+  "description": "Fuel deliveries in native units (LNG/LPG in t, oil/diesel in litres). Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "delivery_id"
+  ],
+  "properties": {
+    "delivery_id": {
+      "type": "string",
+      "description": "Delivery id",
+      "x-term": "delivery_id"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Site (FLEET = vehicles)",
+      "x-observed-values": [
+        "FLEET",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "carrier": {
+      "type": "string",
+      "description": "Fuel",
+      "x-observed-values": [
+        "diesel",
+        "light_fuel_oil",
+        "lng",
+        "lpg"
+      ],
+      "x-term": "fuel_carrier"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "delivery_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date",
+      "x-term": "delivery_date"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity",
+      "x-observed-min": 4.057,
+      "x-observed-max": 68721.0,
+      "x-term": "fuel_quantity",
+      "x-unit-from": "unit"
+    },
+    "unit": {
+      "type": "string",
+      "description": "t or l",
+      "x-observed-values": [
+        "l",
+        "t"
+      ],
+      "x-term": "fuel_unit"
+    }
+  },
+  "required": [
+    "delivery_id",
+    "site_id",
+    "carrier",
+    "year",
+    "delivery_date",
+    "quantity",
+    "unit"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "date": "delivery_date"
+    }
+  }
+}

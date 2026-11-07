@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Material",
+  "title": "Apetit Climate & Nature Navigator - Material",
+  "description": "Material master. ERP texts partly Finnish (as in Apetit's ERP sample).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "material_id"
+  ],
+  "properties": {
+    "material_id": {
+      "type": "string",
+      "description": "Material code",
+      "x-term": "material_id"
+    },
+    "erp_name": {
+      "type": "string",
+      "description": "ERP material text",
+      "x-term": "erp_name"
+    },
+    "name_en": {
+      "type": "string",
+      "description": "English name",
+      "x-term": "name_en"
+    },
+    "material_group": {
+      "type": "string",
+      "description": "Group",
+      "x-observed-values": [
+        "capex",
+        "cereal",
+        "chemical",
+        "dairy",
+        "fish",
+        "legume",
+        "meat",
+        "oil",
+        "oilseed",
+        "packaging",
+        "protein",
+        "sauce",
+        "service",
+        "spice",
+        "sugar",
+        "vegetable_bought",
+        "vegetable_contract"
+      ],
+      "x-term": "material_group"
+    },
+    "base_uom": {
+      "type": "string",
+      "description": "Base unit (kg or EUR for spend-based)",
+      "enum": [
+        "EUR",
+        "kg"
+      ],
+      "x-term": "base_uom"
+    },
+    "default_ef_id": {
+      "type": "string",
+      "description": "Default emission factor (FARM = farm-specific footprint)",
+      "x-term": "default_ef_id"
+    },
+    "receiving_site": {
+      "type": "string",
+      "description": "Receiving plant",
+      "enum": [
+        "S-BJU",
+        "S-HQ",
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "receiving_site"
+    },
+    "origin_countries": {
+      "type": "string",
+      "description": "Typical origin countries (;-separated)",
+      "x-term": "origin_countries"
+    },
+    "eudr_commodity": {
+      "type": "boolean",
+      "description": "In EU Deforestation Regulation scope",
+      "x-term": "eudr_commodity"
+    },
+    "sbtn_high_impact_commodity": {
+      "type": "boolean",
+      "description": "On / derived from SBTN High Impact Commodity List",
+      "x-term": "sbtn_high_impact_commodity"
+    }
+  },
+  "required": [
+    "material_id",
+    "erp_name",
+    "name_en",
+    "material_group",
+    "base_uom",
+    "default_ef_id",
+    "receiving_site",
+    "origin_countries",
+    "eudr_commodity",
+    "sbtn_high_impact_commodity"
+  ],
+  "additionalProperties": false
+}

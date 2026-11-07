@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "cell_id": "https://apetit.sinceai2026.example/ns#cell_id",
+    "scenario": "https://apetit.sinceai2026.example/ns#climate_scenario",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "month": "https://apetit.sinceai2026.example/ns#month",
+    "tmean_c": "https://apetit.sinceai2026.example/ns#tmean_c",
+    "tmax_c_max": "https://apetit.sinceai2026.example/ns#tmax_c_max",
+    "precip_mm": "https://apetit.sinceai2026.example/ns#precip_mm",
+    "pet_mm": "https://apetit.sinceai2026.example/ns#pet_mm",
+    "hot_days_tmax_ge_27": "https://apetit.sinceai2026.example/ns#hot_days_tmax_ge_27",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "WeatherMonthly": "https://apetit.sinceai2026.example/ns#WeatherMonthly"
+  }
+}

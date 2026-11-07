@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:SupplierPcf",
+  "title": "Apetit Climate & Nature Navigator - SupplierPcf",
+  "description": "Supplier product carbon footprint in PACT Technical Specification v2 style. Synthetic. File name {supplier}_{material}_{year}.json. Raw: contains pcf_unit_error and pcf_stale_period issues.",
+  "type": "object",
+  "x-source-format": "json",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID",
+      "format": "uuid"
+    },
+    "specVersion": {
+      "type": "string",
+      "description": "PACT spec version"
+    },
+    "version": {
+      "type": "integer"
+    },
+    "created": {
+      "type": "string",
+      "description": "Created",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status"
+    },
+    "companyName": {
+      "type": "string",
+      "description": "Supplier name (synthetic)"
+    },
+    "companyIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "urn:pathfinder:company:customcode:buyer-assigned:{supplier_id}"
+      }
+    },
+    "productDescription": {
+      "type": "string",
+      "description": "Product"
+    },
+    "productIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "urn:pathfinder:product:customcode:buyer-assigned:{material_id}"
+      }
+    },
+    "productCategoryCpc": {
+      "type": "string",
+      "description": "CPC code"
+    },
+    "productNameCompany": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Comment"
+    },
+    "pcf": {
+      "type": "object",
+      "properties": {
+        "pCfExcludingBiogenic": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "kgCO2e per declared unit excl. biogenic (decimal as string, PACT v2)"
+        },
+        "pCfIncludingBiogenic": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "kgCO2e per declared unit incl. biogenic (decimal as string, PACT v2)"
+        },
+        "fossilGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Fossil GHG (decimal as string, PACT v2)"
+        },
+        "fossilCarbonContent": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Fossil carbon content (decimal as string, PACT v2)"
+        },
+        "biogenicCarbonContent": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Biogenic carbon content (decimal as string, PACT v2)"
+        },
+        "dLucGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Direct land-use-change GHG (decimal as string, PACT v2)"
+        },
+        "landManagementGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Land-management GHG (decimal as string, PACT v2)"
+        },
+        "otherBiogenicGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Other biogenic GHG (decimal as string, PACT v2)"
+        },
+        "iLucGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Indirect land-use-change GHG (decimal as string, PACT v2)"
+        },
+        "biogenicCarbonWithdrawal": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Biogenic carbon withdrawal (decimal as string, PACT v2)"
+        },
+        "aircraftGhgEmissions": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Aircraft GHG (decimal as string, PACT v2)"
+        },
+        "unitaryProductAmount": {
+          "type": "string",
+          "pattern": "^-?\\d+(\\.\\d+)?$",
+          "description": "Amount of declared unit the PCF refers to (decimal as string, PACT v2)"
+        },
+        "declaredUnit": {
+          "type": "string",
+          "description": "Declared unit; only 'kilogram' is valid for kg-based accounting",
+          "x-observed-values": [
+            "kilogram"
+          ]
+        },
+        "characterizationFactors": {
+          "type": "string",
+          "description": "GWP set, e.g. AR6"
+        },
+        "ipccCharacterizationFactorsSources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "crossSectoralStandardsUsed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "productOrSectorSpecificRules": {
+          "type": "array",
+          "items": {}
+        },
+        "boundaryProcessesDescription": {
+          "type": "string",
+          "description": "System boundary"
+        },
+        "referencePeriodStart": {
+          "type": "string",
+          "description": "Reference period start; PCF valid for year Y only if period covers Y",
+          "format": "date-time"
+        },
+        "referencePeriodEnd": {
+          "type": "string",
+          "description": "Reference period end (exclusive)",
+          "format": "date-time"
+        },
+        "geographyCountry": {
+          "type": "string",
+          "description": "ISO country"
+        },
+        "secondaryEmissionFactorSources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Database"
+              },
+              "version": {
+                "type": "string",
+                "description": "Version"
+              }
+            }
+          }
+        },
+        "exemptedEmissionsPercent": {
+          "type": "number",
+          "description": "Percent of emissions exempted"
+        },
+        "exemptedEmissionsDescription": {
+          "type": "string",
+          "description": "Exemption note"
+        },
+        "packagingEmissionsIncluded": {
+          "type": "boolean"
+        },
+        "primaryDataShare": {
+          "type": "number",
+          "description": "Percent primary data"
+        },
+        "dqi": {
+          "type": "object",
+          "properties": {
+            "coveragePercent": {
+              "type": "number",
+              "description": "Coverage %"
+            },
+            "technologicalDQR": {
+              "type": "number",
+              "description": "technologicalDQR"
+            },
+            "temporalDQR": {
+              "type": "number",
+              "description": "temporalDQR"
+            },
+            "geographicalDQR": {
+              "type": "number",
+              "description": "geographicalDQR"
+            },
+            "completenessDQR": {
+              "type": "number",
+              "description": "completenessDQR"
+            },
+            "reliabilityDQR": {
+              "type": "number",
+              "description": "reliabilityDQR"
+            }
+          }
+        },
+        "assurance": {
+          "type": "object",
+          "properties": {
+            "assurance": {
+              "type": "boolean"
+            },
+            "coverage": {
+              "type": "string",
+              "description": "Coverage"
+            },
+            "level": {
+              "type": "string",
+              "description": "Assurance level"
+            }
+          }
+        }
+      },
+      "required": [
+        "declaredUnit",
+        "pCfExcludingBiogenic",
+        "referencePeriodStart",
+        "referencePeriodEnd"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "companyIds",
+    "productIds",
+    "pcf"
+  ],
+  "x-primary-key": [
+    "companyIds",
+    "productIds",
+    "pcf.referencePeriodStart"
+  ],
+  "x-stage": "bronze"
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:OriginStateOfNature",
+  "title": "Apetit Climate & Nature Navigator - OriginStateOfNature",
+  "description": "Indicative state-of-nature categories for import origins (teaching values).",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "origin_country",
+    "commodity"
+  ],
+  "properties": {
+    "origin_country": {
+      "type": "string",
+      "description": "ISO country of origin",
+      "x-term": "origin_country"
+    },
+    "commodity": {
+      "type": "string",
+      "description": "Commodity group",
+      "x-term": "commodity"
+    },
+    "baseline_water_stress_cat_indicative": {
+      "type": "integer",
+      "description": "Aqueduct-style water stress category 0 (low) .. 4 (extremely high)",
+      "x-observed-min": 0,
+      "x-observed-max": 4,
+      "x-term": "baseline_water_stress_cat_indicative"
+    },
+    "deforestation_conversion_risk_indicative": {
+      "type": "string",
+      "description": "Deforestation / conversion risk",
+      "x-term": "deforestation_conversion_risk_indicative"
+    },
+    "biodiversity_sensitivity_indicative": {
+      "type": "string",
+      "description": "Biodiversity sensitivity",
+      "x-term": "biodiversity_sensitivity_indicative"
+    },
+    "freshwater_nutrient_status_indicative": {
+      "type": "string",
+      "description": "Freshwater nutrient status",
+      "x-term": "freshwater_nutrient_status_indicative"
+    },
+    "water_stress_scale": {
+      "type": "string",
+      "description": "Scale legend for water stress category",
+      "x-term": "water_stress_scale"
+    },
+    "source_note": {
+      "type": "string",
+      "description": "Caveat and production data pointer",
+      "x-term": "source_note"
+    }
+  },
+  "required": [
+    "origin_country",
+    "commodity",
+    "baseline_water_stress_cat_indicative",
+    "deforestation_conversion_risk_indicative",
+    "biodiversity_sensitivity_indicative",
+    "freshwater_nutrient_status_indicative",
+    "water_stress_scale",
+    "source_note"
+  ],
+  "additionalProperties": false
+}

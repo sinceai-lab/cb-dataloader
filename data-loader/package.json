@@ -1,0 +1,29 @@
+{
+  "name": "data-loader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "tsc",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "context": "tsx src/writeContext.ts",
+    "load": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "express": "^5.3.0",
+    "fast-csv": "^5.0.8",
+    "multer": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.3.0",
+    "@types/node": "^26.6.6",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "LoadLog": "https://apetit.sinceai2026.example/ns#LoadLog",
+    "schema": "https://apetit.sinceai2026.example/ns#schema",
+    "originalName": "https://apetit.sinceai2026.example/ns#originalName",
+    "storedPath": "https://apetit.sinceai2026.example/ns#storedPath",
+    "sha256": "https://apetit.sinceai2026.example/ns#sha256",
+    "loadedBy": "https://apetit.sinceai2026.example/ns#loadedBy",
+    "loadedAt": "https://apetit.sinceai2026.example/ns#loadedAt",
+    "rowsRead": "https://apetit.sinceai2026.example/ns#rowsRead",
+    "rowsLoaded": "https://apetit.sinceai2026.example/ns#rowsLoaded",
+    "rowsDropped": "https://apetit.sinceai2026.example/ns#rowsDropped",
+    "rowsRejected": "https://apetit.sinceai2026.example/ns#rowsRejected",
+    "loadStatus": "https://apetit.sinceai2026.example/ns#loadStatus",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog"
+  }
+}

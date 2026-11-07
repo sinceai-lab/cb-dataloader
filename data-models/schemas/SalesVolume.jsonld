@@ -1,0 +1,16 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "month": "https://apetit.sinceai2026.example/ns#month",
+    "product_group": "https://apetit.sinceai2026.example/ns#product_group",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "market": "https://apetit.sinceai2026.example/ns#market",
+    "t_sold": "https://apetit.sinceai2026.example/ns#tonnes_sold",
+    "net_sales_eur": "https://apetit.sinceai2026.example/ns#net_sales_eur",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "SalesVolume": "https://apetit.sinceai2026.example/ns#SalesVolume"
+  }
+}

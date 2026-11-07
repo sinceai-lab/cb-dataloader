@@ -1,0 +1,87 @@
+#!/bin/bash
+# Starts APISIX, Keycloak (with users), Coraine with its Mongo + Timescale databases, and the @context httpd.
+
+set -eo pipefail
+cd "$(dirname "$0")"
+
+USAGE="usage: services [start [coraine]|stop|reset|status|upload [Schema...]|clear-uploads]"
+set -a; source .env; set +a
+NETWORK="${COMPOSE_PROJECT_NAME}_default"
+
+waitHealthy () {
+	local name="$1" container="$2"
+	printf "Waiting for %s " "${name}"
+	until [ "$(docker inspect --format='{{.State.Health.Status}}' "${container}" 2>/dev/null)" == "healthy" ]; do
+		printf "."
+		sleep 5
+	done
+	echo " done"
+}
+
+waitForCoraine () {
+	printf "Waiting for Coraine "
+	until [ "$(docker run --network "${NETWORK}" --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w '%{http_code}' http://coraine:1026/admin/health || true)" == "200" ]; do
+		printf "."
+		sleep 5
+	done
+	echo " done"
+}
+
+loadUsers () {
+	docker run --rm \
+		--network "${NETWORK}" \
+		-v "$(pwd)/import_users:/import_users" \
+		-e KEYCLOAK_HOST=keycloak \
+		-e KEYCLOAK_PORT=8080 \
+		--entrypoint /bin/sh \
+		python:3-alpine -c "apk add --no-cache curl && /import_users"
+}
+
+case "${1:-}" in
+	start)
+		if [ "${2:-}" == "coraine" ]; then
+			docker compose up -d coraine
+			waitForCoraine
+			echo "Coraine (direct):   http://localhost:${CORAINE_PORT}"
+			echo "Contexts:           http://localhost:${CONTEXT_PORT}/user-context.jsonld"
+			exit 0
+		fi
+		docker compose up -d
+		waitHealthy Keycloak apetit-keycloak
+		loadUsers
+		waitHealthy APISIX apetit-apisix
+		waitForCoraine
+		echo "Coraine (direct):   http://localhost:${CORAINE_PORT}"
+		echo "Contexts:           http://localhost:${CONTEXT_PORT}/user-context.jsonld"
+		echo "Coraine (secured):  http://localhost:${APISIX_EXPOSED_PORT}/coraine/ngsi-ld/v1/entities"
+		echo "Keycloak:           http://localhost:${KEYCLOAK_PORT} (admin / 1234)"
+		;;
+	stop)
+		docker compose down
+		"$0" clear-uploads
+		;;
+	reset)
+		docker compose down -v
+		;;
+	status)
+		docker compose ps
+		;;
+	upload)
+		shift
+		args=()
+		for a in "$@"; do
+			if [ -e "$a" ]; then a="$(cd "$(dirname "$a")" && pwd)/$(basename "$a")"; fi
+			args+=("$a")
+		done
+		(cd data-loader && npm run --silent load -- "${args[@]}")
+		(cd data-loader && npm run --silent prettier >/dev/null)
+		;;
+	clear-uploads)
+		find data-loader/uploads -mindepth 1 -not -name '.gitkeep' -delete
+		echo "Cleared data-loader/uploads"
+		;;
+	*)
+		echo "${USAGE}"
+		exit 1
+		;;
+esac

@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "cancellation_id": "https://apetit.sinceai2026.example/ns#cancellation_id",
+    "consumption_year": "https://apetit.sinceai2026.example/ns#consumption_year",
+    "beneficiary_site": "https://apetit.sinceai2026.example/ns#beneficiary_site",
+    "mwh": "https://apetit.sinceai2026.example/ns#mwh_cancelled",
+    "technology": "https://apetit.sinceai2026.example/ns#technology",
+    "production_country": "https://apetit.sinceai2026.example/ns#production_country",
+    "production_period_start": "https://apetit.sinceai2026.example/ns#production_period_start",
+    "production_period_end": "https://apetit.sinceai2026.example/ns#production_period_end",
+    "issuing_body": "https://apetit.sinceai2026.example/ns#issuing_body",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "GooRegistryStatement": "https://apetit.sinceai2026.example/ns#GooRegistryStatement"
+  }
+}

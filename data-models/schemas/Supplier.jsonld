@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "supplier_id": "https://apetit.sinceai2026.example/ns#supplier_id",
+    "supplier_name": "https://apetit.sinceai2026.example/ns#supplier_name",
+    "supplier_type": "https://apetit.sinceai2026.example/ns#supplier_type",
+    "country": "https://apetit.sinceai2026.example/ns#country",
+    "material_id": "https://apetit.sinceai2026.example/ns#material_id",
+    "sbti_status": "https://apetit.sinceai2026.example/ns#sbti_status",
+    "provides_pcf": "https://apetit.sinceai2026.example/ns#provides_pcf",
+    "cdp_score": "https://apetit.sinceai2026.example/ns#cdp_score",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "Supplier": "https://apetit.sinceai2026.example/ns#Supplier"
+  }
+}

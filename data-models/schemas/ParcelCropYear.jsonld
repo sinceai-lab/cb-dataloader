@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "parcel_id": "https://apetit.sinceai2026.example/ns#parcel_id",
+    "farm_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "crop": "https://apetit.sinceai2026.example/ns#crop",
+    "catch_crop": "https://apetit.sinceai2026.example/ns#catch_crop",
+    "crop_plan_status": "https://apetit.sinceai2026.example/ns#crop_plan_status",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "ParcelCropYear": "https://apetit.sinceai2026.example/ns#ParcelCropYear"
+  }
+}

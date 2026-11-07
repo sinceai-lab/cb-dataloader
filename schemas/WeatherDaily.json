@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:WeatherDaily",
+  "title": "Apetit Climate & Nature Navigator - WeatherDaily",
+  "description": "Daily weather per grid cell: historical 1991-2026, ssp126/ssp245/ssp585 2027-2060. Synthetic.",
+  "type": "object",
+  "x-source-format": "parquet",
+  "properties": {
+    "cell_id": {
+      "type": "string",
+      "description": "Grid cell, joins ClimateGridCell"
+    },
+    "date": {
+      "type": "string",
+      "description": "Day",
+      "format": "date"
+    },
+    "tmean_c": {
+      "type": "number",
+      "description": "Mean temperature (C)",
+      "x-unit": "Cel"
+    },
+    "tmax_c": {
+      "type": "number",
+      "description": "Max temperature (C)",
+      "x-unit": "Cel"
+    },
+    "tmin_c": {
+      "type": "number",
+      "description": "Min temperature (C)",
+      "x-unit": "Cel"
+    },
+    "precip_mm": {
+      "type": "number",
+      "description": "Precipitation (mm)",
+      "x-unit": "mm"
+    },
+    "rad_mj_m2": {
+      "type": "number",
+      "description": "Global radiation (MJ/m2)"
+    },
+    "pet_mm": {
+      "type": "number",
+      "description": "Potential evapotranspiration, Hargreaves (mm)",
+      "x-unit": "mm"
+    },
+    "scenario": {
+      "type": "string",
+      "description": "historical / ssp126 / ssp245 / ssp585",
+      "enum": [
+        "historical",
+        "ssp126",
+        "ssp245",
+        "ssp585"
+      ]
+    }
+  },
+  "required": [
+    "cell_id",
+    "date",
+    "tmean_c",
+    "tmax_c",
+    "tmin_c",
+    "precip_mm",
+    "rad_mj_m2",
+    "pet_mm",
+    "scenario"
+  ],
+  "x-primary-key": [
+    "cell_id",
+    "date",
+    "scenario"
+  ],
+  "x-stage": "reference",
+  "additionalProperties": false
+}

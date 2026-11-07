@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:Shipment",
+  "title": "Apetit Climate & Nature Navigator - Shipment",
+  "description": "Transport legs. Inbound legs reference ERP documents; outbound legs reference sales.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "shipment_id"
+  ],
+  "properties": {
+    "shipment_id": {
+      "type": "string",
+      "description": "Leg id",
+      "x-term": "shipment_id"
+    },
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2021,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "direction": {
+      "type": "string",
+      "description": "inbound / outbound",
+      "x-observed-values": [
+        "inbound",
+        "outbound"
+      ],
+      "x-term": "shipment_direction"
+    },
+    "ref_doc": {
+      "type": "string",
+      "description": "ERP doc_no or sales reference",
+      "x-term": "ref_doc"
+    },
+    "ef_id": {
+      "type": "string",
+      "description": "Transport factor id",
+      "x-observed-values": [
+        "EF-TKM-ROPAX",
+        "EF-TKM-SHIP-BULK",
+        "EF-TKM-SHIP-REEFER",
+        "EF-TKM-TRUCK",
+        "EF-TKM-TRUCK-REEFER"
+      ],
+      "x-term": "ef_id"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Mode",
+      "x-observed-values": [
+        "ropax",
+        "ship-bulk",
+        "ship-reefer",
+        "truck",
+        "truck-reefer"
+      ],
+      "x-term": "transport_mode"
+    },
+    "t": {
+      "type": "number",
+      "description": "Tonnes",
+      "x-observed-min": 0.413,
+      "x-observed-max": 5775.787,
+      "x-term": "tonnes",
+      "x-unit-code": "TNE"
+    },
+    "km": {
+      "type": "number",
+      "description": "Distance (km)",
+      "x-unit": "km",
+      "x-observed-min": 18.1,
+      "x-observed-max": 20500.0,
+      "x-term": "distance_km",
+      "x-unit-code": "KMT"
+    },
+    "tkm": {
+      "type": "number",
+      "description": "Tonne-km",
+      "x-observed-min": 88.11,
+      "x-observed-max": 4858354.9,
+      "x-term": "tonne_km",
+      "x-unit-text": "tkm"
+    }
+  },
+  "required": [
+    "shipment_id",
+    "year",
+    "direction",
+    "ref_doc",
+    "ef_id",
+    "mode",
+    "t",
+    "km",
+    "tkm"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "year": "year"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:SalesVolume",
+  "title": "Apetit Climate & Nature Navigator - SalesVolume",
+  "description": "Monthly sales by product group and market.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "year",
+    "month",
+    "product_group",
+    "site_id",
+    "market"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2021,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "month": {
+      "type": "integer",
+      "description": "Month",
+      "x-observed-min": 1,
+      "x-observed-max": 12,
+      "x-term": "month"
+    },
+    "product_group": {
+      "type": "string",
+      "description": "Product group",
+      "x-observed-values": [
+        "blackgrain_powder",
+        "fish_products",
+        "frozen_pizza",
+        "frozen_vegetables",
+        "rapeseed_meal_expeller",
+        "rapeseed_oil_bottled",
+        "rapeseed_oil_bulk",
+        "ready_meals_frozen"
+      ],
+      "x-term": "product_group"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Producing site",
+      "x-observed-values": [
+        "S-KAN",
+        "S-PUD",
+        "S-SAK"
+      ],
+      "x-term": "site_id"
+    },
+    "market": {
+      "type": "string",
+      "description": "FI / SE / EXPORT_EU",
+      "x-observed-values": [
+        "EXPORT_EU",
+        "FI",
+        "SE"
+      ],
+      "x-term": "market"
+    },
+    "t_sold": {
+      "type": "number",
+      "description": "Tonnes sold",
+      "x-observed-min": 1.75,
+      "x-observed-max": 4727.334,
+      "x-term": "tonnes_sold",
+      "x-unit-code": "TNE"
+    },
+    "net_sales_eur": {
+      "type": "number",
+      "description": "Net sales (EUR)",
+      "x-unit": "EUR",
+      "x-observed-min": 8368.0,
+      "x-observed-max": 3563125.0,
+      "x-term": "net_sales_eur",
+      "x-unit-text": "EUR"
+    }
+  },
+  "required": [
+    "year",
+    "month",
+    "product_group",
+    "site_id",
+    "market",
+    "t_sold",
+    "net_sales_eur"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "subject": {
+      "column": "site_id",
+      "type": "Site"
+    },
+    "time": {
+      "year": "year",
+      "month": "month"
+    },
+    "dimensions": [
+      "product_group",
+      "market"
+    ]
+  }
+}

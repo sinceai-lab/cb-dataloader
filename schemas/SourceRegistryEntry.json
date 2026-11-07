@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:SourceRegistryEntry",
+  "title": "Apetit Climate & Nature Navigator - SourceRegistryEntry",
+  "description": "Sources used for calibration and frameworks, with licences.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "reference",
+  "x-primary-key": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "Source name",
+      "x-term": "source_name"
+    },
+    "url": {
+      "type": "string",
+      "description": "URL",
+      "x-term": "source_url"
+    },
+    "licence": {
+      "type": "string",
+      "description": "Licence / terms",
+      "x-term": "source_licence"
+    },
+    "used_for": {
+      "type": "string",
+      "description": "Use in the package",
+      "x-term": "used_for"
+    }
+  },
+  "required": [
+    "source",
+    "url",
+    "licence",
+    "used_for"
+  ],
+  "additionalProperties": false
+}

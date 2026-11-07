@@ -1,0 +1,11 @@
+{
+  "description": "Source unit strings found in row-level unit columns -> UN/CEFACT code (Rec. 20) or plain unitText. Unlisted strings fall back to unitText.",
+  "MWh": { "code": "MWH" },
+  "kg": { "code": "KGM" },
+  "KG": { "code": "KGM" },
+  "t": { "code": "TNE" },
+  "TO": { "code": "TNE" },
+  "l": { "code": "LTR" },
+  "m3": { "code": "MTQ" },
+  "EUR": { "text": "EUR" }
+}

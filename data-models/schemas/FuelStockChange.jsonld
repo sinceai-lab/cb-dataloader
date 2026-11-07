@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "site_id": "https://apetit.sinceai2026.example/ns#site_id",
+    "carrier": "https://apetit.sinceai2026.example/ns#fuel_carrier",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "unit": "https://apetit.sinceai2026.example/ns#fuel_unit",
+    "stock_change": "https://apetit.sinceai2026.example/ns#stock_change",
+    "note": "https://apetit.sinceai2026.example/ns#stock_note",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "FuelStockChange": "https://apetit.sinceai2026.example/ns#FuelStockChange"
+  }
+}

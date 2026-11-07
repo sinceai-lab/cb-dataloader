@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schemaVersion": "1.0.0",
+  "$id": "urn:apetit-sinceai2026:schema:TravelBooking",
+  "title": "Apetit Climate & Nature Navigator - TravelBooking",
+  "description": "Travel bookings exported from the booking tool. Raw.",
+  "type": "object",
+  "x-source-format": "csv",
+  "x-stage": "bronze",
+  "x-primary-key": [
+    "booking_id"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "description": "Year",
+      "x-observed-min": 2019,
+      "x-observed-max": 2025,
+      "x-term": "year"
+    },
+    "traveller_id": {
+      "type": "string",
+      "description": "Pseudonymous traveller",
+      "x-term": "traveller_id"
+    },
+    "travel_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Departure date",
+      "x-term": "travel_date"
+    },
+    "mode": {
+      "type": "string",
+      "description": "flight / train",
+      "x-observed-values": [
+        "flight",
+        "train"
+      ],
+      "x-term": "travel_mode"
+    },
+    "route": {
+      "type": "string",
+      "description": "Route",
+      "x-observed-values": [
+        "HEL-AMS",
+        "HEL-ARN",
+        "HEL-BRU",
+        "HEL-CPH",
+        "HEL-FRA",
+        "HEL-MAD",
+        "HEL-OUL",
+        "HEL-TLL",
+        "TKU-ARN",
+        "domestic"
+      ],
+      "x-term": "travel_route"
+    },
+    "pkm": {
+      "type": "number",
+      "description": "Passenger-km (return)",
+      "x-observed-min": 150.0,
+      "x-observed-max": 5900.0,
+      "x-term": "passenger_km",
+      "x-unit-text": "pkm"
+    },
+    "nights": {
+      "type": "integer",
+      "description": "Hotel nights",
+      "x-observed-min": 0,
+      "x-observed-max": 2,
+      "x-term": "nights",
+      "x-unit-text": "night"
+    },
+    "booking_id": {
+      "type": "string",
+      "description": "Booking id",
+      "x-term": "booking_id"
+    }
+  },
+  "required": [
+    "year",
+    "traveller_id",
+    "travel_date",
+    "mode",
+    "route",
+    "pkm",
+    "nights",
+    "booking_id"
+  ],
+  "additionalProperties": false,
+  "x-data-quality": "Raw feed: planted data-quality issues by design (see TASKS_AND_SCORING.md A1). Do not enforce value ranges; use x-observed-* only as a hint.",
+  "x-observation": {
+    "time": {
+      "date": "travel_date"
+    }
+  }
+}

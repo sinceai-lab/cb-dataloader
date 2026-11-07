@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "@vocab": "https://apetit.sinceai2026.example/ns#",
+    "survey_id": "https://apetit.sinceai2026.example/ns#survey_id",
+    "farm_id": "https://apetit.sinceai2026.example/ns#farm_id",
+    "crop": "https://apetit.sinceai2026.example/ns#crop",
+    "year": "https://apetit.sinceai2026.example/ns#year",
+    "area_ha": "https://apetit.sinceai2026.example/ns#area_ha",
+    "soil_type_reported": "https://apetit.sinceai2026.example/ns#soil_type_reported",
+    "n_mineral_kg_ha": "https://apetit.sinceai2026.example/ns#n_mineral_kg_ha",
+    "n_manure_kg_ha": "https://apetit.sinceai2026.example/ns#n_manure_kg_ha",
+    "fertiliser_product": "https://apetit.sinceai2026.example/ns#fertiliser_product",
+    "p_kg_ha": "https://apetit.sinceai2026.example/ns#p_kg_ha",
+    "diesel_l_ha": "https://apetit.sinceai2026.example/ns#diesel_l_ha",
+    "lime_t_ha": "https://apetit.sinceai2026.example/ns#lime_t_ha",
+    "sprays": "https://apetit.sinceai2026.example/ns#sprays",
+    "irrigated": "https://apetit.sinceai2026.example/ns#irrigated",
+    "catch_crop_share": "https://apetit.sinceai2026.example/ns#catch_crop_share",
+    "yield_t_ha": "https://apetit.sinceai2026.example/ns#yield_t_ha",
+    "originalValue": "https://apetit.sinceai2026.example/ns#originalValue",
+    "unitText": "https://apetit.sinceai2026.example/ns#unitText",
+    "refLoadLog": "https://apetit.sinceai2026.example/ns#refLoadLog",
+    "FarmSurveyFi": "https://apetit.sinceai2026.example/ns#FarmSurveyFi"
+  }
+}
