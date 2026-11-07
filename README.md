@@ -9,22 +9,24 @@ Loads the Apetit CSV datasets in `raw-data/` into Coraine (an NGSI-LD context br
 - Node.js and npm
 - An LLM API key: Gemini or Groq (see Chat with the data)
 - Run the commands below from this folder unless a step says otherwise
-
+### A note about windows 
+If the readme says to run any scripts like
+```
+./services start coraine
+./check-models
+```
+there should be an equivalent for windows. for example
+```
+.\services.cmd start coraine
+.\check-models.cmd
+```
 ## First-time setup
 
 ```
-cd cb-data-loader && npm install && cd ..
+cd cb-data-loader && npm install
 ```
 
 ## Start
-### On Windows
-```
-.\services.cmd start coraine   # Coraine + Mongo + Timescale + the @context httpd (enough for loading)
-.\services.cmd start           # full stack: also Keycloak and APISIX
-.\services.cmd status          # see what is running
-```
-### On others
-
 ```
 ./services start coraine   # Coraine + Mongo + Timescale + the @context httpd (enough for loading)
 ./services start           # full stack: also Keycloak and APISIX
@@ -36,7 +38,7 @@ Coraine is then at http://localhost:1026, and the JSON-LD contexts (served by ht
 ## Quick start
 
 ```
-cd data-loader && npm install && cd ..    # once
+cd data-loader && npm install    # once
 ./services start coraine                  # 1. broker
 ./services upload                         # 2. load the data
 # set a key in data-viewer/.env (see Chat with the data), then:
@@ -44,13 +46,6 @@ cd data-viewer && ./services apetit       # 3. chat UI at http://localhost:3006
 ```
 
 ## Load data
-### On Windows
-```
-.\services.cmd upload                # load every CSV, in turn
-.\services.cmd upload Site Parcel    # load only the named schemas
-LOADED_BY=jason ./services upload
-```
-### On others
 ```
 ./services upload                # load every CSV, in turn
 ./services upload Site Parcel    # load only the named schemas
@@ -80,13 +75,6 @@ LOADED_BY=jason ./services upload
 The viewer joins the `apetit_default` Docker network, so Coraine must be running first. Stop it with `cd data-viewer && ./services apetit stop`. Reload the data first if you ran `./services reset`.
 
 ## Stop and clean up
-### On windows
-```
-.\services.cmd clear-uploads   # delete the copied files in data-loader/uploads/ (LoadLog entries stay)
-.\services.cmd stop            # stop containers, keep the data, and clear data-loader/uploads/
-.\services.cmd reset           # stop containers AND delete all loaded data
-```
-### On others
 ```
 ./services clear-uploads   # delete the copied files in data-loader/uploads/ (LoadLog entries stay)
 ./services stop            # stop containers, keep the data, and clear data-loader/uploads/
