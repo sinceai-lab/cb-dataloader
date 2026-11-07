@@ -54,6 +54,7 @@ LOADED_BY=jason ./services upload
 
 - Each file is validated against its schema; rows with a wrong type or missing required field are logged and dropped. Value-level errors (outliers, duplicates) are kept on purpose.
 - Every load writes a `LoadLog` entity (file, sha256, who, when, row counts). Loaded entities link back to it through `refLoadLog`.
+- The CSV folder defaults to `raw-data/data`; set `DATA_DIR=/path/to/data` (the folder containing `01_master`, `02_raw_feeds`, ...) to load from elsewhere.
 - Source CSVs are copied to `data-loader/uploads/` before loading. The source datasets are never modified.
 - Loading again is safe; entities are upserted by id.
 - Check the result: `curl 'localhost:1026/ngsi-ld/v1/entities?type=Site' -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'`

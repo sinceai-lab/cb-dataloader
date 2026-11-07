@@ -69,6 +69,7 @@ case "${1:-}" in
 		;;
 	upload)
 		shift
+		if [ -n "${DATA_DIR:-}" ] && [ -d "$DATA_DIR" ]; then DATA_DIR="$(cd "$DATA_DIR" && pwd)"; export DATA_DIR; fi
 		args=()
 		for a in "$@"; do
 			if [ -e "$a" ]; then a="$(cd "$(dirname "$a")" && pwd)/$(basename "$a")"; fi

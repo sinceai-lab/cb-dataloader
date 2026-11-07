@@ -70,7 +70,7 @@ export function loadSchemas(): Map<string, LoadableSchema> {
     const name = entry.schema.replace(/\.json$/, '');
     out.set(name, {
       name,
-      source: entry.source,
+      source: path.join(config.dataDir, entry.source.replace(/^.*?\/data\//, '')),
       primaryKey: entry.primaryKey,
       properties: raw.properties,
       units,

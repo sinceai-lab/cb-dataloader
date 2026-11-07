@@ -8,7 +8,27 @@ import { detectSchema, loadSchemas } from './schemas.js';
 import { loadCsv } from './loader.js';
 
 // No args: load every indexed CSV. Args: CSV paths (schema detected from the header) or schema names.
+if (!fs.existsSync(config.dataDir) || !fs.statSync(config.dataDir).isDirectory()) {
+  console.error(
+    `Data folder not found: ${config.dataDir}\n` +
+      `Set DATA_DIR to the folder that contains 01_master, 02_raw_feeds, ... ` +
+      `(default: raw-data/data in the repo root).`,
+  );
+  process.exit(1);
+}
 const schemas = loadSchemas();
+const missing = [...schemas.values()].filter((s) => !fs.existsSync(s.source));
+if (missing.length) {
+  console.error(
+    `${missing.length} of ${schemas.size} data files not found under ${config.dataDir}, e.g.\n` +
+      missing
+        .slice(0, 3)
+        .map((s) => `  ${s.source}`)
+        .join('\n') +
+      `\nCheck DATA_DIR points at the folder that contains 01_master, 02_raw_feeds, ...`,
+  );
+  process.exit(1);
+}
 await writeContexts(schemas);
 await loadKeys(schemas);
 const loadedBy = process.env.LOADED_BY ?? os.userInfo().username;
@@ -28,7 +48,8 @@ let failed = 0;
 for (const job of jobs) {
   const label = job.name ?? path.basename(job.src);
   try {
-    if (!fs.existsSync(job.src)) throw new Error(`${job.src} not found`);
+    if (!fs.existsSync(job.src))
+      throw new Error(`file not found: ${job.src} (check DATA_DIR=${config.dataDir})`);
     const stored = path.join(config.uploadsDir, `${Date.now()}-${path.basename(job.src)}`);
     fs.copyFileSync(job.src, stored);
     const schema = job.name ? schemas.get(job.name)! : detectSchema(stored, path.basename(job.src), schemas);
